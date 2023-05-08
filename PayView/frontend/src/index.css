@@ -26,3 +26,6 @@ header a {
   padding: 20px;
   margin: 0 auto;
 }
+nav a {
+  margin-right: 50px;
+}
