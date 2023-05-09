@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -28,8 +30,13 @@ const Signup = () => {
             setEmail('')
             setPassword('')
             setError('')
+            navigate.push('/view')
             console.log('Nuevo usuario añadido', json)
         }
+
+        navigate.push('/view')
+
+        
 
     }
 

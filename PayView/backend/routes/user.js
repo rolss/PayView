@@ -1,7 +1,10 @@
 const express = require('express')
 const {
     createUser,
-    loginUser
+    loginUser,
+    cardInfo,
+    makeTransaction,
+    newCard
 } = require('../controllers/userController')
 
 const router = express.Router()
@@ -9,7 +12,16 @@ const router = express.Router()
 // POST a new user
 router.post('/signup', createUser)
 
-// GET a user
-router.get('/login', loginUser)
+// GET a user (use post because we're using passwords)
+router.post('/login', loginUser)
+
+// GET card information
+router.get('/cardinfo/:id', cardInfo)
+
+// POST a transaction
+router.post('/makeTransaction', makeTransaction)
+
+// POST a card (available to user as in to add cards to his profile maybe?)
+router.post('/newCard', newCard)
 
 module.exports = router
