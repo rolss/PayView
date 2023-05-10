@@ -2,6 +2,7 @@
 
 Instalar dependencias
 
+ir a PayView/backend en la terminal y correr npm install
 ir a PayView/frontend en la terminal y correr npm install
 
 ## Correr el programa
