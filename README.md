@@ -13,9 +13,11 @@ At PayView/frontend, run the following commands
 
 ## Run the program
 First run the server (backend), so that the frontend can communicate to the backend API. 
+
 At .../backend, run the command
 * npm run dev
 
 Now, run the react app (frontend).
+
 At .../frontend, run
 * npm start
