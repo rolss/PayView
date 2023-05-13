@@ -2,8 +2,13 @@
 
 Instalar dependencias
 
-ir a PayView/backend en la terminal y correr npm install
-ir a PayView/frontend en la terminal y correr npm install
+En PayView/backend
+npm install
+npm install nodemon
+
+En PayView/frontend 
+npm install
+npm install nodemon
 
 ## Correr el programa
 Dos terminales
