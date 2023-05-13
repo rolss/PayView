@@ -1,16 +1,21 @@
-# PayView
+# How to run
 
-Instalar dependencias
+## Install dependencies
+Dependencies are not included into the repository in order to reduce code noise
 
-En PayView/backend
-npm install
-npm install nodemon
+At PayView/backend, run the following commands 
+* npm install
+* npm install nodemon
 
-En PayView/frontend 
-npm install
-npm install nodemon
+At PayView/frontend, run the following commands
+* npm install
+* npm install nodemon
 
-## Correr el programa
-Dos terminales
-1. .../frontend, correr npm start
-2. .../backend, correr npm run dev o npm start
+## Run the program
+First run the server (backend), so that the frontend can communicate to the backend API. 
+At .../backend, run the command
+* npm run dev
+
+Now, run the react app (frontend).
+At .../frontend, run
+* npm start
