@@ -11,7 +11,7 @@ At PayView/frontend, run the following commands
 * npm install
 * npm install nodemon
 
-## Run the program
+## Run the code
 First run the server (backend), so that the frontend can communicate to the backend API. 
 
 At .../backend, run the command
