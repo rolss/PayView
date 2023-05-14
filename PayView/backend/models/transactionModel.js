@@ -7,14 +7,6 @@ const transactionSchema = new Schema({
         type: String,
         required: true,
     },
-    number: {
-        type: String,
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-    },
     idType: {
         type: String,
         required: true,
@@ -31,7 +23,7 @@ const transactionSchema = new Schema({
         type: String,
         required: true
     },
-    total: {
+    amount: {
         type: Number,
         required: true
     },
@@ -43,6 +35,27 @@ const transactionSchema = new Schema({
         type: Number,
         required: true
     },
+    cardName: {
+        type: String,
+        required: true,
+    },
+    cardNumber: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    expMonth: {
+        type: String,
+        required: true,
+    },
+    expYear: {
+        type: String,
+        required: true,
+    },
+    code: {
+        type: String,
+        required: true,
+    }
 }, {timestamps: true}) 
 
 module.exports = mongoose.model('Transaction', transactionSchema)

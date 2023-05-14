@@ -29,3 +29,10 @@ header a {
 nav a {
   margin-right: 50px;
 }
+input, label {
+  display: block;
+}
+.tab {
+  display: inline-block;
+  margin-left: 300px;
+}

@@ -22,6 +22,8 @@ const Navbar = () => {
                 <nav>
                     {user && <div>
                         <span>{user.email}</span>
+                        <Link to="/view">Consultar</Link>
+                        <Link to="/transaction">Realizar</Link>
                         <button onClick={handleClick}>Cerrar sesión</button>
                     </div>}
                     {!user && <div>

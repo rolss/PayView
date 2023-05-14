@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import View from './pages/View'
 import { useAuthContext } from './hooks/useAuthContext'
+import Transaction from './pages/Transaction'
 
 function App() {
   const { user } = useAuthContext()
@@ -19,7 +20,7 @@ function App() {
           <Routes>
             <Route 
               path="/"
-              element={user ? <Home /> : <Navigate to="login"/>}
+              element={<Home />}
             />
             <Route 
               path="/login"
@@ -32,6 +33,10 @@ function App() {
             <Route 
               path="/view"
               element={!user ? <Login /> : <View />}
+            />
+            <Route
+              path="/transaction"
+              element={!user ? <Login /> : <Transaction />}
             />
           </Routes>
         </div>

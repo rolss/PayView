@@ -6,7 +6,6 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
-    const [userCheck, setUserCheck] = useState(false)
     const navigate = useNavigate()
     const { dispatch } = useAuthContext()
     
@@ -28,18 +27,15 @@ const Login = () => {
 
         if (!response.ok) {
             setError(json.error)
-            setUserCheck(true)
         }
         
         if (response.ok) {
-            setUserCheck(false)
-
             // Update local storage and global state with authentication credentials
             localStorage.setItem('user', JSON.stringify(json))
             dispatch({type: 'LOGIN', payload: json})
 
             // Reset variables and send user to default post-login page
-            navigate('/view/' + json.email)
+            navigate('/view')
             setEmail('')
             setPassword('')
             setError('')

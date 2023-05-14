@@ -2,8 +2,8 @@ const express = require('express')
 const {
     createUser,
     loginUser,
-    cardInfo,
-    makeTransaction,
+    cardDetails,
+    newTransaction,
     newCard
 } = require('../controllers/userController')
 
@@ -16,10 +16,10 @@ router.post('/signup', createUser)
 router.post('/login', loginUser)
 
 // GET card information
-router.get('/cardinfo/:id', cardInfo)
+router.get('/details/:id', cardDetails)
 
 // POST a transaction
-router.post('/makeTransaction', makeTransaction)
+router.post('/newtransaction', newTransaction)
 
 // POST a card (available to user as in to add cards to his profile maybe?)
 router.post('/newCard', newCard)
