@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Signup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const navigate = useNavigate()
+    const { dispatch } = useAuthContext()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -27,6 +29,12 @@ const Signup = () => {
         }
         
         if (response.ok) {
+
+            // Update local storage and global state with authentication credentials
+            localStorage.setItem('user', JSON.stringify(json))
+            dispatch({type: 'LOGIN', payload: json})
+
+
             setEmail('')
             setPassword('')
             setError('')

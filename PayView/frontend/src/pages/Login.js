@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -7,6 +8,7 @@ const Login = () => {
     const [error, setError] = useState('')
     const [userCheck, setUserCheck] = useState(false)
     const navigate = useNavigate()
+    const { dispatch } = useAuthContext()
     
 
     const handleSubmit = async (e) => {
@@ -31,6 +33,12 @@ const Login = () => {
         
         if (response.ok) {
             setUserCheck(false)
+
+            // Update local storage and global state with authentication credentials
+            localStorage.setItem('user', JSON.stringify(json))
+            dispatch({type: 'LOGIN', payload: json})
+
+            // Reset variables and send user to default post-login page
             navigate('/view/' + json.email)
             setEmail('')
             setPassword('')
