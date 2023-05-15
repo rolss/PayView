@@ -9,7 +9,7 @@ const router = express.Router()
 router.use(requireAuth)
 
 // GET card information
-router.get('/details/:id', cardDetails)
+router.post('/details', cardDetails)
 
 // POST a transaction
 router.post('/newtransaction', newTransaction)

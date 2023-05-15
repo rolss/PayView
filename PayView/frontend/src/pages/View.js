@@ -21,7 +21,7 @@ const View = () => {
             cardName, cardNumber, expMonth, expYear, code
         }
  
-        const response = await fetch('/api/user/details/' + cardNumber, {
+        const response = await fetch('/api/action/details', {
             method: 'POST',
             body: JSON.stringify(details),
             headers: {

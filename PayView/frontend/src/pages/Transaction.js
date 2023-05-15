@@ -30,7 +30,7 @@ const Transaction = () => {
             cardNumber, expMonth, expYear, code
         }
 
-        const response = await fetch('/api/user/newtransaction', {
+        const response = await fetch('/api/action/newtransaction', {
             method: 'POST',
             body: JSON.stringify(transaction),
             headers: {

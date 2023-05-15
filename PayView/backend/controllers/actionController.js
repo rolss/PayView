@@ -2,6 +2,7 @@ const Transaction = require('../models/transactionModel')
 const Card = require('../models/cardModel')
 
 const cardDetails = async (req,res) => {
+    console.log("entra")
     const { cardName, cardNumber, expMonth, expYear, code } = req.body
     try {
         // !! missing: check if all the info has been provided
@@ -12,8 +13,9 @@ const cardDetails = async (req,res) => {
             expYear,
             code
         })
+        console.log(info)
         if (info) {
-            res.status(200).json(info.balance)
+            res.status(200).json(info)
         }
         if (!info) {
             res.status(400).json({error: 'La tarjeta con estas credenciales no pudo ser encontrada'})
@@ -25,7 +27,9 @@ const cardDetails = async (req,res) => {
 
 const newTransaction = async (req,res) => {
     const information = req.body
+    console.log(information)
     try {
+        // !!add: must receive all card info to be searched and valid
         const validCard = await Card.findOne({cardNumber: information.cardNumber})
         console.log(validCard)
         if (validCard) {
