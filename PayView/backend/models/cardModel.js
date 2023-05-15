@@ -3,11 +3,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const cardSchema = new Schema({
-    name: {
+    cardName: {
         type: String,
         required: true,
     },
-    number: {
+    cardNumber: {
         type: String,
         required: true,
         unique: true
@@ -20,7 +20,7 @@ const cardSchema = new Schema({
         type: String,
         required: true,
     },
-    CVV: {
+    code: {
         type: String,
         required: true,
     },
