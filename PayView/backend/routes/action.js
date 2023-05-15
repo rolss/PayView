@@ -8,7 +8,7 @@ const requireAuth = require('../middleware/requireAuth')
 const router = express.Router()
 router.use(requireAuth)
 
-// GET card information
+// secure GET card information
 router.post('/details', cardDetails)
 
 // POST a transaction

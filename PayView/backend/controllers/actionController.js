@@ -2,10 +2,9 @@ const Transaction = require('../models/transactionModel')
 const Card = require('../models/cardModel')
 
 const cardDetails = async (req,res) => {
-    console.log("entra")
     const { cardName, cardNumber, expMonth, expYear, code } = req.body
     try {
-        // !! missing: check if all the info has been provided
+        // !! missing: check if all the info has been provided and is valid
         const info = await Card.findOne({
             cardName,
             cardNumber,
@@ -13,9 +12,15 @@ const cardDetails = async (req,res) => {
             expYear,
             code
         })
-        console.log(info)
+
+        // id added on middleware
+        const id = req.user._id
+        const history = await Transaction.find({user_id: id})
+        balance = info.balance
+        const new_history = history.map(item => ({ description: item.description, amount: item.amount }));
+
         if (info) {
-            res.status(200).json(info)
+            res.status(200).json({balance, new_history})
         }
         if (!info) {
             res.status(400).json({error: 'La tarjeta con estas credenciales no pudo ser encontrada'})

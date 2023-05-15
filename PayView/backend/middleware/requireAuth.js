@@ -18,6 +18,7 @@ const requireAuth = async (req,res,next) => {
 
         // add user at the end of the request, to be able to fetch its id
         req.user = await User.findOne({ _id }).select('_id') // ATTACH USER ID TO A USER. LIKE SO: user: soadjiowefu3248u123djos
+        
         next()
 
     } catch (error) {
