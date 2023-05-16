@@ -23,6 +23,8 @@ const Transaction = () => {
     const [error, setError] = useState('')
 
     const handleSubmit = async (e) => {
+        e.preventDefault()
+        
         const transaction = {
             name, idType, idNumber, 
             description, location, amount, 

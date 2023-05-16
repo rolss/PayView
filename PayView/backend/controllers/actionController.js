@@ -1,7 +1,21 @@
 const Transaction = require('../models/transactionModel')
 const Card = require('../models/cardModel')
 
-const cardDetails = async (req,res) => {
+const transactionHistory = async (req,res) => {
+    // id added on middleware
+    const id = req.user._id
+    const transac_history = await Transaction.find({user_id: id})
+    const history = transac_history.map(item => ({ description: item.description, amount: item.amount, cardNumber: item.cardNumber }));
+
+    if (history) {
+        res.status(200).json({history})
+    }
+    if (!history) {
+        res.status(400).json({error: 'Este usuario no ha realizado ninguna transacción'})
+    }
+}
+
+const cardBalance = async (req,res) => {
     const { cardName, cardNumber, expMonth, expYear, code } = req.body
     try {
         // !! missing: check if all the info has been provided and is valid
@@ -12,15 +26,11 @@ const cardDetails = async (req,res) => {
             expYear,
             code
         })
-
-        // id added on middleware
-        const id = req.user._id
-        const history = await Transaction.find({user_id: id})
+        
         balance = info.balance
-        const new_history = history.map(item => ({ description: item.description, amount: item.amount }));
 
         if (info) {
-            res.status(200).json({balance, new_history})
+            res.status(200).json({balance})
         }
         if (!info) {
             res.status(400).json({error: 'La tarjeta con estas credenciales no pudo ser encontrada'})
@@ -34,12 +44,13 @@ const newTransaction = async (req,res) => {
     const information = req.body
     console.log(information)
     try {
+        user_id = req.user._id
         // !!add: must receive all card info to be searched and valid
         const validCard = await Card.findOne({cardNumber: information.cardNumber})
         console.log(validCard)
         if (validCard) {
             // !!modify: change ...req.body to destructured variables
-            const transaction = await Transaction.create({...req.body}) // includes a user id
+            const transaction = await Transaction.create({...req.body, user_id}) // includes a user id
             //console.log(transaction)
             res.status(200).json(transaction)
         }
@@ -67,6 +78,7 @@ const getHistory = async (req,res) => {
 }
 
 module.exports = {
-    cardDetails,
+    transactionHistory,
+    cardBalance,
     newTransaction
 }
