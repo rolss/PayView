@@ -1,3 +1,5 @@
+// !! consider turning something here into component (?)
+
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuthContext } from "../hooks/useAuthContext"
@@ -54,8 +56,6 @@ const View = () => {
         if (response.ok) {
             console.log(json)
             setBalance(json.balance)
-            // Para eso que viene, hay que crear un context global del historial. 
-            // Luego aqui va a haber un setHistorial(json.historial) pero todavia no se ha agregado el historial al backend ni al API
         }
     }
 

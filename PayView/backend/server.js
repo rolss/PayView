@@ -15,6 +15,7 @@ app.use((req,res,next) => {
 })
 
 // routes
+// !! Eventually separate here for microservices
 app.use('/api/user', userRoutes)
 app.use('/api/action', actionRoutes)
 

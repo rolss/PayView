@@ -18,15 +18,15 @@ export const AuthContextProvider = ({ children }) => {
         user: null
     })
 
+    // Initial checkup verifies if user is already logged in
     useEffect(() => {
-        // esto afuera del useffect?
         // check local storage for user authentication credentials
         const user = JSON.parse(localStorage.getItem('user'))
 
         if (user) {
             dispatch({type:'LOGIN', payload: user})
         }
-    }, []) // Initial checkup verifies if user is already logged in
+    }, []) 
 
     console.log('AuthContext state: ', state)
 

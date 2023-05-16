@@ -15,7 +15,7 @@ const Login = () => {
 
         const user = {email, password}
         console.log(user)
-        // en setupProxy ya estamos haciendo proxy a localhost:4000 en todos los fetch que haga el frontend
+        
         const response = await fetch('/api/user/login', {
             method: 'POST',
             body: JSON.stringify(user),

@@ -51,26 +51,10 @@ const newTransaction = async (req,res) => {
         if (validCard) {
             // !!modify: change ...req.body to destructured variables
             const transaction = await Transaction.create({...req.body, user_id}) // includes a user id
-            //console.log(transaction)
             res.status(200).json(transaction)
         }
         if (!validCard) {
             res.status(400).json({error: 'This card is not valid'})
-        }
-    } catch (error) {
-        res.status(400).json({error: error.message})
-    }
-}
-
-// map it on pages/view render
-const getHistory = async (req,res) => {
-    try {
-        const id = req.user._id
-        const transactions = await Transaction.find({user_id: id})
-        if (transactions) {
-            res.status(200).json(transactions)
-        } else {
-            res.status(400).json({error: 'No transactions found'})
         }
     } catch (error) {
         res.status(400).json({error: error.message})

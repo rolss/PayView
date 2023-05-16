@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 
 
 const createToken = (_id) => {
-    // three arguments: payload object (nothing sensitive), secret, when user will be logged out (after 3 days)
+    // three arguments: payload object (nothing sensitive), secret, timeout before logout
     return jwt.sign({_id}, process.env.SECRET, { expiresIn: '30d'})
 }
 
@@ -42,7 +42,7 @@ const loginUser = async (req,res) => {
     }
 }
 
-// BACKEND ONLY - FOR DEMOS
+// BACKEND ONLY - FOR DEMOS [!!]
 const newCard = async (req,res) => {
     try {  
         const card = await Card.create({...req.body})

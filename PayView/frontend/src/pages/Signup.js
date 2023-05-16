@@ -14,7 +14,7 @@ const Signup = () => {
 
         const user = {email, password}
 
-        // en setupProxy ya estamos haciendo proxy a localhost:4000 en todos los fetch que haga el frontend
+        // setupProxy locates the environment on localhost:4000, so we can omit that for every frontend fetch
         const response = await fetch('/api/user/signup', {
             method: 'POST',
             body: JSON.stringify(user),

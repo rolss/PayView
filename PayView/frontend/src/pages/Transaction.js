@@ -4,7 +4,6 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const Transaction = () => {
     const { user } = useAuthContext()
 
-    // !!Agregar somehow esto al historial del usuario
     const [name, setName] = useState('')
     const [idType, setIdType] = useState('')
     const [idNumber, setIdNumber] = useState('')
@@ -50,7 +49,6 @@ const Transaction = () => {
         if (response.ok) {
             setStatus('Transacción exitosa!')
             setError('')
-            // Agregar transaccion al historial local del frontend
         }
 
     }

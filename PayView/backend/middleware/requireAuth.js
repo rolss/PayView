@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/userModel')
 
-// We dont want to give the user all the information unless he's logged in
+// Making sure user is logged in before continuing to any action request
 const requireAuth = async (req,res,next) => {
     
     const { authorization } = req.headers
@@ -16,8 +16,8 @@ const requireAuth = async (req,res,next) => {
 
         const {_id} = jwt.verify(token, process.env.SECRET)
 
-        // add user at the end of the request, to be able to fetch its id
-        req.user = await User.findOne({ _id }).select('_id') // ATTACH USER ID TO A USER. LIKE SO: user: soadjiowefu3248u123djos
+        // add user at the end of the request, to be able to fetch its id. Use it like so: req.user._id
+        req.user = await User.findOne({ _id }).select('_id') 
         
         next()
 
