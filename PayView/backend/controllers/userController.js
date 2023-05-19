@@ -2,8 +2,7 @@ const User = require('../models/userModel')
 const Card = require('../models/cardModel')
 const jwt = require('jsonwebtoken')
 
-
-
+// Create a JWT Token for a user which expires in 30 days.
 const createToken = (_id) => {
     // three arguments: payload object (nothing sensitive), secret, timeout before logout
     return jwt.sign({_id}, process.env.SECRET, { expiresIn: '30d'})
@@ -26,7 +25,6 @@ const loginUser = async (req,res) => {
     const {email, password} = req.body
     try {
         const user = await User.login(email, password)
-        console.log(user._id)
         const token = createToken(user._id)
 
         if (user) {

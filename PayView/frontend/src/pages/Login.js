@@ -6,16 +6,16 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+
     const navigate = useNavigate()
     const { dispatch } = useAuthContext()
     
-
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         const user = {email, password}
-        console.log(user)
         
+        // Send request to backend based on input fields
         const response = await fetch('/api/user/login', {
             method: 'POST',
             body: JSON.stringify(user),
@@ -30,7 +30,7 @@ const Login = () => {
         }
         
         if (response.ok) {
-            // Update local storage and global state with authentication credentials
+            // Update local storage and global state with authentication credentials (token)
             localStorage.setItem('user', JSON.stringify(json))
             dispatch({type: 'LOGIN', payload: json})
 

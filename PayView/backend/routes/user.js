@@ -10,7 +10,7 @@ const router = express.Router()
 // POST a new user
 router.post('/signup', createUser)
 
-// (secure) GET a user
+// (secure GET) a user
 router.post('/login', loginUser)
 
 // !!this is more of an admin endpoint for now

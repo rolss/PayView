@@ -6,6 +6,7 @@ const Signup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+
     const navigate = useNavigate()
     const { dispatch } = useAuthContext()
 
@@ -14,7 +15,7 @@ const Signup = () => {
 
         const user = {email, password}
 
-        // setupProxy locates the environment on localhost:4000, so we can omit that for every frontend fetch
+        // Send request to backend based on input fields
         const response = await fetch('/api/user/signup', {
             method: 'POST',
             body: JSON.stringify(user),
@@ -30,11 +31,11 @@ const Signup = () => {
         
         if (response.ok) {
 
-            // Update local storage and global state with authentication credentials
+            // Update local storage and global state with authentication credentials (token)
             localStorage.setItem('user', JSON.stringify(json))
             dispatch({type: 'LOGIN', payload: json})
 
-
+            // Reset variables and send user to default post-login page
             setEmail('')
             setPassword('')
             setError('')

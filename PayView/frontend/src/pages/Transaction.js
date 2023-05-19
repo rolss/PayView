@@ -24,6 +24,7 @@ const Transaction = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         
+        // Group all variables the backend requires to log transaction into database
         const transaction = {
             name, idType, idNumber, 
             description, location, amount, 
@@ -31,6 +32,7 @@ const Transaction = () => {
             cardNumber, expMonth, expYear, code
         }
 
+        // Send request to backend to post transaction, using token from context
         const response = await fetch('/api/action/newtransaction', {
             method: 'POST',
             body: JSON.stringify(transaction),
@@ -41,11 +43,12 @@ const Transaction = () => {
         })
 
         const json = await response.json()
-        console.log(json)
+
         if (!response.ok) {
             setStatus('Transacción Fallida')
             setError(json.error)
         }
+        
         if (response.ok) {
             setStatus('Transacción exitosa!')
             setError('')

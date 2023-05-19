@@ -2,6 +2,8 @@ import { createContext, useEffect, useReducer } from 'react'
 
 export const AuthContext = createContext()
 
+// if login, set user to payload, which includes the authorization token
+// if logout, set user to null
 export const authReducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN':
@@ -14,6 +16,7 @@ export const authReducer = (state, action) => {
 }
 
 export const AuthContextProvider = ({ children }) => {
+    // Create user as a global state
     const [state, dispatch] = useReducer(authReducer, {
         user: null
     })
@@ -22,13 +25,10 @@ export const AuthContextProvider = ({ children }) => {
     useEffect(() => {
         // check local storage for user authentication credentials
         const user = JSON.parse(localStorage.getItem('user'))
-
         if (user) {
             dispatch({type:'LOGIN', payload: user})
         }
     }, []) 
-
-    console.log('AuthContext state: ', state)
 
     return (
         <AuthContext.Provider value={{...state, dispatch}}>
