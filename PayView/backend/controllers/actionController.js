@@ -8,6 +8,7 @@ const transactionHistory = async (req,res) => {
     const transac_history = await Transaction.find({user_id: id})
     const history = transac_history.map(item => ({ description: item.description, amount: item.amount, cardNumber: item.cardNumber }));
 
+    console.log(history)
     if (history) {
         res.status(200).json({history})
     }

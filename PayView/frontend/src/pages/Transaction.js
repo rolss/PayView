@@ -10,7 +10,7 @@ const Transaction = () => {
     const [description, setDescription] = useState('')
     const [location, setLocation] = useState('')
     const [amount, setAmount] = useState(0)
-    const [paymentType, setPaymentType] = useState('')
+    const [paymentType, setPaymentType] = useState('tarjeta de credito')
     const [installments, setInstallments] = useState(0)
     const [cardName, setCardName] = useState('')
     const [cardNumber, setCardNumber] = useState('')
@@ -58,35 +58,56 @@ const Transaction = () => {
 
 
     return ( 
-        <form onSubmit={handleSubmit}>
-            <label>Nombre completo</label>
-            <input type="text" onChange={(e) => {setName(e.target.value)}}/>
-            <label>Tipo de identificación</label>
-            <input type="text" onChange={(e) => {setIdType(e.target.value)}}/>
-            <label>Número de identificación</label>
-            <input type="text" onChange={(e) => {setIdNumber(e.target.value)}}/>
-            <label>Monto</label>
-            <input type="number" onChange={(e) => {setAmount(e.target.value)}}/>
-            <label>Descripción</label>
-            <input type="text" onChange={(e) => {setDescription(e.target.value)}}/>
-            <label>Sede</label>
-            <input type="text" onChange={(e) => {setLocation(e.target.value)}}/>
-            <label>Tipo de pago</label>
-            <input type="text" onChange={(e) => {setPaymentType(e.target.value)}}/>
-            <label>Numero de cuotas</label>
-            <input type="number" onChange={(e) => {setInstallments(e.target.value)}}/>
-            <label>Nombre del titular</label>
-            <input type="text" onChange={(e) => {setCardName(e.target.value)}}/>
-            <label>Numero de la tarjeta</label>
-            <input type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
-            <label>Fecha de expiracion</label>
-            <input type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
-            <input type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
-            <label>Código de seguridad</label>
-            <input type="text" onChange={(e) => {setCode(e.target.value)}}/>
-            <button>Enviar</button>
-            <p>{status}</p>
-        </form>
+        <div>
+            {paymentType === 'tarjeta de credito' && (
+                <form onSubmit={handleSubmit}>
+                    <label>Tipo de pago</label>
+                    <select onChange={(e) => {setPaymentType(e.target.value)}}>
+                        <option value="tarjeta de credito">Tarjeta de crédito</option>
+                        <option value="tarjeta de debito">Tarjeta de débito</option>
+                    </select>
+                    <label>Nombre completo</label>
+                    <input type="text" onChange={(e) => {setName(e.target.value)}}/>
+                    <label>Tipo de identificación</label>
+                    <input type="text" onChange={(e) => {setIdType(e.target.value)}}/>
+                    <label>Número de identificación</label>
+                    <input type="text" onChange={(e) => {setIdNumber(e.target.value)}}/>
+                    <label>Monto</label>
+                    <input type="number" onChange={(e) => {setAmount(e.target.value)}}/>
+                    <label>Descripción</label>
+                    <input type="text" onChange={(e) => {setDescription(e.target.value)}}/>
+                    <label>Sede</label>
+                    <input type="text" onChange={(e) => {setLocation(e.target.value)}}/>
+                    {/* <input type="text" onChange={(e) => {setPaymentType(e.target.value)}}/> */}
+                    <label>Numero de cuotas</label>
+                    <input type="number" onChange={(e) => {setInstallments(e.target.value)}}/>
+                    <label>Nombre del titular</label>
+                    <input type="text" onChange={(e) => {setCardName(e.target.value)}}/>
+                    <label>Numero de la tarjeta</label>
+                    <input type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
+                    <label>Fecha de expiracion</label>
+                    <input type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
+                    <input type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
+                    <label>Código de seguridad</label>
+                    <input type="text" onChange={(e) => {setCode(e.target.value)}}/>
+                    <button>Enviar</button>
+                    <p>{status}</p>
+                </form>
+            )}
+            {paymentType === 'tarjeta de debito' && (
+                <div>
+                    <label>Tipo de pago</label>
+                    <select onChange={(e) => {setPaymentType(e.target.value)}}>
+                        <option value="tarjeta de credito">Tarjeta de crédito</option>
+                        <option value="tarjeta de debito">Tarjeta de débito</option>
+                    </select>
+                    <br></br>
+                    <a href="https://www.pse.com.co/persona" target="_blank">Pago por PSE</a>
+                </div>
+              
+                
+            )}
+        </div>
      );
 }
  

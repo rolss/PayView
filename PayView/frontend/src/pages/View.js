@@ -67,6 +67,7 @@ const View = () => {
         }
     }
 
+    // !!Add: loading screen to history
     return ( 
         <div>
             <form onSubmit={handleSubmit}>
@@ -86,6 +87,7 @@ const View = () => {
                 <h4>Saldo: {balance}</h4>
                 <h5>Historial: </h5>
                 {/* !!modify: this will be transformed into a table */}
+                
                 {history && history.map((item) => (
                     <div key={item.id}>
                     <p>{item.amount}<span className="tab"></span>{item.description}<span className="tab"></span>{item.cardNumber}</p>
