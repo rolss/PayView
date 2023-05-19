@@ -1,7 +1,7 @@
 # How to run
 
 ## Install dependencies
-Dependencies are not included into the repository in order to reduce code noise
+Some dependencies are not included into the repository in order to reduce noise
 
 At PayView/backend, run the following commands 
 * npm install
