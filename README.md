@@ -1,4 +1,5 @@
-# How to run
+# PayView
+Model webpage for transaction services using the MERN Stack (MongoDB, Express.js, React and Node.js). 
 
 ## Install dependencies
 Some dependencies are not included into the repository in order to reduce noise
