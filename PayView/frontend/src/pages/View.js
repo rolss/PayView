@@ -1,12 +1,10 @@
 // !! consider turning something here into component (?)
 
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { useAuthContext } from "../hooks/useAuthContext"
 
 const View = () => {
     const { user } = useAuthContext()
-    const navigate = useNavigate()
 
     const [cardName, setCardName] = useState('')
     const [cardNumber, setCardNumber] = useState('')
@@ -16,7 +14,6 @@ const View = () => {
 
     const [balance, setBalance] = useState('000')
     const [history, setHistory] = useState('')
-    const [cardView, setCardView] = useState('')
 
     const [error, setError] = useState(null)
 
@@ -41,11 +38,22 @@ const View = () => {
         }
 
         fetchHistory()
-    }, [])
+    }, [user.token])
     
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        if (!cardName || !cardNumber || !expMonth || !expYear || !code) {
+            setError("Por favor no deje campos vacios")
+            return
+        }
+        if (expMonth.length !== 2 || expYear.length !== 2) {
+            setError("Las fechas de la tarjeta son invalidas")
+        }
+        if (code.length !== 3) {
+            setError("El codigo ingresado es inválido")
+        }
         
         const details = {
             cardName, cardNumber, expMonth, expYear, code
@@ -67,25 +75,31 @@ const View = () => {
         }
     }
 
+    // !!Add: loading screen to history
     return ( 
         <div>
             <form onSubmit={handleSubmit}>
+                {error && 
+                <div className="error">
+                    <p>{error}</p>
+                </div>}
                 <h2>Consultar saldo</h2>
                 <label>Nombre del tarjetahabiente</label>
                 <input type="text" onChange={(e) => {setCardName(e.target.value)}}/>
                 <label>Numero de la tarjeta</label>
-                <input type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
+                <input maxlength="16" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
                 <label>Fecha de expiracion</label>
-                <input type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
-                <input type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
+                <input maxlength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
+                <input maxlength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
                 <label>Código de seguridad</label>
-                <input type="text" onChange={(e) => {setCode(e.target.value)}}/>
+                <input maxlength="3" type="text" onChange={(e) => {setCode(e.target.value)}}/>
                 <button>Consultar</button>
             </form>
             <div>
                 <h4>Saldo: {balance}</h4>
                 <h5>Historial: </h5>
                 {/* !!modify: this will be transformed into a table */}
+                
                 {history && history.map((item) => (
                     <div key={item.id}>
                     <p>{item.amount}<span className="tab"></span>{item.description}<span className="tab"></span>{item.cardNumber}</p>
