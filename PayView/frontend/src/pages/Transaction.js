@@ -69,7 +69,12 @@ const Transaction = () => {
                     <label>Nombre completo</label>
                     <input type="text" onChange={(e) => {setName(e.target.value)}}/>
                     <label>Tipo de identificación</label>
-                    <input type="text" onChange={(e) => {setIdType(e.target.value)}}/>
+                    <select onChange={(e) => {setIdType(e.target.value)}}>
+                        <option value="cedula de ciudadania">Cedula de Ciudadanía</option>
+                        <option value="pasaporte">Pasaporte</option>
+                        <option value="tarjeta de identidad">Tarjeta de Identidad</option>
+                        <option value="cedula de extranjeria">Cedula de Extranjería</option>
+                    </select>
                     <label>Número de identificación</label>
                     <input type="text" onChange={(e) => {setIdNumber(e.target.value)}}/>
                     <label>Monto</label>
@@ -78,9 +83,13 @@ const Transaction = () => {
                     <input type="text" onChange={(e) => {setDescription(e.target.value)}}/>
                     <label>Sede</label>
                     <input type="text" onChange={(e) => {setLocation(e.target.value)}}/>
-                    {/* <input type="text" onChange={(e) => {setPaymentType(e.target.value)}}/> */}
+                    {/* !!update here */}
                     <label>Numero de cuotas</label>
-                    <input type="number" onChange={(e) => {setInstallments(e.target.value)}}/>
+                    <select onChange={(e) => {setInstallments(e.target.value)}}>
+                        <option value="1">1</option>
+                        <option value="6">6</option>
+                        <option value="12">12</option>
+                    </select>
                     <label>Nombre del titular</label>
                     <input type="text" onChange={(e) => {setCardName(e.target.value)}}/>
                     <label>Numero de la tarjeta</label>
