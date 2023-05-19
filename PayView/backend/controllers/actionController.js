@@ -8,7 +8,6 @@ const transactionHistory = async (req,res) => {
     const transac_history = await Transaction.find({user_id: id})
     const history = transac_history.map(item => ({ description: item.description, amount: item.amount, cardNumber: item.cardNumber }));
 
-    console.log(history)
     if (history) {
         res.status(200).json({history})
     }
@@ -50,17 +49,19 @@ const cardBalance = async (req,res) => {
 const newTransaction = async (req,res) => {
     const {cardName, cardNumber, expMonth, expYear, code} = req.body
     user_id = req.user._id
+    amount_paid = req.body.amount
 
     try {
-        // if card can be found, its valid
-        const validCard = await Card.findOne({cardName, cardNumber, expMonth, expYear, code})
+        // if card can be found, its valid. Update balance based on amount
+        const validCard = await Card.findOneAndUpdate(
+            {cardName, cardNumber, expMonth, expYear, code}, 
+            { $inc: { balance: -amount_paid } }, 
+            {new: true}
+        )
 
         if (validCard) {
             // !!modify: change ...req.body to destructured variables
             const transaction = await Transaction.create({...req.body, user_id}) // include id of user who is making transaction
-
-            // !!add: deduct transaction amount from card balance
-            // -----------
 
             res.status(200).json(transaction)
         }
