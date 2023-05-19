@@ -23,6 +23,26 @@ const Transaction = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        if (!name || !idNumber || !description || !location || !amount || !cardName || !cardNumber || !expMonth || !expYear || !code) {
+            setError("Por favor no deje campos vacios")
+            return
+        }
+        if ((idType==="cedula de ciudadania" || idType==="cedula de extranjeria") && idNumber.length !== 10) {
+            setError("Cedula invalida")
+            return
+        }
+        if (idType==="pasaporte" && idNumber.length !== 8) {
+            setError("Pasaporte invalido")
+            return
+        }
+        if (expMonth.length !== 2 || expYear.length !== 2) {
+            setError("Las fechas de la tarjeta son invalidas")
+        }
+        if (code.length !== 3) {
+            setError("El codigo ingresado es inválido")
+        }
+        // add card number validation
         
         // Group all variables the backend requires to log transaction into database
         const transaction = {
@@ -76,7 +96,7 @@ const Transaction = () => {
                         <option value="cedula de extranjeria">Cedula de Extranjería</option>
                     </select>
                     <label>Número de identificación</label>
-                    <input type="text" onChange={(e) => {setIdNumber(e.target.value)}}/>
+                    <input maxlength="10" type="text" onChange={(e) => {setIdNumber(e.target.value)}}/>
                     <label>Monto</label>
                     <input type="number" onChange={(e) => {setAmount(e.target.value)}}/>
                     <label>Descripción</label>
@@ -93,14 +113,15 @@ const Transaction = () => {
                     <label>Nombre del titular</label>
                     <input type="text" onChange={(e) => {setCardName(e.target.value)}}/>
                     <label>Numero de la tarjeta</label>
-                    <input type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
+                    <input maxlength="16" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
                     <label>Fecha de expiracion</label>
-                    <input type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
-                    <input type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
+                    <input maxlength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
+                    <input maxlength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
                     <label>Código de seguridad</label>
-                    <input type="text" onChange={(e) => {setCode(e.target.value)}}/>
+                    <input maxlength="3" type="text" onChange={(e) => {setCode(e.target.value)}}/>
                     <button>Enviar</button>
                     <p>{status}</p>
+                    <p>{error}</p>
                 </form>
             )}
             {paymentType === 'tarjeta de debito' && (
@@ -111,7 +132,7 @@ const Transaction = () => {
                         <option value="tarjeta de debito">Tarjeta de débito</option>
                     </select>
                     <br></br>
-                    <a href="https://www.pse.com.co/persona" target="_blank">Pago por PSE</a>
+                    <a href="https://www.pse.com.co/persona" target="_blank"  rel="noreferrer">Pago por PSE</a>
                 </div>
               
                 

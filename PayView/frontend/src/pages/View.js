@@ -1,12 +1,10 @@
 // !! consider turning something here into component (?)
 
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { useAuthContext } from "../hooks/useAuthContext"
 
 const View = () => {
     const { user } = useAuthContext()
-    const navigate = useNavigate()
 
     const [cardName, setCardName] = useState('')
     const [cardNumber, setCardNumber] = useState('')
@@ -16,7 +14,6 @@ const View = () => {
 
     const [balance, setBalance] = useState('000')
     const [history, setHistory] = useState('')
-    const [cardView, setCardView] = useState('')
 
     const [error, setError] = useState(null)
 
@@ -41,7 +38,7 @@ const View = () => {
         }
 
         fetchHistory()
-    }, [])
+    }, [user.token])
     
 
     const handleSubmit = async (e) => {
@@ -71,16 +68,17 @@ const View = () => {
     return ( 
         <div>
             <form onSubmit={handleSubmit}>
+                <p>{error}</p>
                 <h2>Consultar saldo</h2>
                 <label>Nombre del tarjetahabiente</label>
                 <input type="text" onChange={(e) => {setCardName(e.target.value)}}/>
                 <label>Numero de la tarjeta</label>
-                <input type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
+                <input maxlength="16" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
                 <label>Fecha de expiracion</label>
-                <input type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
-                <input type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
+                <input maxlength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
+                <input maxlength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
                 <label>Código de seguridad</label>
-                <input type="text" onChange={(e) => {setCode(e.target.value)}}/>
+                <input maxlength="3" type="text" onChange={(e) => {setCode(e.target.value)}}/>
                 <button>Consultar</button>
             </form>
             <div>
