@@ -43,6 +43,17 @@ const View = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        if (!cardName || !cardNumber || !expMonth || !expYear || !code) {
+            setError("Por favor no deje campos vacios")
+            return
+        }
+        if (expMonth.length !== 2 || expYear.length !== 2) {
+            setError("Las fechas de la tarjeta son invalidas")
+        }
+        if (code.length !== 3) {
+            setError("El codigo ingresado es inválido")
+        }
         
         const details = {
             cardName, cardNumber, expMonth, expYear, code
@@ -68,7 +79,10 @@ const View = () => {
     return ( 
         <div>
             <form onSubmit={handleSubmit}>
-                <p>{error}</p>
+                {error && 
+                <div className="error">
+                    <p>{error}</p>
+                </div>}
                 <h2>Consultar saldo</h2>
                 <label>Nombre del tarjetahabiente</label>
                 <input type="text" onChange={(e) => {setCardName(e.target.value)}}/>

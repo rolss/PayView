@@ -57,7 +57,10 @@ const Signup = () => {
                 <input type="text" onChange={(e) => {setPassword(e.target.value)}}/>
                 <button>Crear cuenta</button>
             </form>
-            <p>{error}</p>
+            {error && 
+            <div className="error">
+                <p>{error}</p>
+            </div>}
         </div>
      );
 }

@@ -5,7 +5,7 @@ const Transaction = () => {
     const { user } = useAuthContext()
 
     const [name, setName] = useState('')
-    const [idType, setIdType] = useState('')
+    const [idType, setIdType] = useState('cedula de ciudadania')
     const [idNumber, setIdNumber] = useState('')
     const [description, setDescription] = useState('')
     const [location, setLocation] = useState('')
@@ -26,21 +26,33 @@ const Transaction = () => {
 
         if (!name || !idNumber || !description || !location || !amount || !cardName || !cardNumber || !expMonth || !expYear || !code) {
             setError("Por favor no deje campos vacios")
+            setStatus('Transacción Fallida')
             return
         }
         if ((idType==="cedula de ciudadania" || idType==="cedula de extranjeria") && idNumber.length !== 10) {
             setError("Cedula invalida")
+            setStatus('Transacción Fallida')
             return
         }
         if (idType==="pasaporte" && idNumber.length !== 8) {
             setError("Pasaporte invalido")
+            setStatus('Transacción Fallida')
             return
         }
         if (expMonth.length !== 2 || expYear.length !== 2) {
             setError("Las fechas de la tarjeta son invalidas")
+            setStatus('Transacción Fallida')
+            return
         }
         if (code.length !== 3) {
             setError("El codigo ingresado es inválido")
+            setStatus('Transacción Fallida')
+            return
+        }
+        if (amount <= 0) {
+            setError("Debe ingresar un valor distinto de 0")
+            setStatus('Transacción Fallida')
+            return
         }
         // add card number validation
         
@@ -121,7 +133,9 @@ const Transaction = () => {
                     <input maxlength="3" type="text" onChange={(e) => {setCode(e.target.value)}}/>
                     <button>Enviar</button>
                     <p>{status}</p>
-                    <p>{error}</p>
+                    {error && <div className="error">
+                        <p>{error}</p>
+                    </div>}
                 </form>
             )}
             {paymentType === 'tarjeta de debito' && (
@@ -133,9 +147,10 @@ const Transaction = () => {
                     </select>
                     <br></br>
                     <a href="https://www.pse.com.co/persona" target="_blank"  rel="noreferrer">Pago por PSE</a>
+                    {error && <div className="error">
+                        <p>{error}</p>
+                    </div>}
                 </div>
-              
-                
             )}
         </div>
      );
