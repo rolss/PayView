@@ -26,3 +26,13 @@ header a {
   padding: 20px;
   margin: 0 auto;
 }
+nav a {
+  margin-right: 50px;
+}
+input, label {
+  display: block;
+}
+.tab {
+  display: inline-block;
+  margin-left: 300px;
+}
