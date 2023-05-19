@@ -51,7 +51,10 @@ const Login = () => {
                 <input type="text" onChange={(e) => {setEmail(e.target.value)}}/>
                 <input type="text" onChange={(e) => {setPassword(e.target.value)}}/>
                 <button>Ingresar</button>
-                {error && <p>El usuario no se encuentra registrado</p>}
+                {error && 
+                <div className="error">
+                    <p>{error}</p>
+                </div>}
             </form>
         </div>
      );
