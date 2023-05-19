@@ -7,6 +7,7 @@ Some dependencies are not included into the repository in order to reduce noise
 At PayView/backend, run the following commands 
 * npm install
 * npm install nodemon
+* npm install dotenv
 
 At PayView/frontend, run the following commands
 * npm install
