@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuthContext } from '../hooks/useAuthContext'
 
@@ -6,9 +6,29 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const [available, setAvailable] = useState(null)
 
     const navigate = useNavigate()
     const { dispatch } = useAuthContext()
+
+    useEffect(() => {
+        const checkAvailability = async () => {
+            try {
+                const response = await fetch('api/user/checkAvailability')
+                if (response.ok) {
+                    setAvailable(true)
+                }
+                if (!response.ok) {
+                    setAvailable(false)
+                }
+            } catch (error) {
+                setAvailable(false)
+                console.error('Error:', error.message)
+            }
+        }
+
+        checkAvailability()
+    }, [])
     
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -46,16 +66,21 @@ const Login = () => {
 
     return ( 
         <div>
-            <form onSubmit={handleSubmit}>
-                <h2>Iniciar Sesión</h2>
-                <input type="text" onChange={(e) => {setEmail(e.target.value)}}/>
-                <input type="text" onChange={(e) => {setPassword(e.target.value)}}/>
-                <button>Ingresar</button>
-                {error && 
-                <div className="error">
-                    <p>{error}</p>
-                </div>}
-            </form>
+            {available === false && (
+                <div>El servidor no se encuentra disponible</div>
+            )}
+            {available === true && (
+                <form onSubmit={handleSubmit}>
+                    <h2>Iniciar Sesión</h2>
+                    <input type="text" onChange={(e) => {setEmail(e.target.value)}}/>
+                    <input type="text" onChange={(e) => {setPassword(e.target.value)}}/>
+                    <button>Ingresar</button>
+                    {error && 
+                    <div className="error">
+                        <p>{error}</p>
+                    </div>}
+                </form>
+            )}
         </div>
      );
 }

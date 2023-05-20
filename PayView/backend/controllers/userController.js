@@ -40,6 +40,14 @@ const loginUser = async (req,res) => {
     }
 }
 
+const checkAvailability = async (req,res) => {
+    try {
+        res.status(200).json({"status": "available"})
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 // BACKEND ONLY - FOR DEMOS [!!]
 const newCard = async (req,res) => {
     try {  
@@ -56,5 +64,6 @@ const newCard = async (req,res) => {
 module.exports = {
     createUser,
     loginUser,
-    newCard
+    newCard,
+    checkAvailability
 }

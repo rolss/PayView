@@ -2,7 +2,8 @@ const express = require('express')
 const {
     transactionHistory,
     cardBalance,
-    newTransaction
+    newTransaction,
+    checkAvailability
 } = require('../controllers/actionController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -17,5 +18,8 @@ router.post('/balance', cardBalance)
 
 // POST a transaction
 router.post('/newtransaction', newTransaction)
+
+// GET server availability
+router.get('/checkAvailability', checkAvailability)
 
 module.exports = router

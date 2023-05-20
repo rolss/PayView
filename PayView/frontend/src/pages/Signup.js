@@ -1,14 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { ClipLoader } from 'react-spinners';
 
 const Signup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const [available, setAvailable] = useState(null)
 
     const navigate = useNavigate()
     const { dispatch } = useAuthContext()
+
+
+    useEffect(() => {
+        const checkAvailability = async () => {
+            try {
+                const response = await fetch('api/user/checkAvailability')
+                if (response.ok) {
+                    setAvailable(true)
+                }
+                if (!response.ok) {
+                    setAvailable(false)
+                }
+            } catch (error) {
+                setAvailable(false)
+                console.error('Error:', error.message)
+            }
+        }
+
+        checkAvailability()
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -44,23 +66,33 @@ const Signup = () => {
         }
 
         navigate.push('/view')
-
-        
-
     }
+
+    // if (loading) {
+    //     return (
+    //         <div className="loading-spinner">
+    //           <ClipLoader color="#000000" loading={loading} size={80} speedMultiplier={0.6} />
+    //         </div>
+    //     );
+    // }
 
     return ( 
         <div>
-            <form onSubmit={handleSubmit}>
-                <h2>Registro</h2>
-                <input type="text" onChange={(e) => {setEmail(e.target.value)}}/>
-                <input type="text" onChange={(e) => {setPassword(e.target.value)}}/>
-                <button>Crear cuenta</button>
-            </form>
-            {error && 
-            <div className="error">
-                <p>{error}</p>
-            </div>}
+            {available === false && (
+                <div>El servidor no se encuentra disponible</div>
+            )}
+            {available === true && (
+                <form onSubmit={handleSubmit}>
+                    <h2>Registro</h2>
+                    <input type="text" onChange={(e) => {setEmail(e.target.value)}}/>
+                    <input type="text" onChange={(e) => {setPassword(e.target.value)}}/>
+                    <button>Crear cuenta</button>
+                    {error &&
+                    <div className="error">
+                        <p>{error}</p>
+                    </div>}
+                </form>
+            )}
         </div>
      );
 }

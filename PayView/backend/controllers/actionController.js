@@ -78,8 +78,17 @@ const newTransaction = async (req,res) => {
     }
 }
 
+const checkAvailability = async (req,res) => {
+    try {
+        res.status(200).json({"status": "available"})
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 module.exports = {
     transactionHistory,
     cardBalance,
-    newTransaction
+    newTransaction,
+    checkAvailability
 }

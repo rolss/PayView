@@ -43,11 +43,16 @@ input[type="number"]::-webkit-inner-spin-button,
     margin: 0;
   }
 
-  div.error {
-    padding: 10px;
-    background: #ffefef;
-    border: 1px solid var(--error);
-    color: var(--error);
-    border-radius: 4px;
-    margin: 20px 0;
-  }
+div.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+div.loading-spinner {
+  margin-left: 50px;
+  margin-top: 50px;
+}

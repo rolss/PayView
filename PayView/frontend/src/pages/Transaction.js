@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const Transaction = () => {
@@ -20,7 +20,32 @@ const Transaction = () => {
     
     const [status, setStatus] = useState('')
     const [error, setError] = useState('')
+    const [available, setAvailable] = useState(null)
 
+    useEffect(() => {
+        const checkAvailability = async () => {
+            try {
+                const response = await fetch('api/action/checkAvailability', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                if (response.ok) {
+                    setAvailable(true)
+                }
+                if (!response.ok) {
+                    setAvailable(false)
+                }
+            } catch (error) {
+                setAvailable(false)
+                console.error('Error:', error.message)
+            }
+        }
+
+        checkAvailability()
+    }, [])
+    
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -88,68 +113,75 @@ const Transaction = () => {
 
     }
 
-
+    // !!add: to improve redability, make components
     return ( 
         <div>
-            {paymentType === 'tarjeta de credito' && (
-                <form onSubmit={handleSubmit}>
-                    <label>Tipo de pago</label>
-                    <select onChange={(e) => {setPaymentType(e.target.value)}}>
-                        <option value="tarjeta de credito">Tarjeta de crédito</option>
-                        <option value="tarjeta de debito">Tarjeta de débito</option>
-                    </select>
-                    <label>Nombre completo</label>
-                    <input type="text" onChange={(e) => {setName(e.target.value)}}/>
-                    <label>Tipo de identificación</label>
-                    <select onChange={(e) => {setIdType(e.target.value)}}>
-                        <option value="cedula de ciudadania">Cedula de Ciudadanía</option>
-                        <option value="pasaporte">Pasaporte</option>
-                        <option value="tarjeta de identidad">Tarjeta de Identidad</option>
-                        <option value="cedula de extranjeria">Cedula de Extranjería</option>
-                    </select>
-                    <label>Número de identificación</label>
-                    <input maxlength="10" type="text" onChange={(e) => {setIdNumber(e.target.value)}}/>
-                    <label>Monto</label>
-                    <input type="number" onChange={(e) => {setAmount(e.target.value)}}/>
-                    <label>Descripción</label>
-                    <input type="text" onChange={(e) => {setDescription(e.target.value)}}/>
-                    <label>Sede</label>
-                    <input type="text" onChange={(e) => {setLocation(e.target.value)}}/>
-                    {/* !!update here */}
-                    <label>Numero de cuotas</label>
-                    <select onChange={(e) => {setInstallments(e.target.value)}}>
-                        <option value="1">1</option>
-                        <option value="6">6</option>
-                        <option value="12">12</option>
-                    </select>
-                    <label>Nombre del titular</label>
-                    <input type="text" onChange={(e) => {setCardName(e.target.value)}}/>
-                    <label>Numero de la tarjeta</label>
-                    <input maxlength="16" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
-                    <label>Fecha de expiracion</label>
-                    <input maxlength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
-                    <input maxlength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
-                    <label>Código de seguridad</label>
-                    <input maxlength="3" type="text" onChange={(e) => {setCode(e.target.value)}}/>
-                    <button>Enviar</button>
-                    <p>{status}</p>
-                    {error && <div className="error">
-                        <p>{error}</p>
-                    </div>}
-                </form>
+            {available === false && (
+                <div>El servidor no se encuentra disponible</div>
             )}
-            {paymentType === 'tarjeta de debito' && (
+            {available === true && (
                 <div>
-                    <label>Tipo de pago</label>
-                    <select onChange={(e) => {setPaymentType(e.target.value)}}>
-                        <option value="tarjeta de credito">Tarjeta de crédito</option>
-                        <option value="tarjeta de debito">Tarjeta de débito</option>
-                    </select>
-                    <br></br>
-                    <a href="https://www.pse.com.co/persona" target="_blank"  rel="noreferrer">Pago por PSE</a>
-                    {error && <div className="error">
-                        <p>{error}</p>
-                    </div>}
+                    {paymentType === 'tarjeta de credito' && (
+                        <form onSubmit={handleSubmit}>
+                            <label>Tipo de pago</label>
+                            <select onChange={(e) => {setPaymentType(e.target.value)}}>
+                                <option value="tarjeta de credito">Tarjeta de crédito</option>
+                                <option value="tarjeta de debito">Tarjeta de débito</option>
+                            </select>
+                            <label>Nombre completo</label>
+                            <input type="text" onChange={(e) => {setName(e.target.value)}}/>
+                            <label>Tipo de identificación</label>
+                            <select onChange={(e) => {setIdType(e.target.value)}}>
+                                <option value="cedula de ciudadania">Cedula de Ciudadanía</option>
+                                <option value="pasaporte">Pasaporte</option>
+                                <option value="tarjeta de identidad">Tarjeta de Identidad</option>
+                                <option value="cedula de extranjeria">Cedula de Extranjería</option>
+                            </select>
+                            <label>Número de identificación</label>
+                            <input maxlength="10" type="text" onChange={(e) => {setIdNumber(e.target.value)}}/>
+                            <label>Monto</label>
+                            <input type="number" onChange={(e) => {setAmount(e.target.value)}}/>
+                            <label>Descripción</label>
+                            <input type="text" onChange={(e) => {setDescription(e.target.value)}}/>
+                            <label>Sede</label>
+                            <input type="text" onChange={(e) => {setLocation(e.target.value)}}/>
+                            {/* !!update here */}
+                            <label>Numero de cuotas</label>
+                            <select onChange={(e) => {setInstallments(e.target.value)}}>
+                                <option value="1">1</option>
+                                <option value="6">6</option>
+                                <option value="12">12</option>
+                            </select>
+                            <label>Nombre del titular</label>
+                            <input type="text" onChange={(e) => {setCardName(e.target.value)}}/>
+                            <label>Numero de la tarjeta</label>
+                            <input maxlength="16" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
+                            <label>Fecha de expiracion</label>
+                            <input maxlength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
+                            <input maxlength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
+                            <label>Código de seguridad</label>
+                            <input maxlength="3" type="text" onChange={(e) => {setCode(e.target.value)}}/>
+                            <button>Enviar</button>
+                            <p>{status}</p>
+                            {error && <div className="error">
+                                <p>{error}</p>
+                            </div>}
+                        </form>
+                    )}
+                    {paymentType === 'tarjeta de debito' && (
+                        <div>
+                            <label>Tipo de pago</label>
+                            <select onChange={(e) => {setPaymentType(e.target.value)}}>
+                                <option value="tarjeta de credito">Tarjeta de crédito</option>
+                                <option value="tarjeta de debito">Tarjeta de débito</option>
+                            </select>
+                            <br></br>
+                            <a href="https://www.pse.com.co/persona" target="_blank"  rel="noreferrer">Pago por PSE</a>
+                            {error && <div className="error">
+                                <p>{error}</p>
+                            </div>}
+                        </div>
+                    )}
                 </div>
             )}
         </div>
