@@ -8,6 +8,7 @@ import Signup from './pages/Signup'
 import View from './pages/View'
 import { useAuthContext } from './hooks/useAuthContext'
 import Transaction from './pages/Transaction'
+import NotFound from './pages/NotFound'
 
 function App() {
   const { user } = useAuthContext()
@@ -38,6 +39,7 @@ function App() {
               path="/transaction"
               element={!user ? <Login /> : <Transaction />}
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </BrowserRouter>
