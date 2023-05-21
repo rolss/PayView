@@ -1,7 +1,8 @@
 const express = require('express')
 const {
     transactionHistory,
-    cardBalance,
+    cardInformation,
+    fetchCards,
     checkAvailability
 } = require('../controllers/queryController')
 const requireAuth = require('../middleware/requireAuth')
@@ -13,7 +14,10 @@ router.use(requireAuth)
 router.get('/history', transactionHistory)
 
 // (secure GET) card information
-router.post('/balance', cardBalance)
+router.post('/cardInformation', cardInformation)
+
+// GET user cards
+router.get('/fetchCards', fetchCards)
 
 // GET server availability
 router.get('/checkAvailability', checkAvailability)

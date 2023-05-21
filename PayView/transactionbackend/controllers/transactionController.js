@@ -6,9 +6,10 @@ const newTransaction = async (req,res) => {
         description, location, amount, 
         paymentType, installments, cardName, 
         cardNumber, expMonth, expYear, code} = req.body
-    user_id = req.user._id
+    const user_id = req.user._id
+
     try {
-        // VALIDATIONS
+        // VALIDATIONS !! put them in a function to improve code readability
         if (amount <= 0) {
             res.status(400).json({error: 'Monto invalido'})
             return
@@ -39,21 +40,27 @@ const newTransaction = async (req,res) => {
         //!!add: atomicity
 
         // Update balance based on amount. First checks if card can be found (valid).
+        
         const validCard = await Card.findOneAndUpdate(
             {cardName, cardNumber, expMonth, expYear, code}, 
             { $inc: { balance: -amount } }, 
             {new: true}
-        )
+            )
+            
+            if (validCard) {
+                // if user not in card, add user to card
+                const userFound = await Card.findOne({ cardNumber, users: { $in: [user_id] } });
+                if (!userFound) {
+                    validCard.users.push(user_id)
+                    await validCard.save()
+                }
 
-        // Transaction will be created with body request and id of user
-        if (validCard) {
-            const transaction = await Transaction.create(
-                {name, idType, idNumber, 
-                description, location, amount, 
-                paymentType, installments, cardName, 
-                cardNumber, expMonth, expYear, code
-                , user_id}) // include id of user who is making transaction
-            res.status(200).json(transaction)
+                const transaction = await Transaction.create(
+                    {name, idType, idNumber, 
+                    description, location, amount, 
+                    paymentType, installments, cardNumber, 
+                    user_id}) // include id of user who is making transaction
+                res.status(200).json(transaction)
         }
         if (!validCard) {
             res.status(400).json({error: 'Esta tarjeta no es valida'})

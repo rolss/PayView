@@ -16,25 +16,37 @@ const transactionHistory = async (req,res) => {
     }
 }
 
-const cardBalance = async (req,res) => {
+const cardInformation = async (req,res) => {
     const { cardName, cardNumber, expMonth, expYear, code } = req.body
+    const user_id = req.user._id
     
     try {
         // Get card with all the information.
-        const info = await Card.findOne({
+        const card = await Card.findOne({
             cardName,
             cardNumber,
             expMonth,
             expYear,
             code
         })
+
         
-        if (info) {
-            // return only the balance on the card
-            balance = info.balance 
-            res.status(200).json({balance})
+        if (card) {
+            // Find if user is already in this card
+            const userFound = await Card.findOne({ cardNumber, users: { $in: [user_id] } });
+            // If user is not in card, add user to card
+            if (!userFound) {
+                card.users.push(user_id)
+                await card.save()
+            }
+
+            // Return balance, company and last_digits
+            balance = card.balance 
+            last_digits = cardNumber.slice(13)
+            company = card.company
+            res.status(200).json({balance, last_digits, company})
         }
-        if (!info) {
+        if (!card) {
             if (!cardName || !cardNumber || !expMonth || !expYear || !code) {
                 res.status(400).json({error: 'Hay un campo vacio!'})
             } else if (expMonth.length !== 2 || expYear.length !== 2) {
@@ -50,6 +62,24 @@ const cardBalance = async (req,res) => {
     }
 }
 
+const fetchCards = async (req,res) => {
+    const user_id = req.user._id
+    try {
+        // Get all cards which have the user
+        const userCards = await Card.find({ users: { $in: [user_id] } });
+        
+        if (userCards.length !== 0) {
+            const cards = userCards.map(item => ({ balance: item.balance, cardNumber: item.cardNumber, company: item.company }));
+            res.status(200).json({cards})
+        }
+
+        // !! come back: check for validations (no cardS)
+        
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 const checkAvailability = async (req,res) => {
     try {
         res.status(200).json({"status": "available"})
@@ -60,6 +90,7 @@ const checkAvailability = async (req,res) => {
 
 module.exports = {
     transactionHistory,
-    cardBalance,
+    cardInformation,
+    fetchCards,
     checkAvailability
 }

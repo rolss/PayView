@@ -35,26 +35,10 @@ const transactionSchema = new Schema({
         type: Number,
         required: true
     },
-    cardName: {
-        type: String,
-        required: true,
-    },
     cardNumber: {
         type: String,
         required: true,
         unique: true
-    },
-    expMonth: {
-        type: String,
-        required: true,
-    },
-    expYear: {
-        type: String,
-        required: true,
-    },
-    code: {
-        type: String,
-        required: true,
     },
     user_id: {
         type: String,

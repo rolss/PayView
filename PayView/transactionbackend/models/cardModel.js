@@ -28,6 +28,14 @@ const cardSchema = new Schema({
         type: Number,
         required: true,
     },
+    company: {
+        type: String,
+        required: true,
+    },
+    users: {
+        type: [String],
+        required: true
+    }
 }) 
 
 module.exports = mongoose.model('Card', cardSchema)

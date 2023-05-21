@@ -14,6 +14,7 @@ const View = () => {
 
     const [balance, setBalance] = useState('000')
     const [history, setHistory] = useState('')
+    const [cards, setCards] = useState('')
 
     const [error, setError] = useState(null)
     const [available, setAvailable] = useState(null)
@@ -46,6 +47,32 @@ const View = () => {
 
         fetchHistory()
     }, [user.token])
+
+    useEffect(() => {
+        // Get user history, send token stored in context
+        const fetchCards = async () => {
+            try {
+                const response = await fetch('api/query/fetchCards', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                const json = await response.json()
+                
+                if (response.ok) {
+                    setCards(json.cards)
+                }
+                if (!response.ok) {
+                    setError(json.error)
+                }
+            } catch (error) {
+                console.error('Error:', error.message)
+            }
+        }
+
+        fetchCards()
+    }, [user.token])
     
 
     const handleSubmit = async (e) => {
@@ -68,7 +95,7 @@ const View = () => {
         
         try {
             // Send card details and authorization token to receive card balance
-            const response = await fetch('/api/query/balance', {
+            const response = await fetch('/api/query/cardInformation', {
                 method: 'POST',
                 body: JSON.stringify(details),
                 headers: {
@@ -77,7 +104,7 @@ const View = () => {
                 }
             })
             const json = await response.json()
-    
+            
             if (response.ok) {
                 setBalance(json.balance)
             }
@@ -116,14 +143,45 @@ const View = () => {
                     </form>
                     <div>
                         <h4>Saldo: {balance}</h4>
+                        <h5>Tarjetas: </h5>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tarjeta</th>
+                                    <th>Empresa</th>
+                                    <th>Saldo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {cards && cards.map((item) => (
+                                <tr key={item.id}>
+                                    <td>{item.cardNumber}</td>
+                                    <td>{item.company}</td>
+                                    <td>{item.balance}</td>
+                                </tr>
+                                ))}
+                            </tbody>
+                        </table>
                         <h5>Historial: </h5>
                         {/* !!modify: this will be transformed into a table */}
-                        
-                        {history && history.map((item) => (
-                            <div key={item.id}>
-                            <p>{item.amount}<span className="tab"></span>{item.description}<span className="tab"></span>{item.cardNumber}</p>
-                        </div>
-                        ))}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Monto</th>
+                                    <th>Descripcion</th>
+                                    <th>Tarjeta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {history && history.map((item) => (
+                                    <tr key={item.id}>
+                                        <td>{item.amount}</td>
+                                        <td>{item.description}</td>
+                                        <td>{item.cardNumber}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             )}

@@ -65,7 +65,7 @@ const Transaction = () => {
             return
         }
         if (expMonth.length !== 2 || expYear.length !== 2) {
-            setError("Las fechas de la tarjeta son invalidas")
+            setError("Las fechas de la tarjeta son invalidas. Por favor use solo dos dígitos")
             setStatus('Transacción Fallida')
             return
         }
