@@ -3,7 +3,7 @@ const {
     transactionHistory,
     cardBalance,
     checkAvailability
-} = require('../controllers/actionController')
+} = require('../controllers/queryController')
 const requireAuth = require('../middleware/requireAuth')
 
 const router = express.Router()

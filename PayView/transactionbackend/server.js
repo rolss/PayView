@@ -4,7 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
-const actionRoutes = require('./routes/action')
+const actionRoutes = require('./routes/transaction')
 
 // middleware
 app.use(express.json()) 

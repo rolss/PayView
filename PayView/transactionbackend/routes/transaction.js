@@ -2,7 +2,7 @@ const express = require('express')
 const {
     newTransaction,
     checkAvailability
-} = require('../controllers/actionController')
+} = require('../controllers/transactionController')
 const requireAuth = require('../middleware/requireAuth')
 
 const router = express.Router()
