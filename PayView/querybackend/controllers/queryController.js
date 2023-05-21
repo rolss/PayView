@@ -36,7 +36,11 @@ const cardBalance = async (req,res) => {
         }
         if (!info) {
             if (!cardName || !cardNumber || !expMonth || !expYear || !code) {
-                res.status(400).json({error: 'Falta un campo!'})
+                res.status(400).json({error: 'Hay un campo vacio!'})
+            } else if (expMonth.length !== 2 || expYear.length !== 2) {
+                res.status(400).json({error: 'Fechas de la tarjeta invalidas'})
+            } else if (code.length !== 3) {
+                res.status(400).json({error: 'Código invalido'})
             } else {
                 res.status(400).json({error: 'Tarjeta invalida: la tarjeta con estas credenciales no existe'})
             }

@@ -2,26 +2,57 @@ const Transaction = require('../models/transactionModel')
 const Card = require('../models/cardModel')
 
 const newTransaction = async (req,res) => {
-    const {cardName, cardNumber, expMonth, expYear, code} = req.body
+    const {name, idType, idNumber, 
+        description, location, amount, 
+        paymentType, installments, cardName, 
+        cardNumber, expMonth, expYear, code} = req.body
     user_id = req.user._id
-    amount_paid = req.body.amount
-    console.log(req.body.idType)
     try {
-        // !!add: more validations
-        if (amount_paid <= 0) {
+        // VALIDATIONS
+        if (amount <= 0) {
             res.status(400).json({error: 'Monto invalido'})
-            return // is this okay?
+            return
         } 
+        if (!name || !idNumber || !description || !location || !amount || !cardName || !cardNumber || !expMonth || !expYear || !code) {
+            res.status(400).json({error: 'Por favor llene todos los campos'})
+            return
+        }
+        if ((idType==="cedula de ciudadania" || idType==="cedula de extranjeria") && idNumber.length !== 10) {
+            res.status(400).json({error: 'Cédula invalida'})
+            return
+        }
+        if (idType==="pasaporte" && idNumber.length !== 8) {
+            res.status(400).json({error: 'Pasaporte invalido'})
+            return
+        }
+        if (expMonth.length !== 2 || expYear.length !== 2) {
+            res.status(400).json({error: 'Las fechas de la tarjeta son invalidas. Por favor use solo dos digitos.'})
+            setError("Las fechas de la tarjeta son invalidas")
+            setStatus('Transacción Fallida')
+            return
+        }
+        if (code.length !== 3) {
+            res.status(400).json({error: 'El código ingresado es invalido, recuerde que son los 3 digitos en la parte trasera de su tarjeta.'})
+            return
+        }
 
-        // if card can be found, its valid. Update balance based on amount
+        //!!add: atomicity
+
+        // Update balance based on amount. First checks if card can be found (valid).
         const validCard = await Card.findOneAndUpdate(
             {cardName, cardNumber, expMonth, expYear, code}, 
-            { $inc: { balance: -amount_paid } }, 
+            { $inc: { balance: -amount } }, 
             {new: true}
         )
+
+        // Transaction will be created with body request and id of user
         if (validCard) {
-            // !!modify: change ...req.body to destructured variables
-            const transaction = await Transaction.create({...req.body, user_id}) // include id of user who is making transaction
+            const transaction = await Transaction.create(
+                {name, idType, idNumber, 
+                description, location, amount, 
+                paymentType, installments, cardName, 
+                cardNumber, expMonth, expYear, code
+                , user_id}) // include id of user who is making transaction
             res.status(200).json(transaction)
         }
         if (!validCard) {
