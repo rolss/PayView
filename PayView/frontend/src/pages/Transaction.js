@@ -25,7 +25,7 @@ const Transaction = () => {
     useEffect(() => {
         const checkAvailability = async () => {
             try {
-                const response = await fetch('api/action/checkAvailability', {
+                const response = await fetch('api/transaction/checkAvailability', {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${user.token}`
@@ -90,7 +90,7 @@ const Transaction = () => {
         }
 
         // Send request to backend to post transaction, using token from context
-        const response = await fetch('/api/action/newtransaction', {
+        const response = await fetch('/api/transaction/newtransaction', {
             method: 'POST',
             body: JSON.stringify(transaction),
             headers: {

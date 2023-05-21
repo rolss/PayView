@@ -23,7 +23,7 @@ const View = () => {
         // Get user history, send token stored in context
         const fetchHistory = async () => {
             try {
-                const response = await fetch('api/action/history', {
+                const response = await fetch('api/query/history', {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${user.token}`
@@ -68,7 +68,7 @@ const View = () => {
         
         try {
             // Send card details and authorization token to receive card balance
-            const response = await fetch('/api/action/balance', {
+            const response = await fetch('/api/query/balance', {
                 method: 'POST',
                 body: JSON.stringify(details),
                 headers: {

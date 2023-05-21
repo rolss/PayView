@@ -1,23 +1,29 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const { createError } = require('http-errors');
 
+module.exports = function (app) {
+  // Define an object to map endpoints to their corresponding microservices
+  const services = {
+    '/api/user': 'http://localhost:4000',
+    '/api/query': 'http://localhost:4001',
+    '/api/transaction': 'http://localhost:4002',
+  };
 
-// setupProxy locates the environment on localhost:4000, so we can omit that for every frontend fetch
-module.exports = function(app) {
-  app.use(
-    '/api',
-    createProxyMiddleware({
-      target: 'http://localhost:4000',
-      changeOrigin: true,
-      onError: (err, req, res, next) => {
-        if (err.code === 'ECONNREFUSED') {
-          // Handle the backend offline error
-          res.status(503).send('Service Unavailable');
-        } else {
-          // Handle other proxy errors
-          res.status(500).send('Internal Server Error');
-        }
-      }
-    })
-  );
+  // Loop through the services object and create a proxy middleware for each endpoint
+  Object.entries(services).forEach(([endpoint, target]) => {
+    app.use(
+      endpoint,
+      createProxyMiddleware({
+        target,
+        changeOrigin: true,
+        onError: (err, req, res, next) => {
+          if (err.code === 'ECONNREFUSED') {
+            res.status(503).send('Service Unavailable');
+          } else {
+            res.status(500).send('Internal Server Error');
+          }
+        },
+      })
+    );
+  });
 };
