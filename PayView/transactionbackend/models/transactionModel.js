@@ -37,8 +37,7 @@ const transactionSchema = new Schema({
     },
     cardNumber: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     user_id: {
         type: String,

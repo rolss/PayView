@@ -41,6 +41,7 @@ const newTransaction = async (req,res) => {
 
         // Update balance based on amount. First checks if card can be found (valid).
         
+        // !! add: validation amount <= balance
         const validCard = await Card.findOneAndUpdate(
             {cardName, cardNumber, expMonth, expYear, code}, 
             { $inc: { balance: -amount } }, 

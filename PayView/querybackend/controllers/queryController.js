@@ -6,7 +6,11 @@ const transactionHistory = async (req,res) => {
 
     // Find all transactions by user id, only keep the description, amount and card number of each one
     const transac_history = await Transaction.find({user_id: id})
-    const history = transac_history.map(item => ({ _id: item._id, description: item.description, amount: item.amount, cardNumber: item.cardNumber }));
+    const history = transac_history.map(item => ({ _id: item._id, 
+        description: item.description, 
+        amount: item.amount, 
+        cardNumber: item.cardNumber, 
+        createdAt: item.createdAt}));
 
     if (history) {
         res.status(200).json({history})
