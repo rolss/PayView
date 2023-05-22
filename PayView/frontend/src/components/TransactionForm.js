@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
+import TransactionDetails from "./TransactionDetails"
 
 const TransactionForm = () => {
     const { user } = useAuthContext()
@@ -11,15 +12,16 @@ const TransactionForm = () => {
     const [location, setLocation] = useState('')
     const [amount, setAmount] = useState(0)
     const [paymentType, setPaymentType] = useState('tarjeta de credito')
-    const [installments, setInstallments] = useState(0)
+    const [installments, setInstallments] = useState('1')
     const [cardName, setCardName] = useState('')
     const [cardNumber, setCardNumber] = useState('')
     const [expMonth, setExpMonth] = useState('')
     const [expYear, setExpYear] = useState('')
     const [code, setCode] = useState('')
 
-    const [status, setStatus] = useState('')
+    const [status, setStatus] = useState(null)
     const [error, setError] = useState('')
+    const [data, setData] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -47,14 +49,16 @@ const TransactionForm = () => {
         const json = await response.json()
 
         if (!response.ok) {
-            setStatus('Transacción Fallida')
+            setStatus(false)
             setError(json.error)
         }
         
         if (response.ok) {
-            setStatus('Transacción exitosa!')
+            setStatus(true)
             setError('')
         }
+
+        setData({...json, status})
 
     }
     
@@ -64,12 +68,12 @@ const TransactionForm = () => {
             setStatus('Transacción Fallida')
             return
         }
-        if ((idType==="cedula de ciudadania" || idType==="cedula de extranjeria") && idNumber.length !== 10) {
+        if ((idType==="Cédula de Ciudadania" || idType==="Cédula de Extranjería") && idNumber.length !== 10) {
             setError("Cedula invalida")
             setStatus('Transacción Fallida')
             return
         }
-        if (idType==="pasaporte" && idNumber.length !== 8) {
+        if (idType==="Pasaporte" && idNumber.length !== 8) {
             setError("Pasaporte invalido")
             setStatus('Transacción Fallida')
             return
@@ -91,9 +95,13 @@ const TransactionForm = () => {
         }
     }
 
+    const handleClick = () => {
+        setStatus('')
+    }
+
     return ( 
         <div>
-            {paymentType === 'tarjeta de credito' && (
+            {paymentType === 'tarjeta de credito' && !status && (
                 <form onSubmit={handleSubmit}>
                     <label>Tipo de pago</label>
                     <select onChange={(e) => {setPaymentType(e.target.value)}}>
@@ -104,10 +112,10 @@ const TransactionForm = () => {
                     <input type="text" onChange={(e) => {setName(e.target.value)}}/>
                     <label>Tipo de identificación</label>
                     <select onChange={(e) => {setIdType(e.target.value)}}>
-                        <option value="cedula de ciudadania">Cedula de Ciudadanía</option>
-                        <option value="pasaporte">Pasaporte</option>
-                        <option value="tarjeta de identidad">Tarjeta de Identidad</option>
-                        <option value="cedula de extranjeria">Cedula de Extranjería</option>
+                        <option value="Cédula de Ciudadanía">Cedula de Ciudadanía</option>
+                        <option value="Pasaporte">Pasaporte</option>
+                        <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
+                        <option value="Cédula de Extranjería">Cedula de Extranjería</option>
                     </select>
                     <label>Número de identificación</label>
                     <input maxlength="10" type="text" onChange={(e) => {setIdNumber(e.target.value)}}/>
@@ -139,6 +147,9 @@ const TransactionForm = () => {
                         <p>{error}</p>
                     </div>}
                 </form>
+            )}
+            {status && (
+                <TransactionDetails data={data} />
             )}
             {paymentType === 'tarjeta de debito' && (
                 <div>

@@ -18,11 +18,11 @@ const newTransaction = async (req,res) => {
             res.status(400).json({error: 'Por favor llene todos los campos'})
             return
         }
-        if ((idType==="cedula de ciudadania" || idType==="cedula de extranjeria") && idNumber.length !== 10) {
+        if ((idType==="Cédula de Ciudadanía" || idType==="Cédula de Extranjería") && idNumber.length !== 10) {
             res.status(400).json({error: 'Cédula invalida'})
             return
         }
-        if (idType==="pasaporte" && idNumber.length !== 8) {
+        if (idType==="Pasaporte" && idNumber.length !== 8) {
             res.status(400).json({error: 'Pasaporte invalido'})
             return
         }
@@ -56,6 +56,7 @@ const newTransaction = async (req,res) => {
                     await validCard.save()
                 }
 
+                // !! change: only send back last three digits of card
                 const transaction = await Transaction.create(
                     {name, idType, idNumber, 
                     description, location, amount, 
