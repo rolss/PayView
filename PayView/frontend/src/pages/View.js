@@ -1,7 +1,9 @@
 // !! consider turning something here into component (?)
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
+import Cards from "../components/Cards"
+import History from "../components/History"
 
 const View = () => {
     const { user } = useAuthContext()
@@ -12,7 +14,6 @@ const View = () => {
     const [expYear, setExpYear] = useState('')
     const [code, setCode] = useState('')
 
-    const [balance, setBalance] = useState('000')
     const [history, setHistory] = useState('')
     const [cards, setCards] = useState('')
 
@@ -47,6 +48,50 @@ const View = () => {
 
         fetchHistory()
     }, [user.token])
+    
+
+    const handleSubmit = useCallback(async (e) => {
+        e.preventDefault()
+
+        if (!cardName || !cardNumber || !expMonth || !expYear || !code) {
+            setError("Por favor no deje campos vacios")
+            return
+        }
+        if (expMonth.length !== 2 || expYear.length !== 2) {
+            setError("Las fechas de la tarjeta son invalidas")
+        }
+        if (code.length !== 3) {
+            setError("El codigo ingresado es inválido")
+        }
+        
+        const details = {
+            cardName, cardNumber, expMonth, expYear, code
+        }
+        
+        try {
+            // Send card details. This will automatically add the card to the user cards
+            const response = await fetch('/api/query/cardInformation', {
+                method: 'POST',
+                body: JSON.stringify(details),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const json = await response.json()
+            
+            if (response.ok) {
+                setError(null)
+                console.log(json.message)
+            }
+            if (!response.ok) {
+                setError(json.error)
+            }
+        } catch (error) {
+            setAvailable(false)
+            console.error('Error:', error.message)
+        }
+    },[cardName, cardNumber, expMonth, expYear, code, user.token])
 
     useEffect(() => {
         // Get user history, send token stored in context
@@ -72,51 +117,9 @@ const View = () => {
         }
 
         fetchCards()
-    }, [user.token])
-    
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-
-        if (!cardName || !cardNumber || !expMonth || !expYear || !code) {
-            setError("Por favor no deje campos vacios")
-            return
-        }
-        if (expMonth.length !== 2 || expYear.length !== 2) {
-            setError("Las fechas de la tarjeta son invalidas")
-        }
-        if (code.length !== 3) {
-            setError("El codigo ingresado es inválido")
-        }
-        
-        const details = {
-            cardName, cardNumber, expMonth, expYear, code
-        }
-        
-        try {
-            // Send card details and authorization token to receive card balance
-            const response = await fetch('/api/query/cardInformation', {
-                method: 'POST',
-                body: JSON.stringify(details),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const json = await response.json()
-            
-            if (response.ok) {
-                setBalance(json.balance)
-            }
-        } catch (error) {
-            setAvailable(false)
-            console.error('Error:', error.message)
-        }
-    }
-
+    }, [user.token, handleSubmit]) // Reload saved cards when a new card is consulted
 
     // !!Add: loading screen to history
-    // !!add: to improve redability, make components
     return ( 
         <div>
             {available === false && (
@@ -130,59 +133,20 @@ const View = () => {
                             <p>{error}</p>
                         </div>}
                         <h2>Consultar saldo</h2>
+                        {/* make this a component */}
                         <label>Nombre del tarjetahabiente</label>
                         <input type="text" onChange={(e) => {setCardName(e.target.value)}}/>
                         <label>Numero de la tarjeta</label>
-                        <input maxlength="16" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
+                        <input maxLength="16" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
                         <label>Fecha de expiracion</label>
-                        <input maxlength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
-                        <input maxlength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
+                        <input maxLength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
+                        <input maxLength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
                         <label>Código de seguridad</label>
-                        <input maxlength="3" type="text" onChange={(e) => {setCode(e.target.value)}}/>
+                        <input maxLength="3" type="text" onChange={(e) => {setCode(e.target.value)}}/>
                         <button>Consultar</button>
                     </form>
-                    <div>
-                        <h4>Saldo: {balance}</h4>
-                        <h5>Tarjetas: </h5>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Tarjeta</th>
-                                    <th>Empresa</th>
-                                    <th>Saldo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {cards && cards.map((item) => (
-                                <tr key={item.id}>
-                                    <td>{item.cardNumber}</td>
-                                    <td>{item.company}</td>
-                                    <td>{item.balance}</td>
-                                </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <h5>Historial: </h5>
-                        {/* !!modify: this will be transformed into a table */}
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Monto</th>
-                                    <th>Descripcion</th>
-                                    <th>Tarjeta</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {history && history.map((item) => (
-                                    <tr key={item.id}>
-                                        <td>{item.amount}</td>
-                                        <td>{item.description}</td>
-                                        <td>{item.cardNumber}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                        <Cards cards={cards} />
+                        <History history={history}/>
                 </div>
             )}
         </div>

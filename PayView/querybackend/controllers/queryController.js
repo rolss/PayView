@@ -6,7 +6,7 @@ const transactionHistory = async (req,res) => {
 
     // Find all transactions by user id, only keep the description, amount and card number of each one
     const transac_history = await Transaction.find({user_id: id})
-    const history = transac_history.map(item => ({ description: item.description, amount: item.amount, cardNumber: item.cardNumber }));
+    const history = transac_history.map(item => ({ _id: item._id, description: item.description, amount: item.amount, cardNumber: item.cardNumber }));
 
     if (history) {
         res.status(200).json({history})
@@ -38,13 +38,10 @@ const cardInformation = async (req,res) => {
             if (!userFound) {
                 card.users.push(user_id)
                 await card.save()
+                res.status(200).json({message: "Se ha vinculado a este usuario con la tarjeta!"})
+            } else {
+                res.status(200).json({message: "Este usuario ya esta vinculado con esta tarjeta"})
             }
-
-            // Return balance, company and last_digits
-            balance = card.balance 
-            last_digits = cardNumber.slice(13)
-            company = card.company
-            res.status(200).json({balance, last_digits, company})
         }
         if (!card) {
             if (!cardName || !cardNumber || !expMonth || !expYear || !code) {
@@ -69,7 +66,7 @@ const fetchCards = async (req,res) => {
         const userCards = await Card.find({ users: { $in: [user_id] } });
         
         if (userCards.length !== 0) {
-            const cards = userCards.map(item => ({ balance: item.balance, cardNumber: item.cardNumber, company: item.company }));
+            const cards = userCards.map(item => ({ _id: item._id, balance: item.balance, cardNumber: item.cardNumber, company: item.company }));
             res.status(200).json({cards})
         }
 
