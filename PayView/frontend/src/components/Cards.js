@@ -2,11 +2,10 @@ const Cards = ({cards}) => {
 
     return ( 
         <div>
-            <h5>Tarjetas: </h5>
+            <h4>Tarjetas</h4>
             <table className="cards">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Tarjeta</th>
                         <th>Empresa</th>
                         <th>Saldo</th>

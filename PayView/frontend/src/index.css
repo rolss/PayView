@@ -1,13 +1,15 @@
 /* google font importado */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+/* @import 'bootstrap/dist/css/bootstrap.css'; */
 
-body {
+body.custom {
   background: #f1f1f1;
   margin: 0;
   font-family: "Poppins";
 }
-header {
+header.customheader {
   background: #fff;
+  
 }
 header .container {
   max-width: 1400px;
@@ -17,6 +19,11 @@ header .container {
   align-items: center;
   justify-content: space-between;
 }
+
+nav a {
+  margin-right: 50px;
+}
+
 header a {
   color: #333;
   text-decoration: none;
@@ -25,9 +32,6 @@ header a {
   max-width: 1400px;
   padding: 20px;
   margin: 0 auto;
-}
-nav a {
-  margin-right: 50px;
 }
 input, label {
   display: block;
@@ -52,7 +56,31 @@ div.error {
   margin: 20px 0;
 }
 
+div.view {
+  display: flex;
+}
+
+form.viewForm {
+  flex: 1;
+}
+
+div.cards {
+  flex:1;
+  margin-left: 25%;
+}
+
 div.loading-spinner {
   margin-left: 50px;
   margin-top: 50px;
+}
+
+button.formbutton {
+  margin:20px 0px 20px 0px;
+}
+
+table {
+  border-collapse: separate;
+}
+table td {
+  padding-right:20px;
 }

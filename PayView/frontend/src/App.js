@@ -9,6 +9,7 @@ import View from './pages/View'
 import { useAuthContext } from './hooks/useAuthContext'
 import Transaction from './pages/Transaction'
 import NotFound from './pages/NotFound'
+import FullHistory from './pages/FullHistory'
 
 function App() {
   const { user } = useAuthContext()
@@ -38,6 +39,10 @@ function App() {
             <Route
               path="/transaction"
               element={!user ? <Login /> : <Transaction />}
+            />
+            <Route 
+              path="/fullhistory"
+              element={!user ? <Login /> : <FullHistory />}
             />
             <Route path="*" element={<NotFound />} />
           </Routes>

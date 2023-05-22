@@ -1,10 +1,53 @@
 import format from 'date-fns/format'
+import { useAuthContext } from '../hooks/useAuthContext'
+import { useEffect, useState } from 'react'
 
-const History = ({history}) => {
+const History = ({initial}) => {
     
+    const { user } = useAuthContext()
+    const [history, setHistory] = useState('')
+    const [error, setError] = useState(null)
+    
+    // Fetch history only once when View page loads
+    useEffect(() => {
+        // Get user history, send token stored in context
+        const fetchHistory = async () => {
+            try {
+                const response = await fetch('api/query/history', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                const json = await response.json()
+                
+                if (response.ok) {
+                    if (initial) {
+                        setHistory(json.history.slice(-3))
+                    } else {
+                        setHistory(json.history)
+                    }
+                    // setAvailable(true)
+                }
+                if (!response.ok) {
+                    setError(json.error)
+                }
+            } catch (error) {
+                // setAvailable(false)
+                console.error('Error:', error.message)
+            }
+        }
+
+        fetchHistory()
+    }, [user.token, history, initial])
+
     return ( 
         <div>
-            <h5>Historial: </h5>
+            <h4>Historial</h4>
+            {error && 
+            <div className="error">
+                <p>{error}</p>
+            </div>}
             <table className="history">
                 <thead>
                     <tr>
@@ -16,7 +59,7 @@ const History = ({history}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {history && history.slice(-3).map((item) => (
+                    {history && history.map((item) => (
                         <tr key={item._id}>
                         <td>{item.amount}</td>
                         <td>{item.description}</td>

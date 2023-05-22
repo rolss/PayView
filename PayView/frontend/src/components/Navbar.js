@@ -14,7 +14,7 @@ const Navbar = () => {
     }
     
     return (
-        <header>
+        <header className="customheader">
             <div className="container">
                 <Link to="/">
                     <h1>PayView</h1>
