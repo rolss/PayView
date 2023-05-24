@@ -21,7 +21,7 @@ const History = ({user, initial}) => {
                 
                 if (response.ok) {
                     if (initial) {
-                        setHistory(json.history.slice(-3))
+                        setHistory(json.history.slice(0,3))
                     } else {
                         setHistory(json.history)
                     }
@@ -68,7 +68,7 @@ const History = ({user, initial}) => {
                     ))}
                 </tbody>
             </table>
-            <a href="/fullhistory">Ver mas</a>
+            {history.length >= 3 && initial && <a href="/fullhistory">Ver mas</a>}
         </div>
      );
 }

@@ -11,7 +11,7 @@ const newTransaction = async (req,res) => {
     try {
         // VALIDATIONS !! put them in a function to improve code readability
         if (amount <= 0) {
-            res.status(400).json({error: 'Monto invalido'})
+            res.status(400).json({error: 'Debe ingresar un monto distinto de 0'})
             return
         } 
         if (!name || !idNumber || !description || !location || !amount || !cardName || !cardNumber || !expMonth || !expYear || !code) {
@@ -23,7 +23,7 @@ const newTransaction = async (req,res) => {
             return
         }
         if (idType==="Pasaporte" && idNumber.length !== 8) {
-            res.status(400).json({error: 'Pasaporte invalido'})
+            res.status(400).json({error: 'Pasaporte inválido'})
             return
         }
         if (expMonth.length !== 2 || expYear.length !== 2) {
@@ -33,36 +33,49 @@ const newTransaction = async (req,res) => {
             return
         }
         if (code.length !== 3) {
-            res.status(400).json({error: 'El código ingresado es invalido, recuerde que son los 3 digitos en la parte trasera de su tarjeta.'})
+            res.status(400).json({error: 'El código ingresado es invalido'})
             return
         }
 
         //!!add: atomicity
 
-        // Update balance based on amount. First checks if card can be found (valid).
         
-        // !! add: validation amount <= balance
-        const validCard = await Card.findOneAndUpdate(
-            {cardName, cardNumber, expMonth, expYear, code}, 
-            { $inc: { balance: -amount } }, 
-            {new: true}
-            )
-            
-            if (validCard) {
-                // if user not in card, add user to card
-                const userFound = await Card.findOne({ cardNumber, users: { $in: [user_id] } });
-                if (!userFound) {
-                    validCard.users.push(user_id)
-                    await validCard.save()
-                }
 
-                // !! change: only send back last three digits of card
-                const transaction = await Transaction.create(
-                    {name, idType, idNumber, 
-                    description, location, amount, 
-                    paymentType, installments, cardNumber, 
-                    user_id}) // include id of user who is making transaction
-                res.status(200).json(transaction)
+        
+        const validCard = await Card.findOne(
+            {cardName, cardNumber, expMonth, expYear, code}
+        )
+        
+        if (validCard) {
+
+            // Dont continue if there isn't enough money in the card, for the amount stated
+            if (amount > validCard.balance){
+                res.status(400).json({error: 'La tarjeta no tiene suficiente saldo para realizar esta transacción'})
+                return
+            }
+
+            // Update balance
+            await Card.findOneAndUpdate(
+                {cardName, cardNumber, expMonth, expYear, code}, 
+                { $inc: { balance: -amount } }, 
+                {new: true}
+                )
+
+            // if user not in card, add user to card
+            const userFound = await Card.findOne({ cardNumber, users: { $in: [user_id] } });
+            if (!userFound) {
+                validCard.users.push(user_id)
+                await validCard.save()
+            }
+
+            const sliced_number = cardNumber.slice(-4)
+            // !! change: only send back last three digits of card
+            const transaction = await Transaction.create(
+                {name, idType, idNumber, 
+                description, location, amount, 
+                paymentType, installments, cardNumber: sliced_number, 
+                user_id}) // include id of user who is making transaction
+            res.status(200).json(transaction)
         }
         if (!validCard) {
             res.status(400).json({error: 'Esta tarjeta no es valida'})

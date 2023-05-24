@@ -14,13 +14,13 @@ router.use(requireAuth)
 // GET transaction history Returns amount, description, last 3 digits of card (per transaction)
 router.get('/history', transactionHistory)
 
-// (secure GET) card information
+// (secure GET) get card information, link card to user
 router.post('/cardInformation', cardInformation)
 
 // GET user cards
 router.get('/fetchCards', fetchCards)
 
-// POST delete card
+// POST unlink card from user
 router.post('/deleteCard', deleteCard)
 
 // GET server availability

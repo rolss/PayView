@@ -6,7 +6,7 @@ const TransactionForm = () => {
     const { user } = useAuthContext()
 
     const [name, setName] = useState('')
-    const [idType, setIdType] = useState('cedula de ciudadania')
+    const [idType, setIdType] = useState('Cédula de Ciudadanía')
     const [idNumber, setIdNumber] = useState('')
     const [description, setDescription] = useState('')
     const [location, setLocation] = useState('')
@@ -26,7 +26,9 @@ const TransactionForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        validations()
+        if (!validate()) {
+            return
+        }
         
         // Group all variables the backend requires to log transaction into database
         const transaction = {
@@ -62,41 +64,39 @@ const TransactionForm = () => {
 
     }
     
-    const validations = () => {
+    const validate = () => {
         if (!name || !idNumber || !description || !location || !amount || !cardName || !cardNumber || !expMonth || !expYear || !code) {
-            setError("Por favor no deje campos vacios")
-            setStatus('Transacción Fallida')
-            return
+            setError("Por favor llene todos los campos")
+            setStatus(false)
+            return false
         }
-        if ((idType==="Cédula de Ciudadania" || idType==="Cédula de Extranjería") && idNumber.length !== 10) {
-            setError("Cedula invalida")
-            setStatus('Transacción Fallida')
-            return
+        if ((idType==="Cédula de Ciudadanía" || idType==="Cédula de Extranjería") && idNumber.length !== 10) {
+            setError("Cédula invalida")
+            setStatus(false)
+            return false
         }
         if (idType==="Pasaporte" && idNumber.length !== 8) {
-            setError("Pasaporte invalido")
-            setStatus('Transacción Fallida')
-            return
+            setError("Pasaporte inválido")
+            setStatus(false)
+            return false
         }
         if (expMonth.length !== 2 || expYear.length !== 2) {
             setError("Las fechas de la tarjeta son invalidas. Por favor use solo dos dígitos")
-            setStatus('Transacción Fallida')
-            return
+            setStatus(false)
+            return false
         }
         if (code.length !== 3) {
             setError("El codigo ingresado es inválido")
-            setStatus('Transacción Fallida')
-            return
+            setStatus(false)
+            return false
         }
         if (amount <= 0) {
-            setError("Debe ingresar un valor distinto de 0")
-            setStatus('Transacción Fallida')
-            return
+            setError("Debe ingresar un monto distinto de 0")
+            setStatus(false)
+            return false
         }
-    }
 
-    const handleClick = () => {
-        setStatus('')
+        return true
     }
 
     return ( 
@@ -112,7 +112,7 @@ const TransactionForm = () => {
                     <input type="text" onChange={(e) => {setName(e.target.value)}}/>
                     <label>Tipo de identificación</label>
                     <select onChange={(e) => {setIdType(e.target.value)}}>
-                        <option value="Cédula de Ciudadanía">Cedula de Ciudadanía</option>
+                        <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
                         <option value="Pasaporte">Pasaporte</option>
                         <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
                         <option value="Cédula de Extranjería">Cedula de Extranjería</option>

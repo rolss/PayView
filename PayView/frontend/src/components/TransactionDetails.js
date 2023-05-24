@@ -12,6 +12,7 @@ const TransactionDetails = ({ data }) => {
                 <p>Sede: {data.location}</p>
                 <p>Monto: {data.amount} {data.cardNumber}</p>
                 <p>Cuotas: {data.installments}</p>
+                <p>Estado: {data.status ? <p>Aprobado</p> : <p>No Aprobado</p>}</p>
                 <a href="/transaction">Realizar nueva transacción</a>
                 <a href="/view">Pagina de consultas</a>
             </div>

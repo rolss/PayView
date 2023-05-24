@@ -20,7 +20,7 @@ const getUserCards = async (user_id) => {
 const transactionHistory = async (req,res) => {
     const id = req.user._id // this id was added on our own middleware
     // Find all transactions by user id, only keep the description, amount and card number of each one
-    const transac_history = await Transaction.find({user_id: id})
+    const transac_history = await Transaction.find({user_id: id}).sort({ createdAt: 'descending'})
     const history = transac_history.map(item => ({ _id: item._id, 
         description: item.description, 
         amount: item.amount, 
@@ -69,11 +69,11 @@ const cardInformation = async (req,res) => {
         }
         if (!card) {
             if (!cardName || !cardNumber || !expMonth || !expYear || !code) {
-                res.status(400).json({error: 'Hay un campo vacio!'})
+                res.status(400).json({error: 'Por favor no deje campos vacios'})
             } else if (expMonth.length !== 2 || expYear.length !== 2) {
-                res.status(400).json({error: 'Fechas de la tarjeta invalidas'})
+                res.status(400).json({error: 'Las fechas de la tarjeta son invalidas'})
             } else if (code.length !== 3) {
-                res.status(400).json({error: 'Código invalido'})
+                res.status(400).json({error: 'El codigo ingresado es inválido'})
             } else {
                 res.status(400).json({error: 'Tarjeta invalida: la tarjeta con estas credenciales no existe'})
             }
