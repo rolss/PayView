@@ -1,4 +1,4 @@
-# PayView
+# PayView [NOT FINISHED]
 Model webpage for transaction services using the MERN Stack (MongoDB, Express.js, React and Node.js). 
 
 ## Install dependencies ✅
