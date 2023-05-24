@@ -1,9 +1,24 @@
 const Transaction = require('../models/transactionModel')
 const Card = require('../models/cardModel')
 
+// Helper functions
+
+
+// Finds all cards linked to the user that is performing the request
+// returns the list of cards, empty string if no cards
+const getUserCards = async (user_id) => {
+    const userCards = await Card.find({ users: { $in: [user_id] } });
+                
+    if (userCards.length !== 0) {
+        const cards = userCards.map(item => ({ _id: item._id, balance: item.balance, cardNumber: item.cardNumber.slice(-4), company: item.company }));
+        return {cards}
+    } else if (userCards.length === 0) {
+        return {cards: ''}
+    }
+}
+
 const transactionHistory = async (req,res) => {
     const id = req.user._id // this id was added on our own middleware
-
     // Find all transactions by user id, only keep the description, amount and card number of each one
     const transac_history = await Transaction.find({user_id: id})
     const history = transac_history.map(item => ({ _id: item._id, 
@@ -20,6 +35,8 @@ const transactionHistory = async (req,res) => {
     }
 }
 
+// links card to user who performed request
+// returns information of the card
 const cardInformation = async (req,res) => {
     const { cardName, cardNumber, expMonth, expYear, code } = req.body
     const user_id = req.user._id
@@ -42,9 +59,12 @@ const cardInformation = async (req,res) => {
             if (!userFound) {
                 card.users.push(user_id)
                 await card.save()
-                res.status(200).json({message: "Se ha vinculado a este usuario con la tarjeta!"})
+                
+                // Return all user cards updated
+                const updatedCards = await getUserCards(user_id);
+                res.status(200).json(updatedCards);
             } else {
-                res.status(200).json({message: "Este usuario ya esta vinculado con esta tarjeta"})
+                res.status(400).json({error: "Este usuario ya esta vinculado con esta tarjeta"})
             }
         }
         if (!card) {
@@ -63,22 +83,36 @@ const cardInformation = async (req,res) => {
     }
 }
 
-const fetchCards = async (req,res) => {
+const deleteCard = async (req,res) =>{
     const user_id = req.user._id
+    const { cardId } = req.body
+
     try {
         // Get all cards which have the user
-        const userCards = await Card.find({ users: { $in: [user_id] } });
-        
-        if (userCards.length !== 0) {
-            const cards = userCards.map(item => ({ _id: item._id, balance: item.balance, cardNumber: item.cardNumber, company: item.company }));
-            res.status(200).json({cards})
-        }
+        const card = await Card.findOne({ _id: cardId, users: { $in: [user_id] } });
+        if (card) {
+            // remove user from the list of users within that card
+            await Card.updateOne({ _id: cardId }, { $pull: { users: user_id } });
 
-        // !! come back: check for validations (no cardS)
+            // Return all user cards updated
+            const updatedCards = await getUserCards(user_id);
+            res.status(200).json(updatedCards);
+        }
+        if (!card) {
+            res.status(400).json({error: "Este usuario no está vinculado a esta tarjeta"})
+        }
         
     } catch (error) {
         res.status(400).json({error: error.message})
     }
+}
+
+const fetchCards = async (req,res) => {
+    const user_id = req.user._id
+
+    // Return all user cards updated
+    const updatedCards = await getUserCards(user_id);
+    res.status(200).json(updatedCards);
 }
 
 const checkAvailability = async (req,res) => {
@@ -93,5 +127,6 @@ module.exports = {
     transactionHistory,
     cardInformation,
     fetchCards,
+    deleteCard,
     checkAvailability
 }

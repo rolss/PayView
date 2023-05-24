@@ -3,6 +3,7 @@ const {
     transactionHistory,
     cardInformation,
     fetchCards,
+    deleteCard,
     checkAvailability
 } = require('../controllers/queryController')
 const requireAuth = require('../middleware/requireAuth')
@@ -18,6 +19,9 @@ router.post('/cardInformation', cardInformation)
 
 // GET user cards
 router.get('/fetchCards', fetchCards)
+
+// POST delete card
+router.post('/deleteCard', deleteCard)
 
 // GET server availability
 router.get('/checkAvailability', checkAvailability)

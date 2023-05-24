@@ -4,7 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
-const actionRoutes = require('./routes/query')
+const queryRoutes = require('./routes/query')
 
 // middleware
 app.use(express.json()) 
@@ -14,7 +14,7 @@ app.use((req,res,next) => {
 })
 
 // routes
-app.use('/api/query', actionRoutes)
+app.use('/api/query', queryRoutes)
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)

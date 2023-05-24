@@ -1,10 +1,8 @@
 import format from 'date-fns/format'
-import { useAuthContext } from '../hooks/useAuthContext'
 import { useEffect, useState } from 'react'
 
-const History = ({initial}) => {
+const History = ({user, initial}) => {
     
-    const { user } = useAuthContext()
     const [history, setHistory] = useState('')
     const [error, setError] = useState(null)
     
@@ -39,10 +37,10 @@ const History = ({initial}) => {
         }
 
         fetchHistory()
-    }, [user.token, history, initial])
+    }, [user.token, initial])
 
     return ( 
-        <div>
+        <div className='history'>
             <h4>Historial</h4>
             {error && 
             <div className="error">
