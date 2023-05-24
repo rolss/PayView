@@ -11,6 +11,12 @@ import Transaction from './pages/Transaction'
 import NotFound from './pages/NotFound'
 import FullHistory from './pages/FullHistory'
 
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Banner from './components/Banner';
+import Info from './components/Info';
+import Footer from './components/Footer';
+
 function App() {
   const { user } = useAuthContext()
 
@@ -22,7 +28,12 @@ function App() {
           <Routes>
             <Route 
               path="/"
-              element={<Home />}
+              element={
+              <div>
+                <Banner /> 
+                <Info /> 
+                <Footer />
+              </div>}
             />
             <Route 
               path="/login"
