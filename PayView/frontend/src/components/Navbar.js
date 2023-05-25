@@ -2,8 +2,10 @@
 import { Link } from 'react-router-dom'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useLogout } from '../hooks/useLogout'
+import { useLocation } from 'react-router-dom';
 
 import { useState, useEffect } from "react";
+import Help from './Help';
 // import { Navbar, Container, Nav } from "react-bootstrap";
 // import logo from "../assets/img/logo.jpeg";
 
@@ -11,9 +13,11 @@ const NavBar = () => {
     // global user state from AuthContext and logout function from useLogout hook
     const { user } = useAuthContext()
     const { logout } = useLogout()
+    // const location = useLocation()
 
     const [activeLink, setActiveLink] = useState("home");
     const [scrolled, seScrolled] = useState(false);
+    // const [where, setWhere] = useState('')
 
     const handleClick = () => {
         logout()
@@ -37,53 +41,13 @@ const NavBar = () => {
         setActiveLink(value);
       };
 
-    //   return (
-    //     <Navbar expand="lg" className={scrolled ? "scrolled" : ""}>
-    //         <Container>
-    //           <Navbar.Brand href="#home">
-    //             <div className="logo-image">
-    //               <img src={logo} alt="Logo" height="100" />
-    //             </div>
-    //           </Navbar.Brand>
-    //           <Navbar.Toggle aria-controls="basic-navbar-nav">
-    //             <span className="navbar-toggler-icon"></span>
-    //           </Navbar.Toggle>
-    //           <Navbar.Collapse id="basic-navbar-nav" class="topnav-right">
-    //             <Nav className="me-auto">
-    //               {/* <Nav.Link href="#home" className={activeLink === 'home' ? 'active navbar-link': 'navbar-link'} onClick={()=> onUpdateActiveLink('home')}>Home</Nav.Link> */}
-    //               <Nav.Link
-    //                 href="#info"
-    //                 className={
-    //                   activeLink === "info" ? "active navbar-link" : "navbar-link"
-    //                 }
-    //                 onClick={() => onUpdateActiveLink("info")}
-    //               >
-    //                 ¿Quiénes somos?
-    //               </Nav.Link>
-    //               <Nav.Link
-    //                 href="/view"
-    //                 className={
-    //                   activeLink === "info" ? "active navbar-link" : "navbar-link"
-    //                 }
-    //                 onClick={() => onUpdateActiveLink("view")}
-    //               >
-    //                 Consultar
-    //               </Nav.Link>
-    //               {user && <div>
-    //                      <span>{user.email}</span>
-    //                      <Link to="/view">Consultar</Link>
-    //                      <Link to="/transaction">Realizar</Link>
-    //                      <button onClick={handleClick}>Cerrar sesión</button>
-    //                  </div>}
-    //               {!user && <div>
-    //                      <Link to="/login">Iniciar Sesión</Link>
-    //                      <Link to="/signup">Registrarse</Link>
-    //                  </div>}
-    //             </Nav>
-    //           </Navbar.Collapse>
-    //         </Container>
-    //     </Navbar>
-    //   );
+      // if (location.pathname === '/view') {
+      //   setWhere('view')
+      // } else if (location.pathname === '/transaction') {
+      //   setWhere('transaction')
+      // } else if (location.pathname === '/login' || location.pathname === '/signup') {
+      //   setWhere('register')
+      // }
     
     return (
         <header className="customheader">
@@ -93,12 +57,14 @@ const NavBar = () => {
                 </Link>
                 <nav>
                     {user && <div>
-                        <span>{user.email}</span>
+                        {/* <span>{user.email}</span> */}
+                        <Help />
                         <Link className='btn btn-dark' to="/view">Consultar</Link>
                         <Link className='btn btn-dark' to="/transaction">Pagar</Link>
                         <button className='btn btn-outline-danger' onClick={handleClick}>Cerrar sesión</button>
                     </div>}
                     {!user && <div>
+                        <Help />
                         <Link to="/login">Iniciar Sesión</Link>
                         <Link to="/signup">Registrarse</Link>
                     </div>}

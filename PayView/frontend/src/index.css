@@ -428,3 +428,11 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   text-align: center;
   align-items: center;
 }
+
+.transactiondetails p {
+  font-size: 20px;
+}
+
+.modaltext {
+  color: black;
+}

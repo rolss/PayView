@@ -192,9 +192,6 @@ const TransactionForm = () => {
                     </select>
                     <br></br>
                     <a className="btn btn-warning" href="https://www.pse.com.co/persona" target="_blank"  rel="noreferrer">Pago por PSE</a>
-                    {error && <div className="error">
-                        <p>{error}</p>
-                    </div>}
                 </div>
             )}
         </div>
