@@ -109,7 +109,7 @@ const TransactionForm = () => {
                             <label>Nombre completo</label>
                             <input className="form-control" type="text" onChange={(e) => {setName(e.target.value)}}/>
                             <label>Tipo de identificación</label>
-                            <select className="form-control" onChange={(e) => {setIdType(e.target.value)}}>
+                            <select className="form-select" onChange={(e) => {setIdType(e.target.value)}}>
                                 <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
                                 <option value="Pasaporte">Pasaporte</option>
                                 <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
@@ -129,12 +129,12 @@ const TransactionForm = () => {
                             <label>Monto</label>
                             <input className="form-control" type="number" onChange={(e) => {setAmount(e.target.value)}}/>
                             <label>Medio de pago</label>
-                            <select className="form-control" onChange={(e) => {setPaymentType(e.target.value)}}>
+                            <select className="form-select" onChange={(e) => {setPaymentType(e.target.value)}}>
                                 <option value="tarjeta de credito">Tarjeta de crédito</option>
                                 <option value="tarjeta de debito">Tarjeta de débito</option>
                             </select>
                             <label>Numero de cuotas</label>
-                            <select className="form-control" onChange={(e) => {setInstallments(e.target.value)}}>
+                            <select className="form-select" onChange={(e) => {setInstallments(e.target.value)}}>
                                 <option value="1">1</option>
                                 <option value="6">6</option>
                                 <option value="12">12</option>
@@ -170,13 +170,14 @@ const TransactionForm = () => {
             )}
             {paymentType === 'tarjeta de debito' && (
                 <div>
-                    <label>Tipo de pago</label>
-                    <select onChange={(e) => {setPaymentType(e.target.value)}}>
-                        <option value="tarjeta de credito">Tarjeta de crédito</option>
+                    <h3>Nueva Transacción</h3>
+                    <label className="mt-3">Tipo de pago</label>
+                    <select className="form-select w-25 mx-auto" onChange={(e) => {setPaymentType(e.target.value)}}>
                         <option value="tarjeta de debito">Tarjeta de débito</option>
+                        <option value="tarjeta de credito">Tarjeta de crédito</option>
                     </select>
                     <br></br>
-                    <a href="https://www.pse.com.co/persona" target="_blank"  rel="noreferrer">Pago por PSE</a>
+                    <a className="btn btn-warning" href="https://www.pse.com.co/persona" target="_blank"  rel="noreferrer">Pago por PSE</a>
                     {error && <div className="error">
                         <p>{error}</p>
                     </div>}
