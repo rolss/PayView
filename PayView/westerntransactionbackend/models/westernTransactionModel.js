@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const transactionSchema = new Schema({
+const westernTransactionSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -35,10 +35,14 @@ const transactionSchema = new Schema({
         type: String,
         required: true
     },
+    bank: {
+        type: String,
+        required: true
+    },
     user_id: {
         type: String,
         required: true
     }
 }, {timestamps: true}) 
 
-module.exports = mongoose.model('Transaction', transactionSchema)
+module.exports = mongoose.model('WesternTransaction', westernTransactionSchema)

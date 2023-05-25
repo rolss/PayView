@@ -4,7 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
-const queryRoutes = require('./routes/query')
+const actionRoutes = require('./routes/transaction')
 
 // middleware
 app.use(express.json()) 
@@ -14,13 +14,13 @@ app.use((req,res,next) => {
 })
 
 // routes
-app.use('/api/query', queryRoutes)
+app.use('/api/western/transaction', actionRoutes)
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         app.listen(process.env.PORT, () => {
-            console.log('listening on port 4001')
+            console.log('listening on port 4004')
         })
     })
     .catch((error) => {

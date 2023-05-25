@@ -2,48 +2,47 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const cardSchema = new Schema({
-    cardName: {
+const eastTransactionSchema = new Schema({
+    name: {
         type: String,
         required: true,
+    },
+    idType: {
+        type: String,
+        required: true,
+    },
+    idNumber: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    location: {
+        type: String,
+        required: true
+    },
+    amount: {
+        type: Number,
+        required: true
+    },
+    installments: {
+        type: Number,
+        required: true
     },
     cardNumber: {
         type: String,
         required: true,
-        unique: true
     },
-    expMonth: {
-        type: String,
-        required: true,
-    },
-    expYear: {
-        type: String,
-        required: true,
-    },
-    code: {
-        type: String,
-        required: true,
-    },
-    balance: {
-        type: Number,
-        required: true,
-    },
-    company: {
-        type: String,
-        required: true,
-    },
-    type: {
+    bank: {
         type: String,
         required: true
     },
-    active: {
-        type: Boolean,
-        required: true
-    },
-    users: {
-        type: [String],
+    user_id: {
+        type: String,
         required: true
     }
-}) 
+}, {timestamps: true}) 
 
-module.exports = mongoose.model('Card', cardSchema)
+module.exports = mongoose.model('EastTransaction', eastTransactionSchema)

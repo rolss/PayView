@@ -1,5 +1,5 @@
-const Transaction = require('../models/transactionModel')
-const Card = require('../models/cardModel')
+const Transaction = require('../models/westernTransactionModel')
+const Card = require('../models/westernCardModel')
 
 // Helper functions
 
@@ -10,7 +10,7 @@ const getUserCards = async (user_id) => {
     const userCards = await Card.find({ users: { $in: [user_id] } });
                 
     if (userCards.length !== 0) {
-        const cards = userCards.map(item => ({ _id: item._id, balance: item.balance, cardNumber: item.cardNumber.slice(-4), company: item.company }));
+        const cards = userCards.map(item => ({ _id: item._id, balance: item.balance, cardNumber: item.cardNumber.slice(-4), company: item.company, bank: item.bank }));
         return {cards}
     } else if (userCards.length === 0) {
         return {cards: ''}
@@ -27,6 +27,7 @@ const transactionHistory = async (req,res) => {
         description: item.description, 
         amount: item.amount, 
         cardNumber: item.cardNumber, 
+        bank: item.bank,
         createdAt: item.createdAt}));
 
     if (history) {

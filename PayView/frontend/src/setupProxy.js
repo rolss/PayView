@@ -5,8 +5,10 @@ module.exports = function (app) {
   // Define an object to map endpoints to their corresponding microservices
   const services = {
     '/api/user': 'http://localhost:4000',
-    '/api/query': 'http://localhost:4001',
-    '/api/transaction': 'http://localhost:4002',
+    '/api/east/query': 'http://localhost:4001',
+    '/api/east/transaction': 'http://localhost:4002',
+    '/api/western/query': 'http://localhost:4003',
+    '/api/western/transaction': 'http://localhost:4004',
   };
 
   // Loop through the services object and create a proxy middleware for each endpoint

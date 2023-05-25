@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const cardSchema = new Schema({
+const westernCardSchema = new Schema({
     cardName: {
         type: String,
         required: true,
@@ -40,10 +40,14 @@ const cardSchema = new Schema({
         type: Boolean,
         required: true
     },
+    bank: {
+        type: String,
+        required: true
+    },
     users: {
         type: [String],
         required: true
     }
 }) 
 
-module.exports = mongoose.model('Card', cardSchema)
+module.exports = mongoose.model('WesternCard', westernCardSchema)

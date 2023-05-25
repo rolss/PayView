@@ -1,5 +1,5 @@
-const Transaction = require('../models/transactionModel')
-const Card = require('../models/cardModel')
+const Transaction = require('../models/westernTransactionModel')
+const Card = require('../models/westernCardModel')
 
 const newTransaction = async (req,res) => {
     const {name, idType, idNumber, 
@@ -85,7 +85,7 @@ const newTransaction = async (req,res) => {
                 {name, idType, idNumber, 
                 description, location, amount,
                 installments, cardNumber: sliced_number, 
-                user_id}) // include id of user who is making transaction
+                bank:"Western Bank", user_id}) // include id of user who is making transaction
             res.status(200).json(transaction)
         }
         if (!validCard) {
@@ -95,6 +95,31 @@ const newTransaction = async (req,res) => {
     } catch (error) {
         res.status(400).json({error: error.message})
     }
+}
+
+// BACKEND ONLY - FOR DEMOS [!!]
+const newCard = async (req,res) => {
+    const {cardName, cardNumber, expMonth, expYear, code, balance, active, type} = req.body
+    try {
+        // Use regular expressions to find what type of card it is
+        // Example: Master card: starts 5, followed by 1-5, followed by 14 digits. Total 16 digits
+        let company = "Unknown"
+        if (/^5[1-5]\d{14}$/.test(cardNumber)) {
+            company = "MasterCard"
+        } else if (/^4\d{12}(?:\d{3})?$/.test(cardNumber)) {
+            company = "Visa"
+        } else if (/^3[47]\d{13}$/.test(cardNumber)) {
+            company = "American Express"
+        }
+
+        // Create a card using request body + found company + an empty users list
+        const card = await Card.create({cardName, cardNumber, expMonth, expYear, code, balance, company, type, active, bank: "Western Bank", users: []})
+        res.status(200).json(card)
+        
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
 }
 
 const checkAvailability = async (req,res) => {
@@ -107,5 +132,6 @@ const checkAvailability = async (req,res) => {
 
 module.exports = {
     newTransaction,
+    newCard,
     checkAvailability
 }

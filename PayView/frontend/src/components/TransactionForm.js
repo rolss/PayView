@@ -18,6 +18,7 @@ const TransactionForm = () => {
     const [expMonth, setExpMonth] = useState('')
     const [expYear, setExpYear] = useState('')
     const [code, setCode] = useState('')
+    const [bank, setBank] = useState('Western Bank')
 
     const [status, setStatus] = useState(false)
     const [error, setError] = useState('')
@@ -38,8 +39,15 @@ const TransactionForm = () => {
             cardNumber, expMonth, expYear, code
         }
 
+        var bank_to_fetch=""
+        if (bank === "Western Bank") {
+            bank_to_fetch = "western"
+        } else {
+            bank_to_fetch = "east"
+        }
+
         // Send request to backend to post transaction, using token from context
-        const response = await fetch('/api/transaction/newtransaction', {
+        const response = await fetch('/api/' + bank_to_fetch + '/transaction/newtransaction', {
             method: 'POST',
             body: JSON.stringify(transaction),
             headers: {
@@ -127,6 +135,11 @@ const TransactionForm = () => {
                         </div>
                         <div className="col-md-4 transactionform">
                             <h4 className="mt-5">Datos de la Transacción</h4>
+                            <label>Banco</label>
+                            <select className="form-select" onChange={(e) => {setBank(e.target.value)}}>
+                                <option value="Western Bank">Western Bank</option>
+                                <option value="East Bank">East Bank</option>
+                            </select>
                             <label>Monto</label>
                             <input className="form-control" type="number" onChange={(e) => {setAmount(e.target.value)}}/>
                             <label>Medio de pago</label>
