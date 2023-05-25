@@ -27,10 +27,6 @@ const transactionSchema = new Schema({
         type: Number,
         required: true
     },
-    paymentType: {
-        type: String,
-        required: true
-    },
     installments: {
         type: Number,
         required: true

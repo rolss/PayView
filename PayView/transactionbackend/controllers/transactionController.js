@@ -3,8 +3,7 @@ const Card = require('../models/cardModel')
 
 const newTransaction = async (req,res) => {
     const {name, idType, idNumber, 
-        description, location, amount, 
-        paymentType, installments, cardName, 
+        description, location, amount, installments, cardName, 
         cardNumber, expMonth, expYear, code} = req.body
     const user_id = req.user._id
 
@@ -54,6 +53,18 @@ const newTransaction = async (req,res) => {
                 return
             }
 
+            // Don't continue if card isn't active
+            if (!validCard.active) {
+                res.status(400).json({error: 'La tarjeta que intenta utilizar no se encuentra activa'})
+                return
+            }
+
+            // Don't continue if card is not a credit card (but a debit card)
+            if (validCard.type === "Tarjeta de Débito") {
+                res.status(400).json({error: 'La tarjeta que ingresó es de tipo débito. Por favor seleccione la opción Tarjeta de débito para pagar con este tipo de tarjeta.'})
+                return
+            }
+
             // Update balance
             await Card.findOneAndUpdate(
                 {cardName, cardNumber, expMonth, expYear, code}, 
@@ -72,8 +83,8 @@ const newTransaction = async (req,res) => {
             // !! change: only send back last three digits of card
             const transaction = await Transaction.create(
                 {name, idType, idNumber, 
-                description, location, amount, 
-                paymentType, installments, cardNumber: sliced_number, 
+                description, location, amount,
+                installments, cardNumber: sliced_number, 
                 user_id}) // include id of user who is making transaction
             res.status(200).json(transaction)
         }

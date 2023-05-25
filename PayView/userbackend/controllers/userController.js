@@ -50,7 +50,7 @@ const checkAvailability = async (req,res) => {
 
 // BACKEND ONLY - FOR DEMOS [!!]
 const newCard = async (req,res) => {
-    const {cardName, cardNumber, expMonth, expYear, code, balance} = req.body
+    const {cardName, cardNumber, expMonth, expYear, code, balance, active, type} = req.body
     try {
         // Use regular expressions to find what type of card it is
         // Example: Master card: starts 5, followed by 1-5, followed by 14 digits. Total 16 digits
@@ -64,7 +64,7 @@ const newCard = async (req,res) => {
         }
 
         // Create a card using request body + found company + an empty users list
-        const card = await Card.create({cardName, cardNumber, expMonth, expYear, code, balance, company, users: []})
+        const card = await Card.create({cardName, cardNumber, expMonth, expYear, code, balance, company, type, active, users: []})
         res.status(200).json(card)
         
     } catch (error) {

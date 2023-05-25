@@ -34,7 +34,7 @@ const TransactionForm = () => {
         const transaction = {
             name, idType, idNumber, 
             description, location, amount, 
-            paymentType, installments, cardName, 
+            installments, cardName, 
             cardNumber, expMonth, expYear, code
         }
 
@@ -103,9 +103,10 @@ const TransactionForm = () => {
         <div>
             {paymentType === 'tarjeta de credito' && !status && (
                 <form className="" onSubmit={handleSubmit}>
-                    <h3>Nueva Transacción</h3>
+                    <h2>Nueva Transacción</h2>
                     <div className="row">
                         <div className="col-md-4 transactionform">
+                            <h4 className="mt-5">Datos Personales</h4>
                             <label>Nombre completo</label>
                             <input className="form-control" type="text" onChange={(e) => {setName(e.target.value)}}/>
                             <label>Tipo de identificación</label>
@@ -117,8 +118,6 @@ const TransactionForm = () => {
                             </select>
                             <label>Número de identificación</label>
                             <input className="form-control" maxlength="10" type="text" onChange={(e) => {setIdNumber(e.target.value)}}/>
-                            <label>Monto</label>
-                            <input className="form-control" type="number" onChange={(e) => {setAmount(e.target.value)}}/>
                             <label>Descripción</label>
                             <input className="form-control" type="text" onChange={(e) => {setDescription(e.target.value)}}/>
                             <label>Sede</label>
@@ -126,6 +125,7 @@ const TransactionForm = () => {
                             {/* !!update here */}
                         </div>
                         <div className="col-md-4 transactionform">
+                            <h4 className="mt-5">Datos de la Transacción</h4>
                             <label>Monto</label>
                             <input className="form-control" type="number" onChange={(e) => {setAmount(e.target.value)}}/>
                             <label>Medio de pago</label>
@@ -141,6 +141,7 @@ const TransactionForm = () => {
                             </select>
                         </div>
                         <div className="col-md-4 transactionform">
+                            <h4 className="mt-5">Datos de la Tarjeta</h4>
                             <label>Nombre del titular</label>
                             <input placeholder="Bruce Wayne" className="form-control" type="text" onChange={(e) => {setCardName(e.target.value)}}/>
                             <label>Numero de la tarjeta</label>

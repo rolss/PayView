@@ -17,6 +17,8 @@ const getUserCards = async (user_id) => {
     }
 }
 
+// -------------------------------------------------------------------------------------------------------
+
 const transactionHistory = async (req,res) => {
     const id = req.user._id // this id was added on our own middleware
     // Find all transactions by user id, only keep the description, amount and card number of each one
