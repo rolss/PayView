@@ -102,50 +102,67 @@ const TransactionForm = () => {
     return ( 
         <div>
             {paymentType === 'tarjeta de credito' && !status && (
-                <form onSubmit={handleSubmit}>
-                    <label>Tipo de pago</label>
-                    <select onChange={(e) => {setPaymentType(e.target.value)}}>
-                        <option value="tarjeta de credito">Tarjeta de crédito</option>
-                        <option value="tarjeta de debito">Tarjeta de débito</option>
-                    </select>
-                    <label>Nombre completo</label>
-                    <input type="text" onChange={(e) => {setName(e.target.value)}}/>
-                    <label>Tipo de identificación</label>
-                    <select onChange={(e) => {setIdType(e.target.value)}}>
-                        <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
-                        <option value="Pasaporte">Pasaporte</option>
-                        <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
-                        <option value="Cédula de Extranjería">Cedula de Extranjería</option>
-                    </select>
-                    <label>Número de identificación</label>
-                    <input maxlength="10" type="text" onChange={(e) => {setIdNumber(e.target.value)}}/>
-                    <label>Monto</label>
-                    <input type="number" onChange={(e) => {setAmount(e.target.value)}}/>
-                    <label>Descripción</label>
-                    <input type="text" onChange={(e) => {setDescription(e.target.value)}}/>
-                    <label>Sede</label>
-                    <input type="text" onChange={(e) => {setLocation(e.target.value)}}/>
-                    {/* !!update here */}
-                    <label>Numero de cuotas</label>
-                    <select onChange={(e) => {setInstallments(e.target.value)}}>
-                        <option value="1">1</option>
-                        <option value="6">6</option>
-                        <option value="12">12</option>
-                    </select>
-                    <label>Nombre del titular</label>
-                    <input type="text" onChange={(e) => {setCardName(e.target.value)}}/>
-                    <label>Numero de la tarjeta</label>
-                    <input maxLength="16" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
-                    <label>Fecha de expiracion</label>
-                    <input maxLength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
-                    <input maxLength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
-                    <label>Código de seguridad</label>
-                    <input maxLength="3" type="text" onChange={(e) => {setCode(e.target.value)}}/>
-                    <button>Enviar</button>
-                    <p>{status}</p>
-                    {error && <div className="error">
-                        <p>{error}</p>
-                    </div>}
+                <form className="" onSubmit={handleSubmit}>
+                    <h3>Nueva Transacción</h3>
+                    <div className="row">
+                        <div className="col-md-4 transactionform">
+                            <label>Nombre completo</label>
+                            <input className="form-control" type="text" onChange={(e) => {setName(e.target.value)}}/>
+                            <label>Tipo de identificación</label>
+                            <select className="form-control" onChange={(e) => {setIdType(e.target.value)}}>
+                                <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
+                                <option value="Pasaporte">Pasaporte</option>
+                                <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
+                                <option value="Cédula de Extranjería">Cedula de Extranjería</option>
+                            </select>
+                            <label>Número de identificación</label>
+                            <input className="form-control" maxlength="10" type="text" onChange={(e) => {setIdNumber(e.target.value)}}/>
+                            <label>Monto</label>
+                            <input className="form-control" type="number" onChange={(e) => {setAmount(e.target.value)}}/>
+                            <label>Descripción</label>
+                            <input className="form-control" type="text" onChange={(e) => {setDescription(e.target.value)}}/>
+                            <label>Sede</label>
+                            <input className="form-control" type="text" onChange={(e) => {setLocation(e.target.value)}}/>
+                            {/* !!update here */}
+                        </div>
+                        <div className="col-md-4 transactionform">
+                            <label>Monto</label>
+                            <input className="form-control" type="number" onChange={(e) => {setAmount(e.target.value)}}/>
+                            <label>Medio de pago</label>
+                            <select className="form-control" onChange={(e) => {setPaymentType(e.target.value)}}>
+                                <option value="tarjeta de credito">Tarjeta de crédito</option>
+                                <option value="tarjeta de debito">Tarjeta de débito</option>
+                            </select>
+                            <label>Numero de cuotas</label>
+                            <select className="form-control" onChange={(e) => {setInstallments(e.target.value)}}>
+                                <option value="1">1</option>
+                                <option value="6">6</option>
+                                <option value="12">12</option>
+                            </select>
+                        </div>
+                        <div className="col-md-4 transactionform">
+                            <label>Nombre del titular</label>
+                            <input placeholder="Bruce Wayne" className="form-control" type="text" onChange={(e) => {setCardName(e.target.value)}}/>
+                            <label>Numero de la tarjeta</label>
+                            <input placeholder="xxxx xxxx xxxx xxxx" className="form-control" maxLength="16" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
+                            <label>Fecha de expiracion</label>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <input placeholder="mes" className="form-control" maxLength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
+                                </div>
+                                <div className="col-md-6">
+                                    <input placeholder="año" className="form-control" maxLength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
+                                </div>
+                            </div>
+                            <label>Código de seguridad</label>
+                            <input placeholder="CVV" className="form-control w-50 mx-auto" maxLength="3" type="text" onChange={(e) => {setCode(e.target.value)}}/>
+                            <button className="btn btn-warning mt-4 w-75">Pagar</button>
+                        </div>
+                        <p>{status}</p>
+                        {error && <div className="error">
+                            <p>{error}</p>
+                        </div>}
+                    </div>
                 </form>
             )}
             {status && (

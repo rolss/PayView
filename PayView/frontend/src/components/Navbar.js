@@ -4,8 +4,8 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import { useLogout } from '../hooks/useLogout'
 
 import { useState, useEffect } from "react";
-import { Navbar, Container, Nav } from "react-bootstrap";
-import logo from "../assets/img/logo.jpeg";
+// import { Navbar, Container, Nav } from "react-bootstrap";
+// import logo from "../assets/img/logo.jpeg";
 
 const NavBar = () => {
     // global user state from AuthContext and logout function from useLogout hook

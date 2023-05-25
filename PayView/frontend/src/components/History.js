@@ -41,12 +41,12 @@ const History = ({user, initial}) => {
 
     return ( 
         <div className='history'>
-            <h4>Historial</h4>
+            <h4 className='mb-4'>Historial</h4>
             {error && 
             <div className="error">
                 <p>{error}</p>
             </div>}
-            <table className="history">
+            <table className="history table text-light">
                 <thead>
                     <tr>
                         <th>Monto</th>
@@ -68,7 +68,7 @@ const History = ({user, initial}) => {
                     ))}
                 </tbody>
             </table>
-            {history.length >= 3 && initial && <a href="/fullhistory">Ver mas</a>}
+            {history.length >= 3 && initial && <a className='btn btn-warning' href="/fullhistory">Ver mas</a>}
         </div>
      );
 }

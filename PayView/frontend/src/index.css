@@ -76,14 +76,9 @@ div.loading-spinner {
 
 button.formbutton {
   margin:20px 0px 20px 0px;
+  width: 100%;
 }
 
-table {
-  border-collapse: separate;
-}
-table td {
-  padding-right:20px;
-}
 
 /* custom fonts */
 @font-face {
@@ -422,4 +417,14 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   to {
     transform: rotate(360deg);
   }
+}
+
+.transactionform label {
+  margin-top: 0.5em;
+}
+
+.transactionform input {
+  height:35px;
+  text-align: center;
+  align-items: center;
 }

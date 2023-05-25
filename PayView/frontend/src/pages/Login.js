@@ -70,11 +70,13 @@ const Login = () => {
                 <div>El servidor no se encuentra disponible</div>
             )}
             {available === true && (
-                <form onSubmit={handleSubmit}>
+                <form className="w-25 mx-auto" onSubmit={handleSubmit}>
                     <h2>Iniciar Sesión</h2>
-                    <input type="text" onChange={(e) => {setEmail(e.target.value)}}/>
-                    <input type="text" onChange={(e) => {setPassword(e.target.value)}}/>
-                    <button>Ingresar</button>
+                    <label className="mt-4">Correo electrónico</label>
+                    <input className="form-control mb-3" type="text" onChange={(e) => {setEmail(e.target.value)}}/>
+                    <label>Contraseña</label>
+                    <input className="form-control mb-5" type="text" onChange={(e) => {setPassword(e.target.value)}}/>
+                    <button className="btn btn-warning w-50">Ingresar</button>
                     {error && 
                     <div className="error">
                         <p>{error}</p>

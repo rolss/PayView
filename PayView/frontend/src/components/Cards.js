@@ -106,46 +106,56 @@ const Cards = ({user, updateError}) => {
     
 
     return ( 
-        <div className="view">
-            <form classname="viewForm" onSubmit={handleSubmit}>
-                <h2>Consultar saldo</h2>
-                {/* make this a component */}
-                <label>Nombre del tarjetahabiente</label>
-                <input type="text" onChange={(e) => {setCardName(e.target.value)}}/>
-                <label>Numero de la tarjeta</label>
-                <input maxLength="16" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
-                <label>Fecha de expiracion</label>
-                <input maxLength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
-                <input maxLength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
-                <label>Código de seguridad</label>
-                <input maxLength="3" type="text" onChange={(e) => {setCode(e.target.value)}}/>
-                <button className="formbutton">Consultar</button>
-            </form>
-            <div className="cards">
-                <h4>Tarjetas</h4>
-                <table className="cards">
-                    <thead>
-                        <tr>
-                            <th>Tarjeta</th>
-                            <th>Empresa</th>
-                            <th>Saldo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {cards && cards.map((item) => (
-                            <tr key={item._id}>
-                                <td>{item.cardNumber}</td>
-                                <td>{item.company}</td>
-                                <td>{item.balance}</td>
-                                <td>
-                                    <button onClick={() => handleDelete(item._id)}>Delete</button>
-                                </td>
+        <div className="container">
+            <div className="row">
+                <div className="col-md-3">
+                    <form onSubmit={handleSubmit}>
+                        <h2>Consultar saldo</h2>
+                        {/* make this a component */}
+                        <label className="mt-2">Nombre del tarjetahabiente</label>
+                        <input type="text" className="form-control"  onChange={(e) => {setCardName(e.target.value)}}/>
+                        <label className="mt-2">Numero de la tarjeta</label>
+                        <input maxLength="16" className="form-control" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
+                        <label className="mt-2">Fecha de expiracion</label>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <input className="form-control" maxLength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
+                            </div>
+                            <div className="col-md-6">
+                                <input className="form-control" maxLength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
+                            </div>
+                        </div>
+                        <label className="mt-2">Código de seguridad</label>
+                        <input maxLength="3" className="form-control" type="text" onChange={(e) => {setCode(e.target.value)}}/>
+                        <button className="formbutton btn btn-warning">Consultar</button>
+                    </form>
+                </div>
+                <div className="col-md-9">
+                    <h4>Tarjetas</h4>
+                    <table className="table text-light ml-4">
+                        <thead>
+                            <tr>
+                                <th>Tarjeta</th>
+                                <th>Empresa</th>
+                                <th>Saldo</th>
                             </tr>
-                        ))
-                    }
-                    </tbody>
-                </table>
-                {!cards && <p>Usted no cuenta con tarjetas vinculadas</p> }
+                        </thead>
+                        <tbody>
+                            {cards && cards.map((item) => (
+                                <tr key={item._id}>
+                                    <td>{item.cardNumber}</td>
+                                    <td>{item.company}</td>
+                                    <td>{item.balance}</td>
+                                    <td>
+                                        <button className="btn btn-warning" onClick={() => handleDelete(item._id)}>Delete</button>
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                        </tbody>
+                    </table>
+                    {!cards && <p>Usted no cuenta con tarjetas vinculadas</p> }
+                </div>
             </div>
         </div>
      );
