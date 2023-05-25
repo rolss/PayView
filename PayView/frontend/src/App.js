@@ -33,7 +33,7 @@ function App() {
                 <Banner /> 
                 <Info /> 
                 <Footer />
-              </div>) : <View />}
+              </div>) : <Navigate to="/view"/>}
             />
             <Route 
               path="/login"

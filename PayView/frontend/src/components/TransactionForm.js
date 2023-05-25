@@ -19,7 +19,7 @@ const TransactionForm = () => {
     const [expYear, setExpYear] = useState('')
     const [code, setCode] = useState('')
 
-    const [status, setStatus] = useState(null)
+    const [status, setStatus] = useState(false)
     const [error, setError] = useState('')
     const [data, setData] = useState('')
 
@@ -61,6 +61,7 @@ const TransactionForm = () => {
         }
 
         setData({...json, status})
+        console.log(data)
 
     }
     
@@ -159,7 +160,6 @@ const TransactionForm = () => {
                             <input placeholder="CVV" className="form-control w-50 mx-auto" maxLength="3" type="text" onChange={(e) => {setCode(e.target.value)}}/>
                             <button className="btn btn-warning mt-4 w-75">Pagar</button>
                         </div>
-                        <p>{status}</p>
                         {error && <div className="error">
                             <p>{error}</p>
                         </div>}

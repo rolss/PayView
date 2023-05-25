@@ -147,7 +147,7 @@ const Cards = ({user, updateError}) => {
                                     <td>{item.company}</td>
                                     <td>{item.balance}</td>
                                     <td>
-                                        <button className="btn btn-warning" onClick={() => handleDelete(item._id)}>Delete</button>
+                                        <button className="btn btn-warning" onClick={() => handleDelete(item._id)}>Borrar</button>
                                     </td>
                                 </tr>
                             ))

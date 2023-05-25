@@ -94,9 +94,9 @@ const NavBar = () => {
                 <nav>
                     {user && <div>
                         <span>{user.email}</span>
-                        <Link to="/view">Consultar</Link>
-                        <Link to="/transaction">Realizar</Link>
-                        <button onClick={handleClick}>Cerrar sesión</button>
+                        <Link className='btn btn-dark' to="/view">Consultar</Link>
+                        <Link className='btn btn-dark' to="/transaction">Pagar</Link>
+                        <button className='btn btn-outline-danger' onClick={handleClick}>Cerrar sesión</button>
                     </div>}
                     {!user && <div>
                         <Link to="/login">Iniciar Sesión</Link>

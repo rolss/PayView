@@ -14,6 +14,7 @@ const TransactionDetails = ({ data }) => {
                     <p>Monto: {data.amount}</p>
                     <p>Cuotas: {data.installments}</p>
                     <p>Estado: {data.status ? <p>No aprobado</p> : <p>Aprobado</p>}</p>
+                    <p>{data.status}</p>
             </div>
             <div className="row">
                 <div className="col-md-6">

@@ -79,7 +79,7 @@ const Signup = () => {
     return ( 
         <div>
             {available === false && (
-                <div>El servidor no se encuentra disponible</div>
+                <div className="error">El servidor no se encuentra disponible</div>
             )}
             {available === true && (
                 <form className="w-25 mx-auto" onSubmit={handleSubmit}>
