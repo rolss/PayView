@@ -3,19 +3,19 @@ const TransactionDetails = ({ data }) => {
     // !!add: company
     return ( 
         <div>
-            <h3>{data.status}</h3>
-            <div className="transactioninfo">
-                <p>Nombre: {data.name}</p>
-                <p>Documento: {data.idType}</p>
-                <p>Numero: {data.idNumber}</p>
-                <p>Descripción: {data.description}</p>
-                <p>Sede: {data.location}</p>
-                <p>Monto: {data.amount} {data.cardNumber}</p>
-                <p>Cuotas: {data.installments}</p>
-                <p>Estado: {data.status ? <p>Aprobado</p> : <p>No Aprobado</p>}</p>
-                <a href="/transaction">Realizar nueva transacción</a>
-                <a href="/view">Pagina de consultas</a>
+            {data.status ? <h1>Transacción Fallida</h1> : <h1>Transacción Exitosa!</h1> }
+            <div className="mt-5 transactiondetails">
+                <p className="mb-2"><strong>Nombre:</strong> {data.name}</p>
+                <p className="mb-2"><strong>Documento:</strong> {data.idType}</p>
+                <p className="mb-2"><strong>Numero:</strong> {data.idNumber}</p>
+                <p className="mb-2"><strong>Descripción:</strong> {data.description}</p>
+                <p className="mb-2"><strong>Sede:</strong> {data.location}</p>
+                <p className="mb-2"><strong>Monto:</strong> {data.amount}</p>
+                <p className="mb-2"><strong>Cuotas:</strong> {data.installments}</p>
+                <p className="mb-2"><strong>Estado:</strong> {data.status ? 'No aprobado' : 'Aprobado'}</p>
             </div>
+            <a className="btn btn-warning m-3" href="/transaction">Realizar nueva transacción</a>
+            <a className="btn btn-warning m-2" href="/view">Pagina de consultas</a>
         </div>
      );
 }

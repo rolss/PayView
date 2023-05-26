@@ -7,43 +7,64 @@ const View = () => {
     const { user } = useAuthContext()
 
     const [error, setError] = useState(null)
-    const [available, setAvailable] = useState(true)
+    const [eastAvailable, setEastAvailable] = useState(true)
+    const [westernAvailable, setWesternAvailable] = useState(true)
 
     const updateError = (newError) => {
         setError(newError);
     };
 
     useEffect(() => {
-        const checkAvailability = async () => {
+        const checkEastAvailability = async () => {
             try {
-                const response = await fetch('api/query/checkAvailability', {
+                const response = await fetch('api/east/query/checkAvailability', {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${user.token}`
                     }
                 })
                 if (response.ok) {
-                    setAvailable(true)
+                    setEastAvailable(true)
                 }
                 if (!response.ok) {
-                    setAvailable(false)
+                    setEastAvailable(false)
                 }
             } catch (error) {
-                setAvailable(false)
+                setEastAvailable(false)
+                console.error('Error:', error.message)
+            }
+        }
+        const checkWesternAvailability = async () => {
+            try {
+                const response = await fetch('api/western/query/checkAvailability', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                if (response.ok) {
+                    setWesternAvailable(true)
+                }
+                if (!response.ok) {
+                    setWesternAvailable(false)
+                }
+            } catch (error) {
+                setWesternAvailable(false)
                 console.error('Error:', error.message)
             }
         }
 
-        checkAvailability()
+        checkEastAvailability()
+        checkWesternAvailability()
     }, [user.token])
 
     // !!Add: loading screen to history
     return ( 
         <div>
-            {available === false && (
+            {eastAvailable === false && (
                 <div className="error">El servidor no se encuentra disponible</div>
             )}
-            {available === true && (
+            {eastAvailable === true && (
                 <div>
                     {error && 
                     <div className="error">

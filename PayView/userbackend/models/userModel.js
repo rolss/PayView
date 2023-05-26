@@ -47,19 +47,19 @@ userSchema.statics.signup = async function(email, password) {
 userSchema.statics.login = async function(email, password) {
     // validate for missing fields
     if (!email || !password) {
-        throw Error('All fields must be filled')
+        throw Error('Todos los campos deben ser completados')
     }
 
     // validate if email can be found in database
     const user = await this.findOne({ email })
     if (!user) {
-        throw Error('Incorrect email')
+        throw Error('Correo electrónico incorrecto')
     }
 
     // compare password on input with hashed password on database
     const match = await bcrypt.compare(password, user.password)
     if (!match) {
-        throw Error('Incorrect password')
+        throw Error('Contraseña incorrecta')
     }
 
     return user

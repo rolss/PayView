@@ -10,7 +10,7 @@ const NotFound = () => {
     return ( 
         <div className="error">
             <h2>Oops! Esta pagina no existe</h2>
-            <button onClick={handleClick}>Volver al Menu Principal</button>
+            <button className="btn btn-danger" onClick={handleClick}>Volver al Menu Principal</button>
         </div>
      );
 }

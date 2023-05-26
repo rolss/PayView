@@ -35,7 +35,7 @@ const Transaction = () => {
     return ( 
         <div>
             {available === false && (
-                <div>El servidor no se encuentra disponible</div>
+                <div className="error">El servidor no se encuentra disponible</div>
             )}
             {available === true && (
                 <TransactionForm />

@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 // pages & components
 import Home from './pages/Home'
-import Navbar from './components/Navbar'
+import NavBar from './components/NavBar'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import View from './pages/View'
@@ -11,18 +11,29 @@ import Transaction from './pages/Transaction'
 import NotFound from './pages/NotFound'
 import FullHistory from './pages/FullHistory'
 
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Banner from './components/Banner';
+import Info from './components/Info';
+import Footer from './components/Footer';
+
 function App() {
   const { user } = useAuthContext()
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+      <NavBar />
         <div className="pages">
           <Routes>
             <Route 
               path="/"
-              element={<Home />}
+              element={!user ? (
+              <div>
+                <Banner /> 
+                <Info /> 
+                <Footer />
+              </div>) : <Navigate to="/view"/>}
             />
             <Route 
               path="/login"

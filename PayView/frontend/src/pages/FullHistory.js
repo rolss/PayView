@@ -13,7 +13,7 @@ const FullHistory = () => {
     return ( 
         <div>
             <History user={user} initial={false} />
-            <button onClick={handleClick}>Atrás</button>
+            <button className="btn btn-warning" onClick={handleClick}>Atrás</button>
         </div>
      );
 }

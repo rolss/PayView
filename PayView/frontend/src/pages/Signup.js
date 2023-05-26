@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { ClipLoader } from 'react-spinners';
+// import { ClipLoader } from 'react-spinners';
 
 const Signup = () => {
     const [email, setEmail] = useState('')
@@ -79,14 +79,16 @@ const Signup = () => {
     return ( 
         <div>
             {available === false && (
-                <div>El servidor no se encuentra disponible</div>
+                <div className="error">El servidor no se encuentra disponible</div>
             )}
             {available === true && (
-                <form onSubmit={handleSubmit}>
+                <form className="w-25 mx-auto" onSubmit={handleSubmit}>
                     <h2>Registro</h2>
-                    <input type="text" onChange={(e) => {setEmail(e.target.value)}}/>
-                    <input type="text" onChange={(e) => {setPassword(e.target.value)}}/>
-                    <button>Crear cuenta</button>
+                    <label className="mt-4">Correo electrónico</label>
+                    <input className="form-control mb-3" type="text" onChange={(e) => {setEmail(e.target.value)}}/>
+                    <label>Contraseña</label>
+                    <input className="form-control mb-5" type="text" onChange={(e) => {setPassword(e.target.value)}}/>
+                    <button className="btn btn-warning w-50">Crear cuenta</button>
                     {error &&
                     <div className="error">
                         <p>{error}</p>
