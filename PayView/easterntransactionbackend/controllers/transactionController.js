@@ -108,6 +108,11 @@ const newCard = async (req,res) => {
             company = "American Express"
         }
 
+        if (company = "Unknown") {
+            res.status(400).json({error: 'Esta tarjeta no es Visa, MasterCard ni American Express'})
+            return
+        }
+
         // Create a card using request body + found company + an empty users list
         const card = await Card.create({cardName, cardNumber, expMonth, expYear, code, balance, company, type, active, bank: "East Bank", users: []})
         res.status(200).json(card)
