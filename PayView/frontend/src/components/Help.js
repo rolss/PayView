@@ -9,7 +9,7 @@ const Help = () => {
   return (
     <span className='p-5'>
       {/* Modal */}
-      <Button variant="primary" onClick={() => setShowModal(true)}>Ayuda</Button>
+      <Button variant="warning" onClick={() => setShowModal(true)}>Help</Button>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         {location.pathname === '/view' && 
         <span>
@@ -58,18 +58,18 @@ const Help = () => {
         </Modal.Header>
 
         <Modal.Body>
-          <p className='modaltext'>Por favor inicie sesión con sus credenciales para acceder a los servicios de consulta y transacción</p>
+          <p className='modaltext'>Please log in with your credentials to access payment and viewing services</p>
         </Modal.Body>
         </span>
         }
         {location.pathname === '/' && 
         <span>
           <Modal.Header closeButton>
-          <Modal.Title className='modaltext' >¡Bienvenido!</Modal.Title>
+          <Modal.Title className='modaltext' >Welcome!</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <p className='modaltext'>Crea una cuenta para empezar a usar nuestros servicios</p>
+          <p className='modaltext'>Please create an account or log in to start using our services</p>
         </Modal.Body>
         </span>
         }

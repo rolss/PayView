@@ -50,7 +50,7 @@ const NavBar = () => {
       // }
     
     return (
-        <header className="customheader">
+        <header className="customheader shadow">
             <div className="container">
                 <Link to="/">
                     <h1>PayView</h1>
@@ -59,14 +59,14 @@ const NavBar = () => {
                     {user && <div>
                         {/* <span>{user.email}</span> */}
                         <Help />
-                        <Link className='btn btn-dark' to="/view">Consultar</Link>
-                        <Link className='btn btn-dark' to="/transaction">Pagar</Link>
-                        <button className='btn btn-outline-danger' onClick={handleClick}>Cerrar sesión</button>
+                        <Link className='btn btn-dark' to="/view">View</Link>
+                        <Link className='btn btn-dark' to="/transaction">Pay</Link>
+                        <button className='btn btn-outline-danger' onClick={handleClick}>Log out</button>
                     </div>}
                     {!user && <div>
                         <Help />
-                        <Link to="/login">Iniciar Sesión</Link>
-                        <Link to="/signup">Registrarse</Link>
+                        <Link className='text-warning-hover' to="/login">Log in</Link>
+                        <Link className='text-warning-hover' to="/signup">Register</Link>
                     </div>}
                 </nav>
             </div>

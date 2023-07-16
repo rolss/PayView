@@ -10,12 +10,10 @@ import { useAuthContext } from './hooks/useAuthContext'
 import Transaction from './pages/Transaction'
 import NotFound from './pages/NotFound'
 import FullHistory from './pages/FullHistory'
+import Homepage from './components/Homepage'
 
-import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Banner from './components/Banner';
-import Info from './components/Info';
-import Footer from './components/Footer';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import './index.css';
 
 function App() {
   const { user } = useAuthContext()
@@ -28,12 +26,7 @@ function App() {
           <Routes>
             <Route 
               path="/"
-              element={!user ? (
-              <div>
-                <Banner /> 
-                <Info /> 
-                <Footer />
-              </div>) : <Navigate to="/view"/>}
+              element={!user ? <Homepage /> : <Navigate to="/view"/>}
             />
             <Route 
               path="/login"

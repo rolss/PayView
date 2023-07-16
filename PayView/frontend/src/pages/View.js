@@ -49,7 +49,7 @@ const View = () => {
                     setWesternAvailable(false)
                 }
             } catch (error) {
-                setWesternAvailable(false)
+                setEastAvailable(false)
                 console.error('Error:', error.message)
             }
         }
