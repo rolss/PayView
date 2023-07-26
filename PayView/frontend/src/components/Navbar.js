@@ -53,6 +53,7 @@ const NavBar = () => {
         <header className="customheader shadow">
             <div className="container">
                 <Link to="/">
+                    <i class="bi bi-hexagon-half"></i>
                     <h1>PayView</h1>
                 </Link>
                 <nav>
@@ -66,7 +67,7 @@ const NavBar = () => {
                     {!user && <div>
                         <Help />
                         <Link className='text-warning-hover' to="/login">Log in</Link>
-                        <Link className='text-warning-hover' to="/signup">Register</Link>
+                        <Link className='text-warning-hover' to="/signup">Sign up</Link>
                     </div>}
                 </nav>
             </div>

@@ -77,26 +77,35 @@ const Signup = () => {
     // }
 
     return ( 
-        <div>
+        <div className>
             {available === false && (
                 <div className="error">El servidor no se encuentra disponible</div>
             )}
             {available === true && (
-                <form className="w-25 mx-auto" onSubmit={handleSubmit}>
-                    <h2>Registro</h2>
-                    <label className="mt-4">Correo electrónico</label>
-                    <input className="form-control mb-3" type="text" onChange={(e) => {setEmail(e.target.value)}}/>
-                    <label>Contraseña</label>
-                    <input className="form-control mb-5" type="text" onChange={(e) => {setPassword(e.target.value)}}/>
-                    <button className="btn btn-warning w-50">Crear cuenta</button>
-                    {error &&
-                    <div className="error">
-                        <p>{error}</p>
-                    </div>}
-                </form>
+                <div className="container text-center mw-100 stripe-row">
+                    <div className="row">
+                        <form className="user-form" onSubmit={handleSubmit}>
+                            <h2 className="mb-3 pb-4 h1">Welcome to PayView</h2>
+                            {error &&
+                            <div className="error">
+                                <p>{error}</p>
+                            </div>}
+                            <div className="form-floating">
+                                <input className="form-control form-control-sm mb-3 ms-1" type="email" id="floatingInput" placeholder="email@domain.com" onChange={(e) => {setEmail(e.target.value)}}/>
+                                <label id="floatingInput" className="form-label text-black-50 ms-1">Enter your email</label>
+                            </div>
+                            <div className="form-floating">
+                                <input className="form-control form-control-sm ms-1" type="password" id="floatingPassword" placeholder="password" onChange={(e) => {setPassword(e.target.value)}}/>
+                                <label id="floatingPassword" className="form-label text-black-50 ms-1">Enter a secure password</label>
+                            </div>
+                            <button className="btn btn-warning w-50 mt-5">Create account</button>
+                            <p className="text-black mt-4">Already have an account? <a className="text-secondary text-decoration-underline" href="/login">Login instead</a></p>
+                        </form>
+                    </div>
+                </div>
             )}
         </div>
      );
 }
- 
+
 export default Signup;

@@ -70,18 +70,34 @@ const Login = () => {
                 <div className="error">El servidor no se encuentra disponible</div>
             )}
             {available === true && (
-                <form className="w-25 mx-auto" onSubmit={handleSubmit}>
-                    <h2>Iniciar Sesión</h2>
-                    <label className="mt-4">Correo electrónico</label>
-                    <input className="form-control mb-3" type="text" onChange={(e) => {setEmail(e.target.value)}}/>
-                    <label>Contraseña</label>
-                    <input className="form-control mb-5" type="text" onChange={(e) => {setPassword(e.target.value)}}/>
-                    <button className="btn btn-warning w-50">Ingresar</button>
-                    {error && 
-                    <div className="error">
-                        <p>{error}</p>
-                    </div>}
-                </form>
+                <div className="container mw-100 stripe-row">
+                    <div className="row align-items-center justify-content-center">
+                        <form className="user-form" onSubmit={handleSubmit}>
+                            <h1 className="mb-3 pb-4 h1">Welcome back</h1>
+                            {error &&
+                            <div className="error">
+                                <p>{error}</p>
+                            </div>}
+                            <label className="form-label text-black ms-1 force-left">Email address</label>
+                            <input className="form-control form-control-sm mb-3 ms-1" placeholder="john@hotmail.com" type="email" onChange={(e) => {setEmail(e.target.value)}}/>
+                            
+                            <label className="form-label text-black ms-1 force-left">Password</label>
+                            <input className="form-control form-control-sm mb-3 ms-1" placeholder="•••••••••••••••••" type="password" onChange={(e) => {setEmail(e.target.value)}}/>
+                            {/* <div className="form-floating">
+                                <input className="form-control form-control-sm mb-3 ms-1" placeholder="email@domain.com" id="floatingInput" type="email" onChange={(e) => {setEmail(e.target.value)}}/>
+                                <label id="floatingInput" className="form-label text-black-50 ms-1">Email address</label>
+                            </div>
+                            <div className="form-floating">
+                                <input className="form-control form-control-sm ms-1" type="password" id="floatingPassword" placeholder="password" onChange={(e) => {setPassword(e.target.value)}}/>
+                                <label className="form-label text-black-50 ms-1">Password</label>
+                            </div> */}
+                            <a className="text-secondary text-decoration-none d-block force-left" href="#">Forgot password?</a>
+                            <button className="btn btn-warning w-50 mt-5">Log in</button>
+                            <p className="text-black mt-4">Don't have an account? <a className="text-secondary text-decoration-underline" href="/signup">Sign up today!</a></p>
+
+                        </form>
+                    </div>
+                </div>
             )}
         </div>
      );

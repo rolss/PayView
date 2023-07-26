@@ -36,13 +36,18 @@ header a:hover {
   color: #ffc107 !important;
 }
 
-div.error {
+/* div.error {
   padding: 10px;
   background: #f0b2b2;
   border: 2px solid #d24040;
   color: #bc3a3a;
   border-radius: 4px;
-  margin: 20px 0;
+  margin-top: 20px;
+  margin-bottom: -50px;
+} */
+
+div.error {
+  color: #e31a1a;
 }
 
 .alt-row {
@@ -57,3 +62,31 @@ footer {
 .avoid-overflow {
   overflow-x: hidden;
 }
+
+/* .login {
+  background-color: #fde18f80;
+  margin: 100px 380px 50px 380px;
+  padding: 80px;
+  border-radius: 30px;
+} */
+
+.user-form {
+  /* margin: 190px auto; */
+  margin: 60px auto 40px auto;
+  width:30%;
+}
+
+.stripe-row {
+  background-color: #fde18f80;
+  margin: 80px auto;
+}
+
+.user-form a:hover {
+  color: #eeb300 !important;
+}
+
+.force-left {
+  text-align: left;
+  margin: 5px 10px 10px 6px;
+}
+
