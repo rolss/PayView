@@ -79,19 +79,19 @@ const NewCard = ({user, updateError, setEastCards, setWesternCards}) => {
                 <option value="East Bank">Eastern Bank</option>
             </select>
             <label className="mt-2">Card number</label>
-            <input maxLength="16" className="form-control" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
-            <label className="mt-2">Expiry code</label>
+            <input maxLength="16" className="form-control" type="text" placeholder="xxxx xxxx xxxx xxxx" onChange={(e) => {setCardNumber(e.target.value)}}/>
+            <label className="mt-2">Date of expiry</label>
             <div className="row">
                 <div className="col-md-6">
-                    <input className="form-control" maxLength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
+                    <input className="form-control" maxLength="2" type="text" placeholder="MM" onChange={(e) => {setExpMonth(e.target.value)}}/>
                 </div>
                 <div className="col-md-6">
-                    <input className="form-control" maxLength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
+                    <input className="form-control" maxLength="2" type="text" placeholder="YY" onChange={(e) => {setExpYear(e.target.value)}}/>
                 </div>
             </div>
             <label className="mt-2">Security code</label>
-            <input maxLength="3" className="form-control" type="text" onChange={(e) => {setCode(e.target.value)}}/>
-            <button className="formbutton btn btn-warning">View</button>
+            <input maxLength="3" className="form-control" type="password" placeholder="•••" onChange={(e) => {setCode(e.target.value)}}/>
+            <button className="formbutton btn btn-warning mt-4 w-25">View</button>
         </form>
      );
 }

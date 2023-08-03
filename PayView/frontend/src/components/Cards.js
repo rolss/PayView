@@ -1,12 +1,13 @@
 import { useEffect, useState, useSyncExternalStore } from "react"
 import NewCard from "../components/NewCard"
+import History from "../components/History"
 
 const Cards = ({user, updateError}) => {
 
     const [westernCards, setWesternCards] = useState('')
     const [eastCards, setEastCards] = useState('')
 
-    const [toggleNewCard, setToggleNewCard] = useState(false)
+    // const [toggleNewCard, setToggleNewCard] = useState(false)
 
     // Unlink a card with current account
     // cardId is used instead of cardNumber because the frontend will never have the full card number for security reasons
@@ -43,9 +44,9 @@ const Cards = ({user, updateError}) => {
         }
     }
 
-    const handleToggle = async () => {
-        setToggleNewCard(!toggleNewCard)
-    }
+    // const handleToggle = async () => {
+    //     setToggleNewCard(!toggleNewCard)
+    // }
 
     // Fetch all cards linked to this account and store the information in state variables
     useEffect(() => {
@@ -94,62 +95,68 @@ const Cards = ({user, updateError}) => {
         <div className="container">
             <div className="row mt-5">
                 {westernCards || eastCards && 
-                    <div className={`me-5 ${toggleNewCard ? 'col-8' : 'col-12'}`}>
-                        <h2>Cards</h2>
-                        <table className="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Card</th>
-                                    <th>Brand</th>
-                                    <th>Balance</th>
-                                    <th>Bank</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {eastCards && eastCards.map((item) => (
-                                    <tr key={item._id}>
-                                        <td>{item.cardNumber}</td>
-                                        <td>{item.company}</td>
-                                        <td>{item.balance}</td>
-                                        <td>{item.bank}</td>
-                                        <td>
-                                            <button className="btn btn-sm btn-outline-danger" onClick={() => handleDelete(item._id, item.bank)}>Unlink Card</button>
-                                        </td>
+                    <div className="me-5 col-8">
+                        <div>
+
+                            <h2>Cards</h2>
+                            <table className="table text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Card</th>
+                                        <th>Brand</th>
+                                        <th>Balance</th>
+                                        <th>Bank</th>
                                     </tr>
-                                ))
+                                </thead>
+                                <tbody>
+                                    {eastCards && eastCards.map((item) => (
+                                        <tr key={item._id}>
+                                            <td>{item.cardNumber}</td>
+                                            <td>{item.company}</td>
+                                            <td>{item.balance}</td>
+                                            <td>{item.bank}</td>
+                                            <td>
+                                                <button className="btn btn-sm btn-outline-danger ms-5" onClick={() => handleDelete(item._id, item.bank)}>Unlink Card</button>
+                                            </td>
+                                        </tr>
+                                    ))
                                 }
-                                {westernCards && westernCards.map((item) => (
-                                    <tr key={item._id}>
-                                        <td>{item.cardNumber}</td>
-                                        <td>{item.company}</td>
-                                        <td>{item.balance}</td>
-                                        <td>{item.bank}</td>
-                                        <td>
-                                            <button className="btn btn-warning" onClick={() => handleDelete(item._id, item.bank)}>Borrar</button>
-                                        </td>
-                                    </tr>
-                                ))
+                                    {westernCards && westernCards.map((item) => (
+                                        <tr key={item._id}>
+                                            <td>{item.cardNumber}</td>
+                                            <td>{item.company}</td>
+                                            <td>{item.balance}</td>
+                                            <td>
+                                                {item.bank}
+                                                <button className="btn btn-sm btn-outline-danger ms-5" onClick={() => handleDelete(item._id, item.bank)}>Unlink</button>
+                                            </td>
+                                        </tr>
+                                    ))
                                 }
-                            </tbody>
-                        </table>
-                        <button className="btn btn-sm btn-outline-secondary" data-bs-toggle="button" onClick={() => handleToggle()}>Add new card</button>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <History user={user} initial={true}/>
+                            {/* <button className="btn btn-sm btn-warning mb-5" onClick={() => handleToggle()}>Add new card</button> */}
+                        </div>
                     </div>
                 }
                     
                     {!westernCards && !eastCards && 
-                    <div className="col-5">
-                        <p>No cards have been linked to this account</p> 
-                        <button className="btn btn-warning">Add new card</button>
+                    <div className="col-7">
+                        <p>No cards have been linked to this account</p>
+                        {/* <button className="btn btn-sm btn-warning mb-5" onClick={() => handleToggle()}>Add new card</button>  */}
                     </div>
                     }
                     
-                    
-                    {/* <p>{eastCards}</p> */}
-                    {toggleNewCard && 
-                        <div className="col-3">
+                    {/* {toggleNewCard &&  */}
+                    <div className={`${(!westernCards && !eastCards) ? 'col-6' : 'col-3'}`}>
+                        <div>
                             <NewCard user={user} updateError={updateError} setEastCards={setEastCards} setWesternCards={setWesternCards} />
                         </div>
-                    }
+                    </div>
+                    {/* } */}
                     
             </div>
         </div>

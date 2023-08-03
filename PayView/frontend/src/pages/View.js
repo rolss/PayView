@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
 import Cards from "../components/Cards"
-import History from "../components/History"
+
 
 const View = () => {
     const { user } = useAuthContext()
@@ -9,8 +9,6 @@ const View = () => {
     const [error, setError] = useState(null)
     const [eastAvailable, setEastAvailable] = useState(true)
     const [westernAvailable, setWesternAvailable] = useState(true)
-
-
 
     const updateError = (newError) => {
         setError(newError);
@@ -74,7 +72,8 @@ const View = () => {
                     </div>}
                     
                     <Cards user={user} updateError={updateError}/>
-                    <History user={user} initial={true}/>
+                    
+                    
                     
                     
                     

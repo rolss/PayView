@@ -96,7 +96,7 @@ const History = ({user, initial}) => {
                             ))}
                         </tbody>
                     </table>
-                    {history.length >= 3 && initial && <a className='btn btn-sm btn-warning' href="/fullhistory">View more</a>}
+                    {history.length >= 3 && initial && <button className='btn btn-sm btn-warning' href="/fullhistory">View more</button>}
                 </div>
         //     </div>
         // </div>
