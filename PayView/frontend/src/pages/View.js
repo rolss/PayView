@@ -70,8 +70,15 @@ const View = () => {
                     <div className="error">
                         <p>{error}</p>
                     </div>}
+                    
                     <Cards user={user} updateError={updateError}/>
+                    
+                    <div className="col-6">
+
                     <History user={user} initial={true}/>
+                    </div>
+                    
+                    
                 </div>
             )}
         </div>

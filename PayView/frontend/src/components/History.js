@@ -67,20 +67,20 @@ const History = ({user, initial}) => {
 
     return ( 
         <div className='history'>
-            <h4 className='mb-4'>Historial</h4>
+            <h2 className='mb-4'>History</h2>
             {error && 
             <div className="error">
                 <p>{error}</p>
             </div>}
-            <table className="history table text-light">
+            <table className="history table">
                 <thead>
                     <tr>
-                        <th>Monto</th>
-                        <th>Descripcion</th>
-                        <th>Tarjeta</th>
-                        <th>Banco</th>
-                        <th>Fecha</th>
-                        <th>Hora</th>
+                        <th>Balance</th>
+                        <th>Description</th>
+                        <th>Card</th>
+                        <th>Bank</th>
+                        <th>Date</th>
+                        <th>Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -96,7 +96,7 @@ const History = ({user, initial}) => {
                     ))}
                 </tbody>
             </table>
-            {history.length >= 3 && initial && <a className='btn btn-warning' href="/fullhistory">Ver mas</a>}
+            {history.length >= 3 && initial && <a className='btn btn-warning' href="/fullhistory">View more</a>}
         </div>
      );
 }
