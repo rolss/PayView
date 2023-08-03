@@ -10,6 +10,8 @@ const View = () => {
     const [eastAvailable, setEastAvailable] = useState(true)
     const [westernAvailable, setWesternAvailable] = useState(true)
 
+
+
     const updateError = (newError) => {
         setError(newError);
     };
@@ -72,11 +74,8 @@ const View = () => {
                     </div>}
                     
                     <Cards user={user} updateError={updateError}/>
-                    
-                    <div className="col-6">
-
                     <History user={user} initial={true}/>
-                    </div>
+                    
                     
                     
                 </div>

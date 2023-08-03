@@ -2,6 +2,7 @@ import { useEffect, useState, useSyncExternalStore } from "react"
 import NewCard from "../components/NewCard"
 
 const Cards = ({user, updateError}) => {
+
     const [westernCards, setWesternCards] = useState('')
     const [eastCards, setEastCards] = useState('')
 
