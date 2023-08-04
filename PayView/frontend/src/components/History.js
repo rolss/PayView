@@ -1,5 +1,5 @@
 import format from 'date-fns/format'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 const History = ({user, initial}) => {
     
@@ -23,6 +23,7 @@ const History = ({user, initial}) => {
                 // update history 
                 if (response1.ok) {
                     setHistory([...json1.history])
+                    console.log("PING")
                 }
                 if (!response1.ok) {
                     setError(json1.error)
@@ -49,6 +50,7 @@ const History = ({user, initial}) => {
                     setError(json2.error)
                 }
                 
+                
             } catch (error) {
                 // setAvailable(false)
                 console.error('Error:', error.message)
@@ -58,22 +60,15 @@ const History = ({user, initial}) => {
         fetchHistory()
     }, [user.token, initial])
 
-    useEffect(() => {
-        if (initial === true) {
-            setHistory(history.slice(0,3))
-        }
-    }, [history])
-    
-
     return ( 
         <div>
-            {/* <div className="row mt-5">
-                <div className="col-8"> */}
-                    <h2 className='mb-4'>History</h2>
-                    {error && 
-                    <div className="error">
-                        <p>{error}</p>
-                    </div>}
+            <h2 className='mb-4'>History</h2>
+            {error && 
+            <div className="error">
+                <p>{error}</p>
+            </div>}
+            {history ? (
+                <div>
                     <table className="history table">
                         <thead>
                             <tr>
@@ -85,7 +80,7 @@ const History = ({user, initial}) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {history && history.map((item) => (
+                            {history && history.slice(0, initial ? 3 : undefined).map((item) => (
                                 <tr key={item._id}>
                                     <td>{item.amount}</td>
                                     <td>{item.cardNumber}</td>
@@ -96,10 +91,15 @@ const History = ({user, initial}) => {
                             ))}
                         </tbody>
                     </table>
-                    {history.length >= 3 && initial && <button className='btn btn-sm btn-warning' href="/fullhistory">View more</button>}
+                    {history.length >= 3 && initial && <a className='btn btn-sm btn-warning' href="/fullhistory">View more</a>}
                 </div>
-        //     </div>
-        // </div>
+                ) : (
+                <div>
+                    <p>No transactions have been done in this account</p>
+                </div>
+            )}
+            
+        </div>
      );
 }
  

@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const NewCard = ({user, updateError, setEastCards, setWesternCards}) => {
+const NewCard = ({user, setEastCards, setWesternCards}) => {
 
     const [cardName, setCardName] = useState('')
     const [cardNumber, setCardNumber] = useState('')
@@ -10,16 +10,18 @@ const NewCard = ({user, updateError, setEastCards, setWesternCards}) => {
 
     const [bank, setBank] = useState('Western Bank')
 
+    const [error, setError] = useState(null)
+
     const performValidations = () => {
         if (!cardName || !cardNumber || !expMonth || !expYear || !code) {
-            updateError("Por favor no deje campos vacios")
+            setError("Por favor no deje campos vacios")
             return
         }
         if (expMonth.length !== 2 || expYear.length !== 2) {
-            updateError("Las fechas de la tarjeta son invalidas")
+            setError("Las fechas de la tarjeta son invalidas")
         }
         if (code.length !== 3) {
-            updateError("El codigo ingresado es inválido")
+            setError("El codigo ingresado es inválido")
         }
     }
     
@@ -51,7 +53,7 @@ const NewCard = ({user, updateError, setEastCards, setWesternCards}) => {
             const json = await response.json()
             
             if (response.ok) {
-                updateError('')
+                setError('')
                 if (bank === "Western Bank") {
                     setWesternCards(json.cards)
                 } else {
@@ -60,7 +62,7 @@ const NewCard = ({user, updateError, setEastCards, setWesternCards}) => {
             }
 
             if (!response.ok) {
-                updateError(json.error)
+                setError(json.error)
             }
         } catch (error) {
             console.error('Error at cardInformation:', error.message)
@@ -68,11 +70,11 @@ const NewCard = ({user, updateError, setEastCards, setWesternCards}) => {
     }
 
     return ( 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="">
             <h2>New Card</h2>
             {/* make this a component */}
             <label className="mt-2">Name on card</label>
-            <input type="text" className="form-control"  onChange={(e) => {setCardName(e.target.value)}}/>
+            <input type="text" className="form-control" placeholder="Bruce Wayne"  onChange={(e) => {setCardName(e.target.value)}}/>
             <label>Bank</label>
             <select className="form-select" onChange={(e) => {setBank(e.target.value)}}>
                 <option value="Western Bank">Western Bank</option>
@@ -91,7 +93,11 @@ const NewCard = ({user, updateError, setEastCards, setWesternCards}) => {
             </div>
             <label className="mt-2">Security code</label>
             <input maxLength="3" className="form-control" type="password" placeholder="•••" onChange={(e) => {setCode(e.target.value)}}/>
-            <button className="formbutton btn btn-warning mt-4 w-25">View</button>
+            <button className="formbutton btn btn-warning mt-4 w-50">Add to view</button>
+            {error && 
+            <div className="error mt-2">
+                <p>{error}</p>
+            </div>}
         </form>
      );
 }

@@ -5,14 +5,10 @@ import Cards from "../components/Cards"
 
 const View = () => {
     const { user } = useAuthContext()
-
-    const [error, setError] = useState(null)
+    
     const [eastAvailable, setEastAvailable] = useState(true)
     const [westernAvailable, setWesternAvailable] = useState(true)
 
-    const updateError = (newError) => {
-        setError(newError);
-    };
 
     useEffect(() => {
         const checkEastAvailability = async () => {
@@ -66,17 +62,8 @@ const View = () => {
             )}
             {eastAvailable === true && (
                 <div>
-                    {error && 
-                    <div className="error">
-                        <p>{error}</p>
-                    </div>}
                     
-                    <Cards user={user} updateError={updateError}/>
-                    
-                    
-                    
-                    
-                    
+                    <Cards user={user}/>
                 </div>
             )}
         </div>

@@ -2,7 +2,8 @@ import { useEffect, useState, useSyncExternalStore } from "react"
 import NewCard from "../components/NewCard"
 import History from "../components/History"
 
-const Cards = ({user, updateError}) => {
+const Cards = ({user}) => {
+    const [error, setError] = useState(null)
 
     const [westernCards, setWesternCards] = useState('')
     const [eastCards, setEastCards] = useState('')
@@ -32,10 +33,10 @@ const Cards = ({user, updateError}) => {
         const json = await response.json()
 
         if (!response.ok) {
-            updateError(json.error)
+            setError(json.error)
         }
         if (response.ok) {
-            updateError('')
+            setError('')
             if (bank === "Western Bank") {
                 setWesternCards(json.cards)
             } else {
@@ -78,7 +79,7 @@ const Cards = ({user, updateError}) => {
                 }
 
                 if (!response1.ok && !response2.ok) {
-                    updateError(json1.error)
+                    setError(json1.error)
                 }
                 
             } catch (error) {
@@ -94,12 +95,15 @@ const Cards = ({user, updateError}) => {
     return ( 
         <div className="container">
             <div className="row mt-5">
-                {westernCards || eastCards && 
                     <div className="me-5 col-8">
-                        <div>
-
-                            <h2>Cards</h2>
-                            <table className="table text-center">
+                        <div className="">
+                            <h2 className="mb-4">Cards</h2>
+                            {error && 
+                            <div className="error">
+                                <p>{error}</p>
+                            </div>}
+                            {westernCards || eastCards && 
+                            <table className="table mb-5">
                                 <thead>
                                     <tr>
                                         <th>Card</th>
@@ -135,25 +139,24 @@ const Cards = ({user, updateError}) => {
                                 }
                                 </tbody>
                             </table>
+                            }
+                            {!westernCards && !eastCards && 
+                                <div className="mb-5">
+                                    <p>No cards are currently linked to this account</p>
+                                    {/* <button className="btn btn-sm btn-warning mb-5" onClick={() => handleToggle()}>Add new card</button>  */}
+                                </div>
+                            }      
                         </div>
                         <div>
                             <History user={user} initial={true}/>
                             {/* <button className="btn btn-sm btn-warning mb-5" onClick={() => handleToggle()}>Add new card</button> */}
                         </div>
                     </div>
-                }
-                    
-                    {!westernCards && !eastCards && 
-                    <div className="col-7">
-                        <p>No cards have been linked to this account</p>
-                        {/* <button className="btn btn-sm btn-warning mb-5" onClick={() => handleToggle()}>Add new card</button>  */}
-                    </div>
-                    }
                     
                     {/* {toggleNewCard &&  */}
-                    <div className={`${(!westernCards && !eastCards) ? 'col-6' : 'col-3'}`}>
+                    <div className="col-3">
                         <div>
-                            <NewCard user={user} updateError={updateError} setEastCards={setEastCards} setWesternCards={setWesternCards} />
+                            <NewCard user={user} setEastCards={setEastCards} setWesternCards={setWesternCards} />
                         </div>
                     </div>
                     {/* } */}
