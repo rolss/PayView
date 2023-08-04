@@ -70,12 +70,12 @@ const NewCard = ({user, setEastCards, setWesternCards}) => {
     }
 
     return ( 
-        <form onSubmit={handleSubmit} className="">
+        <form onSubmit={handleSubmit} className="form">
             <h2>New Card</h2>
             {/* make this a component */}
             <label className="mt-2">Name on card</label>
             <input type="text" className="form-control" placeholder="Bruce Wayne"  onChange={(e) => {setCardName(e.target.value)}}/>
-            <label>Bank</label>
+            <label className="mt-2">Bank</label>
             <select className="form-select" onChange={(e) => {setBank(e.target.value)}}>
                 <option value="Western Bank">Western Bank</option>
                 <option value="East Bank">Eastern Bank</option>

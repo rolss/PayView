@@ -33,8 +33,6 @@ const loginUser = async (req,res) => {
         if (!user) {
             res.status(400).json({error: 'El usuario no se encuentra registrado'})
         }
-        
-        
     } catch (error) {
         res.status(400).json({error: error.message})
     }

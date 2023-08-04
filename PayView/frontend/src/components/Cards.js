@@ -118,9 +118,13 @@ const Cards = ({user}) => {
                                             <td>{item.cardNumber}</td>
                                             <td>{item.company}</td>
                                             <td>{item.balance}</td>
-                                            <td>{item.bank}</td>
+                                            {/* <td>{item.bank}</td>
                                             <td>
-                                                <button className="btn btn-sm btn-outline-danger ms-5" onClick={() => handleDelete(item._id, item.bank)}>Unlink Card</button>
+                                                <button className="btn btn-sm btn-outline-danger ms-5" onClick={() => handleDelete(item._id, item.bank)}>X</button>
+                                            </td> */}
+                                            <td>
+                                                {item.bank}
+                                                <button className="btn btn-sm btn-outline-danger ms-5" onClick={() => handleDelete(item._id, item.bank)}>Unlink</button>
                                             </td>
                                         </tr>
                                     ))

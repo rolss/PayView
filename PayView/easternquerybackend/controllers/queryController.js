@@ -2,8 +2,6 @@ const Transaction = require('../models/eastTransactionModel')
 const Card = require('../models/eastCardModel')
 
 // Helper functions
-
-
 // Finds all cards linked to the user that is performing the request
 // returns the list of cards, empty string if no cards
 const getUserCards = async (user_id) => {
@@ -29,7 +27,6 @@ const transactionHistory = async (req,res) => {
         const transac_history = await Transaction.find({user_id: id}).sort({ createdAt: 'descending'})
         if (transac_history != []) {
             history = transac_history.map(item => ({ _id: item._id, 
-                description: item.description, 
                 amount: item.amount, 
                 cardNumber: item.cardNumber, 
                 bank: item.bank,

@@ -15,11 +15,7 @@ const westernTransactionSchema = new Schema({
         type: String,
         required: true,
     },
-    description: {
-        type: String,
-        required: true
-    },
-    location: {
+    email: {
         type: String,
         required: true
     },
@@ -27,13 +23,9 @@ const westernTransactionSchema = new Schema({
         type: Number,
         required: true
     },
-    installments: {
-        type: Number,
-        required: true
-    },
     cardNumber: {
         type: String,
-        required: true
+        required: true,
     },
     bank: {
         type: String,

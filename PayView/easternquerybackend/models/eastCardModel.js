@@ -32,14 +32,6 @@ const eastCardSchema = new Schema({
         type: String,
         required: true,
     },
-    type: {
-        type: String,
-        required: true
-    },
-    active: {
-        type: Boolean,
-        required: true
-    },
     bank: {
         type: String,
         required: true

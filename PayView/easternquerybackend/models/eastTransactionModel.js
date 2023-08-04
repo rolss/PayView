@@ -15,11 +15,7 @@ const eastTransactionSchema = new Schema({
         type: String,
         required: true,
     },
-    description: {
-        type: String,
-        required: true
-    },
-    location: {
+    email: {
         type: String,
         required: true
     },
