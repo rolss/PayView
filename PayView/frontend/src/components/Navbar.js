@@ -53,7 +53,6 @@ const NavBar = () => {
         <header className="customheader shadow">
             <div className="container">
                 <Link to="/">
-                    <i class="bi bi-hexagon-half"></i>
                     <h1>PayView</h1>
                 </Link>
                 <nav>

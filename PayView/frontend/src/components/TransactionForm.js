@@ -6,7 +6,7 @@ const TransactionForm = () => {
     const { user } = useAuthContext()
 
     const [name, setName] = useState('')
-    const [idType, setIdType] = useState('Cédula de Ciudadanía')
+    const [idType, setIdType] = useState('National ID')
     const [idNumber, setIdNumber] = useState('')
     const [email, setEmail] = useState('')
     const [amount, setAmount] = useState(0)
@@ -97,10 +97,10 @@ const TransactionForm = () => {
         <div className="container">
             {!status && (
                 <form onSubmit={handleSubmit}>
-                    <h1 className="mt-5">New Transaction</h1>
-                    <div className="row">
-                        <div className="col-md-6 w-25">
-                            <h4 className="mt-5">Transaction Information</h4>
+                    <div className="row justify-content-center">
+                        <h1 className="mt-5 text-center">New Transaction</h1>
+                        <div className="col-md-6 w-25 transaction-form">
+                            <h4>Transaction Information</h4>
                             <label>Full name</label>
                             <input className="form-control" type="text" placeholder="Luke Hemmings" onChange={(e) => {setName(e.target.value)}}/>
                             <label className="mt-2">ID type</label>
@@ -122,8 +122,8 @@ const TransactionForm = () => {
                             <input className="form-control" type="number" onChange={(e) => {setAmount(e.target.value)}}/>
                         </div>
                     
-                        <div className="col-md-6 w-25">
-                            <h4 className="mt-5">Card details</h4>
+                        <div className="col-md-6 w-25 transaction-form">
+                            <h4>Card details</h4>
                             <img src={require('../img/companies.png')} alt="" height={60} width={300} />
                             <br />
                             <label className="mt-2">Name on card</label>
