@@ -2,8 +2,6 @@ const Transaction = require('../models/westernTransactionModel')
 const Card = require('../models/westernCardModel')
 
 // Helper functions
-
-
 // Finds all cards linked to the user that is performing the request
 // returns the list of cards, empty string if no cards
 const getUserCards = async (user_id) => {
@@ -119,6 +117,7 @@ const fetchCards = async (req,res) => {
 
     // Return all user cards updated
     const updatedCards = await getUserCards(user_id);
+    // console.log("UPDATED CARDS:",Array.isArray(updatedCards.cards))
     res.status(200).json(updatedCards);
 }
 

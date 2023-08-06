@@ -131,7 +131,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .transaction-form {
-  margin: 40px 40px;
+  margin: 30px 40px;
 }
 
 .receipt-success {
@@ -146,7 +146,25 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 60px;
 }
 
+.fw-semi-bold {
+  font-weight: 600;
+}
+
 .receipt-button {
   width: auto;
-  margin: 30px 30px;
+  margin: 40px 30px;
+  background-color: #212529;
+  text-decoration: none;
+  color: white;
+  padding: 5px 14px;
+  font-size: 95%;
+}
+.receipt-button:hover {
+  color: white;
+  background-color: #33393e;
+}
+
+.service-unavailable {
+  margin: 200px 300px;
+  padding: 50px;
 }

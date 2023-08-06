@@ -67,7 +67,11 @@ const Login = () => {
     return ( 
         <div>
             {available === false && (
-                <div className="error">El servidor no se encuentra disponible</div>
+                <div className="alert alert-danger service-unavailable">
+                    <h3 className="alert-heading">Service Unavailable</h3>
+                    <hr />
+                    <p>Our service is currently under maintenance to make your experience better! Please try again later</p>
+                </div>
             )}
             {available === true && (
                 <div className="container p-0 d-flex align-items-center justify-content-center">

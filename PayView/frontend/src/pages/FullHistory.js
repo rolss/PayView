@@ -11,7 +11,7 @@ const FullHistory = () => {
     }
 
     return ( 
-        <div>
+        <div className="container mt-5">
             <History user={user} initial={false} />
             <button className="btn btn-warning" onClick={handleClick}>Back</button>
         </div>

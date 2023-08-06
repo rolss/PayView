@@ -95,7 +95,7 @@ const History = ({user, initial}) => {
                 </div>
                 ) : (
                 <div>
-                    <p>No transactions have been done in this account</p>
+                    <p>No history found. Please make a payment or try again later</p>
                 </div>
             )}
             

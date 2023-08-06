@@ -56,16 +56,8 @@ const View = () => {
 
     // !!Add: loading screen to history
     return ( 
-        <div>
-            {eastAvailable === false && (
-                <div className="error">El servidor no se encuentra disponible</div>
-            )}
-            {eastAvailable === true && (
-                <div>
-                    
-                    <Cards user={user}/>
-                </div>
-            )}
+        <div>    
+            <Cards user={user} eastAvailable={eastAvailable} westernAvailable={westernAvailable} fullUnavailable={!eastAvailable&&!westernAvailable}/>
         </div>
      );
 }

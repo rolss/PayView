@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
 import TransactionDetails from "./TransactionDetails"
 
@@ -20,6 +20,9 @@ const TransactionForm = () => {
     const [status, setStatus] = useState(false)
     const [error, setError] = useState('')
     const [data, setData] = useState('')
+
+    const [eastAvailable, setEastAvailable] = useState(true)
+    const [westernAvailable, setWesternAvailable] = useState(true)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -69,6 +72,50 @@ const TransactionForm = () => {
 
     }
     
+    useEffect(() => {
+        const checkEastAvailability = async () => {
+            try {
+                const response = await fetch('api/east/transaction/checkAvailability', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                if (response.ok) {
+                    setEastAvailable(true)
+                }
+                if (!response.ok) {
+                    setEastAvailable(false)
+                }
+            } catch (error) {
+                setEastAvailable(false)
+                console.error('Error:', error.message)
+            }
+        }
+        const checkWesternAvailability = async () => {
+            try {
+                const response = await fetch('api/western/transaction/checkAvailability', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                if (response.ok) {
+                    setWesternAvailable(true)
+                }
+                if (!response.ok) {
+                    setWesternAvailable(false)
+                }
+            } catch (error) {
+                setEastAvailable(false)
+                console.error('Error:', error.message)
+            }
+        }
+
+        checkEastAvailability()
+        checkWesternAvailability()
+    }, [user.token])
+
     const validate = () => {
         if (amount <= 0) {
             setError("Invalid amount")
@@ -98,7 +145,15 @@ const TransactionForm = () => {
             {!status && (
                 <form onSubmit={handleSubmit}>
                     <div className="row justify-content-center">
-                        <h1 className="mt-5 text-center">New Transaction</h1>
+                        <h1 className="mt-4 text-center">New Transaction</h1>
+                        <div className="transaction-error error text-center mt-3">
+                            {eastAvailable === false && (
+                                <p className="fw-semi-bold me-5"><i className="bi bi-exclamation-circle-fill me-2"></i>East Bank servers for obtaining your information are currently unavailable</p>
+                            )}
+                            {westernAvailable === false && (
+                                <p className="fw-semi-bold me-3 mb-0"><i className="bi bi-exclamation-circle-fill me-2"></i>Western Bank servers for obtaining your information are currently unavailable</p>
+                            )}
+                        </div>
                         <div className="col-md-6 w-25 transaction-form">
                             <h4>Transaction Information</h4>
                             <label>Full name</label>
@@ -153,9 +208,6 @@ const TransactionForm = () => {
             {status && (
                 <TransactionDetails data={data} />
             )}
-            <div className="card-helper">
-                    
-            </div>
         </div>
      );
 }
