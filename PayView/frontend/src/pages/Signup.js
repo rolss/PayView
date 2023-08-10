@@ -86,9 +86,9 @@ const Signup = () => {
                 </div>
             )}
             {available === true && (
-                <div className="container p-0 d-flex align-items-center justify-content-center">
-                    <form className="signup-form" onSubmit={handleSubmit}>
-                        <h2 className="h2 mb-5">Welcome to PayView</h2>
+                <div className="container p-0 d-flex align-items-center justify-content-center mt-5">
+                    <form className="user-form me-3 p-4 p-sm-5 col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4" onSubmit={handleSubmit}>
+                        <h2 className="h2 ms-1 mb-5">Welcome to PayView</h2>
                         {error &&
                         <div className="error">
                             <p>{error}</p>
