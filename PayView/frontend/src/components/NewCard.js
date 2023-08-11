@@ -84,16 +84,16 @@ const NewCard = ({user, setEastCards, setWesternCards}) => {
             <input maxLength="16" className="form-control" type="text" placeholder="xxxx xxxx xxxx xxxx" onChange={(e) => {setCardNumber(e.target.value)}}/>
             <label className="mt-2">Date of expiry</label>
             <div className="row">
-                <div className="col-md-6">
+                <div className="col-5 col-sm-4">
                     <input className="form-control" maxLength="2" type="text" placeholder="MM" onChange={(e) => {setExpMonth(e.target.value)}}/>
                 </div>
-                <div className="col-md-6">
+                <div className="col-5 col-sm-4">
                     <input className="form-control" maxLength="2" type="text" placeholder="YY" onChange={(e) => {setExpYear(e.target.value)}}/>
                 </div>
             </div>
             <label className="mt-2">Security code</label>
-            <input maxLength="3" className="form-control" type="password" placeholder="•••" onChange={(e) => {setCode(e.target.value)}}/>
-            <button className="formbutton btn btn-warning mt-4 w-50">Add to view</button>
+            <input maxLength="3" className="form-control w-25" type="password" placeholder="•••" onChange={(e) => {setCode(e.target.value)}}/>
+            <button className="formbutton btn btn-warning mt-4 w-100">Add to view</button>
             {error && 
             <div className="error mt-2">
                 <p>{error}</p>

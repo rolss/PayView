@@ -105,7 +105,7 @@ const Cards = ({user, eastAvailable, westernAvailable, fullUnavailable}) => {
     
 
     return ( 
-        <div className="container">
+        <div className="container-fluid mx-md-4">
             {/* <div className={fullUnavailable ? "alert alert-danger mt-3 p-0 pt-3 pb-2 ps-4" : ""} style={{ width: "65%" }}> */}
             <div className="mt-5">
                 {eastAvailable === false && (
@@ -120,8 +120,8 @@ const Cards = ({user, eastAvailable, westernAvailable, fullUnavailable}) => {
                 )}
             </div>
             {/* </div> */}
-            <div className="row mt-5">
-                <div className="me-5 col-8">
+            <div className="row mt-5 ms-sm-3">
+                <div className="me-xl-5 me-md-3 col-12 col-md-7 col-lg-8 px-xl-4">
                     <h2 className="mb-4">Cards</h2>
                     {error && 
                     <div className="error">
@@ -134,7 +134,7 @@ const Cards = ({user, eastAvailable, westernAvailable, fullUnavailable}) => {
                                 <th>Card</th>
                                 <th>Brand</th>
                                 <th>Balance</th>
-                                <th>Bank</th>
+                                <th className="d-sm-block d-none">Bank</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -143,9 +143,9 @@ const Cards = ({user, eastAvailable, westernAvailable, fullUnavailable}) => {
                                     <td>{item.cardNumber}</td>
                                     <td>{item.company}</td>
                                     <td>{item.balance}</td>
-                                    <td>{item.bank}</td>
+                                    <td className="d-sm-block d-none">{item.bank}</td>
                                     <td>
-                                        <button className="btn btn-sm btn-outline-danger ms-5" onClick={() => handleDelete(item._id, item.bank)}>Unlink</button>
+                                        <button className="btn btn-sm btn-outline-danger" onClick={() => handleDelete(item._id, item.bank)}>Unlink</button>
                                     </td>
                                 </tr>
                             ))
@@ -155,9 +155,9 @@ const Cards = ({user, eastAvailable, westernAvailable, fullUnavailable}) => {
                                     <td>{item.cardNumber}</td>
                                     <td>{item.company}</td>
                                     <td>{item.balance}</td>
-                                    <td>{item.bank}</td>
+                                    <td className="d-sm-block d-none">{item.bank}</td>
                                     <td>
-                                        <button className="btn btn-sm btn-outline-danger ms-5" onClick={() => handleDelete(item._id, item.bank)}>Unlink</button>
+                                        <button className="btn btn-sm btn-outline-danger" onClick={() => handleDelete(item._id, item.bank)}>Unlink</button>
                                     </td>
                                 </tr>
                             ))
@@ -176,7 +176,7 @@ const Cards = ({user, eastAvailable, westernAvailable, fullUnavailable}) => {
                     </div>
                 </div>
                     
-                <div className="col-3">
+                <div className="col-8 col-sm-6 col-md-4 col-lg-3 px-xl-4 mt-5 mt-md-0 mb-4 mb-md-0">
                     <div>
                         <NewCard user={user} setEastCards={setEastCards} setWesternCards={setWesternCards} />
                     </div>

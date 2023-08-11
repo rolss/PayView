@@ -19,19 +19,19 @@ const userSchema = new Schema({
 userSchema.statics.signup = async function(email, password) {
     // validate for missing fields, invalid email and password strength
     if (!email || !password) {
-        throw Error('Todos los campos deben ser completados')
+        throw Error('All fields must be filled')
     }
     if (!validator.isEmail(email)) {
-        throw Error('Correo invalido')
+        throw Error('Invalid email')
     }
     if (!validator.isStrongPassword(password)) {
-        throw Error('La contraseña no es lo suficientemente fuerte')
+        throw Error('Password is too weak, please add numbers, capital latters and/or special characters')
     }
     
     // validate if email already exists
     const exists = await this.findOne({ email })
     if (exists) {
-        throw Error('Este correo ya se encuentra en uso')
+        throw Error('This email is already in use')
     }
 
     // Add random data to password and hash it
@@ -47,19 +47,19 @@ userSchema.statics.signup = async function(email, password) {
 userSchema.statics.login = async function(email, password) {
     // validate for missing fields
     if (!email || !password) {
-        throw Error('Todos los campos deben ser completados')
+        throw Error('All fields must be filled')
     }
 
     // validate if email can be found in database
     const user = await this.findOne({ email })
     if (!user) {
-        throw Error('Correo electrónico incorrecto')
+        throw Error('Incorrect email or password')
     }
 
     // compare password on input with hashed password on database
     const match = await bcrypt.compare(password, user.password)
     if (!match) {
-        throw Error('Contraseña incorrecta')
+        throw Error('Incorrect email or password')
     }
 
     return user

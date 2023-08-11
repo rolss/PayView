@@ -60,6 +60,11 @@ const History = ({user, initial}) => {
         fetchHistory()
     }, [user.token, initial])
 
+    useEffect(() => {
+      console.log("history: "+history)
+    }, [history])
+    
+
     return ( 
         <div>
             <h2 className='mb-4'>History</h2>
@@ -69,7 +74,7 @@ const History = ({user, initial}) => {
             </div>}
             {history ? (
                 <div>
-                    <table className="history table">
+                    <table className="table">
                         <thead>
                             <tr>
                                 <th>Paid</th>

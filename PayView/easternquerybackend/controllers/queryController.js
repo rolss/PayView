@@ -25,7 +25,8 @@ const transactionHistory = async (req,res) => {
     try {
         let history = null;
         const transac_history = await Transaction.find({user_id: id}).sort({ createdAt: 'descending'})
-        if (transac_history != []) {
+        if (transac_history.length > 0) {
+            console.log("transac: "+transac_history)
             history = transac_history.map(item => ({ _id: item._id, 
                 amount: item.amount, 
                 cardNumber: item.cardNumber, 
@@ -34,8 +35,10 @@ const transactionHistory = async (req,res) => {
         }
 
         if (history) {
+            console.log(history)
             res.status(200).json({history})
         }
+        
     } catch (error) {
         res.status(400).json({error: error.message})
     }

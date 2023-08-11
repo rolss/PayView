@@ -1,5 +1,4 @@
 const User = require('../models/userModel')
-const Card = require('../models/cardModel')
 const jwt = require('jsonwebtoken')
 
 // Create a JWT Token for a user which expires in 30 days.
@@ -31,7 +30,7 @@ const loginUser = async (req,res) => {
             res.status(200).json({email, token})
         }
         if (!user) {
-            res.status(400).json({error: 'El usuario no se encuentra registrado'})
+            res.status(400).json({error: 'User not found, please check your credentials'})
         }
     } catch (error) {
         res.status(400).json({error: error.message})
