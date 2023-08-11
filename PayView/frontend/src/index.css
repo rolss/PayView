@@ -105,9 +105,9 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-top: 33px;
 }
 
-.transaction-form {
+/* .transaction-form {
   margin: 30px 40px;
-}
+} */
 
 .receipt-success {
   color: #43a047;

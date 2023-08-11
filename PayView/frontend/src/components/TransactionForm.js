@@ -144,9 +144,9 @@ const TransactionForm = () => {
         <div className="container">
             {!status && (
                 <form onSubmit={handleSubmit}>
-                    <div className="row justify-content-center">
+                    <div className="row justify-content-center mt-4">
                         <h1 className="mt-4 text-center">New Transaction</h1>
-                        <div className="transaction-error error text-center mt-3">
+                        <div className="transaction-error error text-center mt-3 mb-4">
                             {eastAvailable === false && (
                                 <p className="fw-semi-bold me-5"><i className="bi bi-exclamation-circle-fill me-2"></i>East Bank servers for obtaining your information are currently unavailable</p>
                             )}
@@ -154,7 +154,7 @@ const TransactionForm = () => {
                                 <p className="fw-semi-bold me-3 mb-0"><i className="bi bi-exclamation-circle-fill me-2"></i>Western Bank servers for obtaining your information are currently unavailable</p>
                             )}
                         </div>
-                        <div className="col-md-6 w-25 transaction-form">
+                        <div className="col-11 col-sm-7 col-lg-4 col-xl-4 me-lg-5 mb-5 mb-sm-0 mt-3 mt-sm-0">
                             <h4>Transaction Information</h4>
                             <label>Full name</label>
                             <input className="form-control" type="text" placeholder="Luke Hemmings" onChange={(e) => {setName(e.target.value)}}/>
@@ -177,9 +177,9 @@ const TransactionForm = () => {
                             <input className="form-control" type="number" onChange={(e) => {setAmount(e.target.value)}}/>
                         </div>
                     
-                        <div className="col-md-6 w-25 transaction-form">
+                        <div className="col-11 col-sm-5 col-lg-4 col-xl-3">
                             <h4>Card details</h4>
-                            <img src={require('../img/companies.png')} alt="" height={60} width={300} />
+                            <img className="img-fluid" src={require('../img/companies.png')} alt="" height={60} width={300} />
                             <br />
                             <label className="mt-2">Name on card</label>
                             <input placeholder="Bruce Wayne" className="form-control" type="text" onChange={(e) => {setCardName(e.target.value)}}/>
@@ -187,16 +187,16 @@ const TransactionForm = () => {
                             <input placeholder="xxxx xxxx xxxx xxxx" className="form-control" maxLength="16" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
                             <label className="mt-2">Date of expiry</label>
                             <div className="row">
-                                <div className="col-md-6">
-                                    <input placeholder="mes" className="form-control" maxLength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
+                                <div className="col-5 col-md-6">
+                                    <input placeholder="MM" className="form-control" maxLength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
                                 </div>
-                                <div className="col-md-6">
-                                    <input placeholder="año" className="form-control" maxLength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
+                                <div className="col-5 col-md-6">
+                                    <input placeholder="YY" className="form-control" maxLength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
                                 </div>
                             </div>
                             <label className="mt-2">Security code</label>
                             <input placeholder="CVV" className="form-control w-25" maxLength="4" type="text" onChange={(e) => {setCode(e.target.value)}}/>
-                            <button className="btn btn-warning w-50 custom-margin">Pagar</button>
+                            <button className="btn btn-warning w-50 custom-margin mb-4 mb-sm-0">Pay</button>
                         </div>
                     {error && <div className="error">
                         <p>{error}</p>

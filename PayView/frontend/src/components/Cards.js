@@ -107,7 +107,7 @@ const Cards = ({user, eastAvailable, westernAvailable, fullUnavailable}) => {
     return ( 
         <div className="container-fluid mx-md-4">
             {/* <div className={fullUnavailable ? "alert alert-danger mt-3 p-0 pt-3 pb-2 ps-4" : ""} style={{ width: "65%" }}> */}
-            <div className="mt-5">
+            <div className="mt-5 ms-sm-4 ps-sm-2">
                 {eastAvailable === false && (
                     <div className="error">
                         <p className="fw-semi-bold"><i className="bi bi-exclamation-circle-fill me-2"></i>East Bank servers for obtaining your information are currently unavailable</p>
