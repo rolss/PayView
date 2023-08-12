@@ -171,9 +171,9 @@ const Cards = ({user, eastAvailable, westernAvailable, fullUnavailable}) => {
                             <p>No cards found. Please add a card or try again later</p>
                         </div>
                     }      
-                    <div>
-                        <History user={user} initial={true}/>
-                    </div>
+                    {/* <div> */}
+                    <History user={user} initial={true}/>
+                    {/* </div> */}
                 </div>
                     
                 <div className="col-8 col-sm-6 col-md-4 col-lg-3 px-xl-4 mt-5 mt-md-0 mb-4 mb-md-0">

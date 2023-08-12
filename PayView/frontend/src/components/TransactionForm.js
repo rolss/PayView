@@ -141,8 +141,9 @@ const TransactionForm = () => {
     }
 
     return ( 
-        <div className="container">
-            {!status && (
+        <>
+        {!status && (
+            <div className="container">
                 <form onSubmit={handleSubmit}>
                     <div className="row justify-content-center mt-4">
                         <h1 className="mt-4 text-center">New Transaction</h1>
@@ -198,17 +199,17 @@ const TransactionForm = () => {
                             <input placeholder="CVV" className="form-control w-25" maxLength="4" type="text" onChange={(e) => {setCode(e.target.value)}}/>
                             <button className="btn btn-warning w-50 custom-margin mb-4 mb-sm-0">Pay</button>
                         </div>
-                    {error && <div className="error">
-                        <p>{error}</p>
-                    </div>}
+                        {error && <div className="error">
+                            <p>{error}</p>
+                        </div>}
                     </div>  
                 </form>
-                
-            )}
-            {status && (
-                <TransactionDetails data={data} />
-            )}
-        </div>
+            </div>
+        )}
+        {status && (
+            <TransactionDetails data={data} />
+        )}
+        </>
      );
 }
  
