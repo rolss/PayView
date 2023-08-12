@@ -8,9 +8,10 @@ const NotFound = () => {
     }
     
     return ( 
-        <div className="error">
-            <h2>Oops! Esta pagina no existe</h2>
-            <button className="btn btn-danger" onClick={handleClick}>Volver al Menu Principal</button>
+        <div className="alert alert-danger service-unavailable">
+            <h3 className="alert-heading">Not found</h3>
+            <hr />
+            <p>We could not find the page you were looking for!</p>
         </div>
      );
 }

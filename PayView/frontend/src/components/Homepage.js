@@ -1,10 +1,10 @@
 const Homepage = () => {
     return ( 
-        <div>
+        <>
             <section>
                 <div className="container-fluid">
                     <div className="row justify-content-center align-items-center mt-4 ms-lg-5 ms-4 pb-3">
-                        <div className="col-12 col-xl-4 col-lg-5 col-md-5 col-sm-6 m-0 p-0 ms-sm-4 ms-lg-3 pe-xl-3">
+                        <div className="col-12 col-xl-4 col-lg-5 col-md-5 col-sm-6 m-0 p-0 ms-sm-4 ms-lg-3 pe-xl-4">
                             <h1 className="display-4 text-left d-lg-block d-none">Welcome to <span className='d-block'>PayView</span></h1>
                             <h1 className="display-5 text-left d-md-block d-lg-none">Welcome to <span className='d-block'>PayView</span></h1>
                             {/* <h1 className="display-4 text-left d-sm-block d-md-none">Smaller welcome to <span className='d-block'>PayView</span></h1> */}
@@ -33,7 +33,7 @@ const Homepage = () => {
                             <p style={{ fontSize: '16px' }} className="lead d-sm-none text-center px-3">Make quick transactions through Western and East Banks</p>
                         </div>
                     </div>
-                    <div className='row justify-content-center align-items-sm-center'>
+                    <div className='row justify-content-center align-items-sm-center gx-0'>
                         <div className="col-4 d-sm-none mt-4">
                             <img className='mb-4 img-fluid d-sm-none' src={require('../img/security.png')} alt="" width={200} height={200}/>
                         </div>
@@ -59,7 +59,7 @@ const Homepage = () => {
                         <p style={{ fontSize: '16px' }} className="lead d-sm-none text-center px-3">View and get receipts of all your previous transactions</p>
                         </div>
                     </div>
-                    <div className='row justify-content-center align-items-sm-center'>
+                    <div className='row justify-content-center align-items-sm-center gx-0'>
                         <div className="col-4 d-sm-none mt-4">
                             <img className='mb-2 img-fluid d-sm-none' src={require('../img/chat.png')} alt="" width={200} height={200}/>
                         </div>
@@ -78,44 +78,24 @@ const Homepage = () => {
                 </div>
             </section>
             <footer>
-                {/* <div className="container-fluid">
-                    <div className="row py-3 justify-content-center align-items-center text-center">
-                        <div className="col-12 col-sm-4 col-md-3 mx-lg-5 mb-4 mb-sm-0">
-                            <h6 className="heading-6">Company</h6>
-                            <a className='d-block text-decoration-none text-dark' href="#">About us</a>
-                            <a className='d-block text-decoration-none text-dark' href="#">Contact us</a>
-                            <a className='d-block text-decoration-none text-dark' href="#">FAQ</a>
-                        </div>
-                        <div className="col-12 col-sm-4 col-md-3 mb-4 mb-sm-0">
-                            <h6 className="heading-6">App</h6>
-                            <a className='d-block text-decoration-none text-dark' href="#">Get started</a>
-                            <a className='d-block text-decoration-none text-dark' href="#">Associates</a>
-                            <a className='d-block text-decoration-none text-dark' href="#">References</a>
-                        </div>
-                        <div className="col-12 col-sm-4 col-md-3">
-                            <p className="text-sm-center fw-semi-bold">All rights reserved <span className="d-block">Copyright 2023</span></p>
-                        </div>
-                    </div>
-                </div> */}
                 <div className="container-fluid">
                     <div className="row justify-content-center align-items-center text-center py-3 py-sm-4">
                         <div className="col-12 col-sm-3 mb-2">
-                            <a className='d-block text-decoration-none text-dark fw-semi-bold' href="#">Get started</a>
+                            <a className='d-block text-decoration-none fw-semi-bold' href="/signup">Get started</a>
                         </div>
                         <div className="col-12 col-sm-3 mb-2">
-                            <a className='d-block text-decoration-none text-dark fw-semi-bold' href="#">About us</a>
+                            <a className='d-block text-decoration-none fw-semi-bold' href="#">About us</a>
                         </div>
                         <div className="col-12 col-sm-3 mb-2">
-                            <a className='d-block text-decoration-none text-dark fw-semi-bold' href="#">Contact us</a>
+                            <a className='d-block text-decoration-none fw-semi-bold' href="#">Contact us</a>
                         </div>
                         <div className="col-12 col-sm-3 mb-2">
-                            <a className='d-block text-decoration-none text-dark fw-semi-bold' href="#">FAQ</a>
+                            <a className='d-block text-decoration-none fw-semi-bold' href="#">FAQ</a>
                         </div>
                     </div>
                 </div>
-
             </footer>
-        </div>
+        </>
      );
 }
   
