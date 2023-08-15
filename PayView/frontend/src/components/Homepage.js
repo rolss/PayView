@@ -76,7 +76,7 @@ const Homepage = () => {
                     </div>
                 </div>
             </section>
-            <footer>
+            <footer style={{backgroundColor:"#414043"}}>
                 <div className="container-fluid">
                     <div className="row justify-content-center align-items-center text-center py-3 py-sm-4">
                         <div className="col-12 col-sm-3 mb-2">
