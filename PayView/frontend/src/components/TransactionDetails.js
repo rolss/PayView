@@ -63,7 +63,7 @@ const TransactionDetails = ({ data }) => {
             </div>
             <div className="container">
                 <div className="row align-items-center justify-content-center ">
-                    <a className="receipt-button" href="/transaction">New transaction</a>
+                    <a className="receipt-button reducer" href="/transaction">New transaction</a>
                     <a className="receipt-button px-4" href="/view">View cards</a>
                 </div>
             </div>

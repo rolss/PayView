@@ -155,7 +155,7 @@ const TransactionForm = () => {
                                 <p className="fw-semi-bold me-3 mb-0"><i className="bi bi-exclamation-circle-fill me-2"></i>Western Bank servers for obtaining your information are currently unavailable</p>
                             )}
                         </div>
-                        <div className="col-11 col-sm-7 col-lg-4 col-xl-4 me-lg-5 mb-5 mb-sm-0 mt-3 mt-sm-0">
+                        <div className="col-11 col-sm-7 col-lg-4 col-xl-4 me-lg-5 mb-5 mb-sm-0 mt-3 mt-sm-0 transaction-information">
                             <h4>Transaction Information</h4>
                             <label>Full name</label>
                             <input className="form-control" type="text" placeholder="Luke Hemmings" onChange={(e) => {setName(e.target.value)}}/>
@@ -178,7 +178,7 @@ const TransactionForm = () => {
                             <input className="form-control" type="number" onChange={(e) => {setAmount(e.target.value)}}/>
                         </div>
                     
-                        <div className="col-11 col-sm-5 col-lg-4 col-xl-3">
+                        <div className="col-11 col-sm-5 col-lg-4 col-xl-3 card-details">
                             <h4>Card details</h4>
                             <img className="img-fluid" src={require('../img/companies.png')} alt="" height={60} width={300} />
                             <br />

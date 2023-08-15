@@ -57,6 +57,9 @@ footer a {
 footer {
   background-color: #414043 !important;
 }
+footer a:hover {
+  color: #f2f9fd8b !important;
+}
 
 .avoid-overflow {
   overflow-x: hidden;
@@ -130,10 +133,6 @@ input[type="number"]::-webkit-outer-spin-button {
   padding: 50px;
 }
 
-footer a:hover {
-  color: rgb(99, 99, 99) !important;
-}
-
 .modal-anchor {
   margin: 0;
 
@@ -142,4 +141,10 @@ footer a:hover {
 /* FOR TESTS AND BUILDING */
 .bg-tests {
   background-color: #ecebeb;
+}
+
+@media screen and (max-width: 420px) {
+  .receipt-button.reducer {
+    margin-bottom: 0;
+  }
 }
