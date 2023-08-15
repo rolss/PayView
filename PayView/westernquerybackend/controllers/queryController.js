@@ -2,8 +2,6 @@ const Transaction = require('../models/westernTransactionModel')
 const Card = require('../models/westernCardModel')
 
 // Helper functions
-
-
 // Finds all cards linked to the user that is performing the request
 // returns the list of cards, empty string if no cards
 const getUserCards = async (user_id) => {
@@ -21,20 +19,28 @@ const getUserCards = async (user_id) => {
 
 const transactionHistory = async (req,res) => {
     const id = req.user._id // this id was added on our own middleware
-    // Find all transactions by user id, only keep the description, amount and card number of each one
-    const transac_history = await Transaction.find({user_id: id}).sort({ createdAt: 'descending'})
-    const history = transac_history.map(item => ({ _id: item._id, 
-        description: item.description, 
-        amount: item.amount, 
-        cardNumber: item.cardNumber, 
-        bank: item.bank,
-        createdAt: item.createdAt}));
 
-    if (history) {
-        res.status(200).json({history})
-    }
-    if (!history) {
-        res.status(400).json({error: 'Este usuario no ha realizado ninguna transacción'})
+    // Find all transactions by user id, only keep the description, amount and card number of each one
+    // Return null if user has no history
+    try {
+        let history = null;
+        const transac_history = await Transaction.find({user_id: id}).sort({ createdAt: 'descending'})
+        if (transac_history.length > 0) {
+            console.log("transac: "+transac_history)
+            history = transac_history.map(item => ({ _id: item._id, 
+                amount: item.amount, 
+                cardNumber: item.cardNumber, 
+                bank: item.bank,
+                createdAt: item.createdAt}));
+        }
+
+        if (history) {
+            console.log(history)
+            res.status(200).json({history})
+        }
+        
+    } catch (error) {
+        res.status(400).json({error: error.message})
     }
 }
 
@@ -115,6 +121,7 @@ const fetchCards = async (req,res) => {
 
     // Return all user cards updated
     const updatedCards = await getUserCards(user_id);
+    // console.log("UPDATED CARDS:",Array.isArray(updatedCards.cards))
     res.status(200).json(updatedCards);
 }
 

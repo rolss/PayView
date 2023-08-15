@@ -1,16 +1,20 @@
 /* google font importado */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 /* @import 'bootstrap/dist/css/bootstrap.css'; */
+/* #f1ab44 */
+/* #414043 */
+/* #f2f9fd */
 
 body.custom {
   background: white;
   margin: 0;
   font-family: "Poppins";
 }
+
 header.customheader {
   background: #fff;
-  
 }
+
 header .container {
   max-width: 1400px;
   margin: 0 auto;
@@ -30,30 +34,117 @@ header a {
 }
 
 nav a:hover {
-  color:#ffc107 !important;
+  color:#f1ab44 !important;
 }
-header a:hover {
-  color: #ffc107 !important;
+.logout:hover {
+  color: #e31a1a !important;
+}
+.user-form a:hover {
+  color: #f1ab44 !important;
 }
 
 div.error {
-  padding: 10px;
-  background: #f0b2b2;
-  border: 2px solid #d24040;
-  color: #bc3a3a;
-  border-radius: 4px;
-  margin: 20px 0;
+  color: #e31a1a;
 }
 
 .alt-row {
   background-color: #fde18f80;
 }
 
+footer a {
+  color: #f2f9fd !important;
+}
 footer {
-  background-color: #a8a8a8;
-  /* background-color: #917002; */
+  background-color: #414043 !important;
+}
+footer a:hover {
+  color: #f2f9fd8b !important;
 }
 
 .avoid-overflow {
   overflow-x: hidden;
+}
+
+.user-form {
+  background-color: #fde18f80;
+  box-shadow: 15px 15px;
+  padding-bottom: 70px !important;
+}
+
+.receipt {
+  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.force-left {
+  text-align: left;
+  margin: 5px 10px 10px 6px;
+}
+
+.custom-stuff {
+  background-color: #fde18f80;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.custom-margin {
+  margin-top: 33px;
+}
+
+.receipt-success {
+  color: #43a047;
+}
+
+.receipt-failed {
+  color: #d4001a;
+}
+
+.big-icon {
+  font-size: 60px;
+}
+
+.md-icon {
+  font-size: 30px;
+}
+
+.fw-semi-bold {
+  font-weight: 600;
+}
+
+.receipt-button {
+  width: auto;
+  margin: 40px 30px;
+  background-color: #212529;
+  text-decoration: none;
+  color: white;
+  padding: 5px 14px;
+  font-size: 95%;
+}
+.receipt-button:hover {
+  color: white;
+  background-color: #33393e;
+}
+
+.service-unavailable {
+  margin: 200px 300px;
+  padding: 50px;
+}
+
+.modal-anchor {
+  margin: 0;
+
+}
+
+/* FOR TESTS AND BUILDING */
+.bg-tests {
+  background-color: #ecebeb;
+}
+
+@media screen and (max-width: 420px) {
+  .receipt-button.reducer {
+    margin-bottom: 0;
+  }
 }

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
 import TransactionDetails from "./TransactionDetails"
 
@@ -6,13 +6,10 @@ const TransactionForm = () => {
     const { user } = useAuthContext()
 
     const [name, setName] = useState('')
-    const [idType, setIdType] = useState('Cédula de Ciudadanía')
+    const [idType, setIdType] = useState('National ID')
     const [idNumber, setIdNumber] = useState('')
-    const [description, setDescription] = useState('')
-    const [location, setLocation] = useState('')
+    const [email, setEmail] = useState('')
     const [amount, setAmount] = useState(0)
-    const [paymentType, setPaymentType] = useState('tarjeta de credito')
-    const [installments, setInstallments] = useState('1')
     const [cardName, setCardName] = useState('')
     const [cardNumber, setCardNumber] = useState('')
     const [expMonth, setExpMonth] = useState('')
@@ -24,6 +21,9 @@ const TransactionForm = () => {
     const [error, setError] = useState('')
     const [data, setData] = useState('')
 
+    const [eastAvailable, setEastAvailable] = useState(true)
+    const [westernAvailable, setWesternAvailable] = useState(true)
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -34,8 +34,7 @@ const TransactionForm = () => {
         // Group all variables the backend requires to log transaction into database
         const transaction = {
             name, idType, idNumber, 
-            description, location, amount, 
-            installments, cardName, 
+            email, amount, cardName, 
             cardNumber, expMonth, expYear, code
         }
 
@@ -73,128 +72,144 @@ const TransactionForm = () => {
 
     }
     
+    useEffect(() => {
+        const checkEastAvailability = async () => {
+            try {
+                const response = await fetch('api/east/transaction/checkAvailability', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                if (response.ok) {
+                    setEastAvailable(true)
+                }
+                if (!response.ok) {
+                    setEastAvailable(false)
+                }
+            } catch (error) {
+                setEastAvailable(false)
+                console.error('Error:', error.message)
+            }
+        }
+        const checkWesternAvailability = async () => {
+            try {
+                const response = await fetch('api/western/transaction/checkAvailability', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                if (response.ok) {
+                    setWesternAvailable(true)
+                }
+                if (!response.ok) {
+                    setWesternAvailable(false)
+                }
+            } catch (error) {
+                setEastAvailable(false)
+                console.error('Error:', error.message)
+            }
+        }
+
+        checkEastAvailability()
+        checkWesternAvailability()
+    }, [user.token])
+
     const validate = () => {
-        if (!name || !idNumber || !description || !location || !amount || !cardName || !cardNumber || !expMonth || !expYear || !code) {
-            setError("Por favor llene todos los campos")
+        if (amount <= 0) {
+            setError("Invalid amount")
             setStatus(false)
             return false
         }
-        if ((idType==="Cédula de Ciudadanía" || idType==="Cédula de Extranjería") && idNumber.length !== 10) {
-            setError("Cédula invalida")
-            setStatus(false)
-            return false
-        }
-        if (idType==="Pasaporte" && idNumber.length !== 8) {
-            setError("Pasaporte inválido")
+        if (!name || !idNumber || !email || !amount || !cardName || !cardNumber || !expMonth || !expYear || !code) {
+            setError("Please don't leave empty fields")
             setStatus(false)
             return false
         }
         if (expMonth.length !== 2 || expYear.length !== 2) {
-            setError("Las fechas de la tarjeta son invalidas. Por favor use solo dos dígitos")
+            setError("Invalid expiry dates")
             setStatus(false)
             return false
         }
-        if (code.length !== 3) {
-            setError("El codigo ingresado es inválido")
+        if (code.length < 3) {
+            setError("Invalid code")
             setStatus(false)
             return false
         }
-        if (amount <= 0) {
-            setError("Debe ingresar un monto distinto de 0")
-            setStatus(false)
-            return false
-        }
-
         return true
     }
 
     return ( 
-        <div>
-            {paymentType === 'tarjeta de credito' && !status && (
-                <form className="" onSubmit={handleSubmit}>
-                    <h2>Nueva Transacción</h2>
-                    <div className="row">
-                        <div className="col-md-4 transactionform">
-                            <h4 className="mt-5">Datos Personales</h4>
-                            <label>Nombre completo</label>
-                            <input className="form-control" type="text" onChange={(e) => {setName(e.target.value)}}/>
-                            <label>Tipo de identificación</label>
-                            <select className="form-select" onChange={(e) => {setIdType(e.target.value)}}>
-                                <option value="Cédula de Ciudadanía">Cédula de Ciudadanía</option>
-                                <option value="Pasaporte">Pasaporte</option>
-                                <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
-                                <option value="Cédula de Extranjería">Cedula de Extranjería</option>
-                            </select>
-                            <label>Número de identificación</label>
-                            <input className="form-control" maxlength="10" type="text" onChange={(e) => {setIdNumber(e.target.value)}}/>
-                            <label>Descripción</label>
-                            <input className="form-control" type="text" onChange={(e) => {setDescription(e.target.value)}}/>
-                            <label>Sede</label>
-                            <input className="form-control" type="text" onChange={(e) => {setLocation(e.target.value)}}/>
-                            {/* !!update here */}
+        <>
+        {!status && (
+            <div className="container">
+                <form onSubmit={handleSubmit}>
+                    <div className="row justify-content-center mt-4">
+                        <h1 className="mt-4 text-center">New Transaction</h1>
+                        <div className="transaction-error error text-center mt-3 mb-4">
+                            {eastAvailable === false && (
+                                <p className="fw-semi-bold me-5"><i className="bi bi-exclamation-circle-fill me-2"></i>East Bank servers for obtaining your information are currently unavailable</p>
+                            )}
+                            {westernAvailable === false && (
+                                <p className="fw-semi-bold me-3 mb-0"><i className="bi bi-exclamation-circle-fill me-2"></i>Western Bank servers for obtaining your information are currently unavailable</p>
+                            )}
                         </div>
-                        <div className="col-md-4 transactionform">
-                            <h4 className="mt-5">Datos de la Transacción</h4>
-                            <label>Banco</label>
+                        <div className="col-11 col-sm-7 col-lg-4 col-xl-4 me-lg-5 mb-5 mb-sm-0 mt-3 mt-sm-0 transaction-information">
+                            <h4>Transaction Information</h4>
+                            <label>Full name</label>
+                            <input className="form-control" type="text" placeholder="Luke Hemmings" onChange={(e) => {setName(e.target.value)}}/>
+                            <label className="mt-2">ID type</label>
+                            <select className="form-select" onChange={(e) => {setIdType(e.target.value)}}>
+                                <option value="National ID">National ID</option>
+                                <option value="Passport">Passport</option>
+                            </select>
+                            <label className="mt-2">ID number</label>
+                            <input className="form-control" maxlength="16" placeholder="123456789" type="text" onChange={(e) => {setIdNumber(e.target.value)}}/>
+                            <label className="mt-2">Email</label>
+                            <input className="form-control" type="email" placeholder="lucas@gmail.com" onChange={(e) => {setEmail(e.target.value)}}/>
+                            {/* !!update here */}
+                            <label className="mt-2">Bank</label>
                             <select className="form-select" onChange={(e) => {setBank(e.target.value)}}>
                                 <option value="Western Bank">Western Bank</option>
                                 <option value="East Bank">East Bank</option>
                             </select>
-                            <label>Monto</label>
+                            <label className="mt-2">Amount</label>
                             <input className="form-control" type="number" onChange={(e) => {setAmount(e.target.value)}}/>
-                            <label>Medio de pago</label>
-                            <select className="form-select" onChange={(e) => {setPaymentType(e.target.value)}}>
-                                <option value="tarjeta de credito">Tarjeta de crédito</option>
-                                <option value="tarjeta de debito">Tarjeta de débito</option>
-                            </select>
-                            <label>Numero de cuotas</label>
-                            <select className="form-select" onChange={(e) => {setInstallments(e.target.value)}}>
-                                <option value="1">1</option>
-                                <option value="6">6</option>
-                                <option value="12">12</option>
-                            </select>
                         </div>
-                        <div className="col-md-4 transactionform">
-                            <h4 className="mt-5">Datos de la Tarjeta</h4>
-                            <label>Nombre del titular</label>
+                    
+                        <div className="col-11 col-sm-5 col-lg-4 col-xl-3 card-details">
+                            <h4>Card details</h4>
+                            <img className="img-fluid" src={require('../img/companies.png')} alt="" height={60} width={300} />
+                            <br />
+                            <label className="mt-2">Name on card</label>
                             <input placeholder="Bruce Wayne" className="form-control" type="text" onChange={(e) => {setCardName(e.target.value)}}/>
-                            <label>Numero de la tarjeta</label>
+                            <label className="mt-2">Card number</label>
                             <input placeholder="xxxx xxxx xxxx xxxx" className="form-control" maxLength="16" type="text" onChange={(e) => {setCardNumber(e.target.value)}}/>
-                            <label>Fecha de expiracion</label>
+                            <label className="mt-2">Date of expiry</label>
                             <div className="row">
-                                <div className="col-md-6">
-                                    <input placeholder="mes" className="form-control" maxLength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
+                                <div className="col-5 col-md-6">
+                                    <input placeholder="MM" className="form-control" maxLength="2" type="text" onChange={(e) => {setExpMonth(e.target.value)}}/>
                                 </div>
-                                <div className="col-md-6">
-                                    <input placeholder="año" className="form-control" maxLength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
+                                <div className="col-5 col-md-6">
+                                    <input placeholder="YY" className="form-control" maxLength="2" type="text" onChange={(e) => {setExpYear(e.target.value)}}/>
                                 </div>
                             </div>
-                            <label>Código de seguridad</label>
-                            <input placeholder="CVV" className="form-control w-50 mx-auto" maxLength="3" type="text" onChange={(e) => {setCode(e.target.value)}}/>
-                            <button className="btn btn-warning mt-4 w-75">Pagar</button>
+                            <label className="mt-2">Security code</label>
+                            <input placeholder="CVV" className="form-control w-25" maxLength="4" type="text" onChange={(e) => {setCode(e.target.value)}}/>
+                            <button className="btn btn-warning w-50 custom-margin mb-4 mb-sm-0">Pay</button>
                         </div>
                         {error && <div className="error">
                             <p>{error}</p>
                         </div>}
-                    </div>
+                    </div>  
                 </form>
-            )}
-            {status && (
-                <TransactionDetails data={data} />
-            )}
-            {paymentType === 'tarjeta de debito' && (
-                <div>
-                    <h3>Nueva Transacción</h3>
-                    <label className="mt-3">Tipo de pago</label>
-                    <select className="form-select w-25 mx-auto" onChange={(e) => {setPaymentType(e.target.value)}}>
-                        <option value="tarjeta de debito">Tarjeta de débito</option>
-                        <option value="tarjeta de credito">Tarjeta de crédito</option>
-                    </select>
-                    <br></br>
-                    <a className="btn btn-warning" href="https://www.pse.com.co/persona" target="_blank"  rel="noreferrer">Pago por PSE</a>
-                </div>
-            )}
-        </div>
+            </div>
+        )}
+        {status && (
+            <TransactionDetails data={data} />
+        )}
+        </>
      );
 }
  

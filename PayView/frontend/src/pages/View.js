@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
 import Cards from "../components/Cards"
-import History from "../components/History"
+
 
 const View = () => {
     const { user } = useAuthContext()
-
-    const [error, setError] = useState(null)
+    
     const [eastAvailable, setEastAvailable] = useState(true)
     const [westernAvailable, setWesternAvailable] = useState(true)
 
-    const updateError = (newError) => {
-        setError(newError);
-    };
 
     useEffect(() => {
         const checkEastAvailability = async () => {
@@ -60,20 +56,8 @@ const View = () => {
 
     // !!Add: loading screen to history
     return ( 
-        <div>
-            {eastAvailable === false && (
-                <div className="error">El servidor no se encuentra disponible</div>
-            )}
-            {eastAvailable === true && (
-                <div>
-                    {error && 
-                    <div className="error">
-                        <p>{error}</p>
-                    </div>}
-                    <Cards user={user} updateError={updateError}/>
-                    <History user={user} initial={true}/>
-                </div>
-            )}
+        <div>    
+            <Cards user={user} eastAvailable={eastAvailable} westernAvailable={westernAvailable} fullUnavailable={!eastAvailable&&!westernAvailable}/>
         </div>
      );
 }

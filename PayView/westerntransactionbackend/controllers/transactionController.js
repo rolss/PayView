@@ -2,45 +2,30 @@ const Transaction = require('../models/westernTransactionModel')
 const Card = require('../models/westernCardModel')
 
 const newTransaction = async (req,res) => {
-    const {name, idType, idNumber, 
-        description, location, amount, installments, cardName, 
+    const {name, idType, idNumber, email, amount, cardName, 
         cardNumber, expMonth, expYear, code} = req.body
     const user_id = req.user._id
 
     try {
-        // VALIDATIONS !! put them in a function to improve code readability
+        // VALIDATIONS !!put in function
         if (amount <= 0) {
-            res.status(400).json({error: 'Debe ingresar un monto distinto de 0'})
+            res.status(400).json({error: 'Invalid amount'})
             return
         } 
-        if (!name || !idNumber || !description || !location || !amount || !cardName || !cardNumber || !expMonth || !expYear || !code) {
-            res.status(400).json({error: 'Por favor llene todos los campos'})
-            return
-        }
-        if ((idType==="Cédula de Ciudadanía" || idType==="Cédula de Extranjería") && idNumber.length !== 10) {
-            res.status(400).json({error: 'Cédula invalida'})
-            return
-        }
-        if (idType==="Pasaporte" && idNumber.length !== 8) {
-            res.status(400).json({error: 'Pasaporte inválido'})
+        if (!name || !idNumber || !email || !amount || !cardName || !cardNumber || !expMonth || !expYear || !code) {
+            res.status(400).json({error: 'Please do not leave empty fields'})
             return
         }
         if (expMonth.length !== 2 || expYear.length !== 2) {
-            res.status(400).json({error: 'Las fechas de la tarjeta son invalidas. Por favor use solo dos digitos.'})
-            setError("Las fechas de la tarjeta son invalidas")
-            setStatus('Transacción Fallida')
+            res.status(400).json({error: 'Invalid expiry dates'})
             return
         }
         if (code.length !== 3) {
-            res.status(400).json({error: 'El código ingresado es invalido'})
+            res.status(400).json({error: 'Invalid code'})
             return
         }
 
         //!!add: atomicity
-
-        
-
-        
         const validCard = await Card.findOne(
             {cardName, cardNumber, expMonth, expYear, code}
         )
@@ -49,19 +34,7 @@ const newTransaction = async (req,res) => {
 
             // Dont continue if there isn't enough money in the card, for the amount stated
             if (amount > validCard.balance){
-                res.status(400).json({error: 'La tarjeta no tiene suficiente saldo para realizar esta transacción'})
-                return
-            }
-
-            // Don't continue if card isn't active
-            if (!validCard.active) {
-                res.status(400).json({error: 'La tarjeta que intenta utilizar no se encuentra activa'})
-                return
-            }
-
-            // Don't continue if card is not a credit card (but a debit card)
-            if (validCard.type === "Tarjeta de Débito") {
-                res.status(400).json({error: 'La tarjeta que ingresó es de tipo débito. Por favor seleccione la opción Tarjeta de débito para pagar con este tipo de tarjeta.'})
+                res.status(400).json({error: 'Insufficient funds'})
                 return
             }
 
@@ -80,12 +53,11 @@ const newTransaction = async (req,res) => {
             }
 
             const sliced_number = cardNumber.slice(-4)
-            // !! change: only send back last three digits of card
+            // Only sending last 4 digits of card for security purposes
             const transaction = await Transaction.create(
                 {name, idType, idNumber, 
-                description, location, amount,
-                installments, cardNumber: sliced_number, 
-                bank:"Western Bank", user_id}) // include id of user who is making transaction
+                email, amount, cardNumber: sliced_number, 
+                bank:"East Bank", user_id}) // include id of user who is making transaction
             res.status(200).json(transaction)
         }
         if (!validCard) {
@@ -99,7 +71,7 @@ const newTransaction = async (req,res) => {
 
 // BACKEND ONLY - FOR DEMOS [!!]
 const newCard = async (req,res) => {
-    const {cardName, cardNumber, expMonth, expYear, code, balance, active, type} = req.body
+    const {cardName, cardNumber, expMonth, expYear, code, balance} = req.body
     try {
         // Use regular expressions to find what type of card it is
         // Example: Master card: starts 5, followed by 1-5, followed by 14 digits. Total 16 digits
@@ -112,8 +84,13 @@ const newCard = async (req,res) => {
             company = "American Express"
         }
 
+        if (company === "Unknown") {
+            res.status(400).json({error: 'Invalid card. Not Visa, MasterCard or American Express'})
+            return
+        }
+
         // Create a card using request body + found company + an empty users list
-        const card = await Card.create({cardName, cardNumber, expMonth, expYear, code, balance, company, type, active, bank: "Western Bank", users: []})
+        const card = await Card.create({cardName, cardNumber, expMonth, expYear, code, balance, company, bank: "Western Bank", users: []})
         res.status(200).json(card)
         
     } catch (error) {
