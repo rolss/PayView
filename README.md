@@ -1,7 +1,7 @@
 # PayView
 Model webpage for online transaction services using the MERN Stack (MongoDB, Express.js, React and Node.js), Bootstrap, JWT and a microservice architectural approach. 
 
-## Install dependencies ✅
+## Setup and dependencies ✅
 Some dependencies are not included into the repository in order to reduce noise
 
 At PayView/backend, run the following commands 
@@ -12,6 +12,13 @@ At PayView/backend, run the following commands
 At PayView/frontend, run the following commands
 * npm install
 * npm install nodemon
+
+Be sure to add a .env file on all backend folders (userbackend, eastquerybackend, easttransactionbackend, westernquerybackend, westerntransactionbackend) with the following variable strings
+1. MONGO_URI
+2. SECRET
+
+MONGO_URI variable should store the URI for a MongoDB cluster. The URI should look something like this: mongodb://username:password@hostname:port/database
+SECRET variable should be a random string of characters and numbers used to sign a JWT token
 
 ## Run the code 🏃‍♂️
 To run all microservices (backend), do as follows:
