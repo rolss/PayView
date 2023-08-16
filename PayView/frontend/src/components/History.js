@@ -20,7 +20,7 @@ const History = ({user, initial}) => {
                 })
                 const json1 = await response1.json()
                 
-                // update history 
+                // update history state variable with information returned by backend
                 if (response1.ok) {
                     setHistory([...json1.history])
                     console.log("PING")
@@ -29,7 +29,6 @@ const History = ({user, initial}) => {
                     setError(json1.error)
                 }
             } catch (error) {
-                // setAvailable(false)
                 console.error('Error:', error.message)
             }
 
@@ -42,6 +41,7 @@ const History = ({user, initial}) => {
                 })
                 const json2 = await response2.json()
 
+                // update history state variable with information returned by backend
                 if (response2.ok) {
                     setHistory(prevHistory => [...prevHistory, ...json2.history]);
                 }
@@ -52,7 +52,6 @@ const History = ({user, initial}) => {
                 
                 
             } catch (error) {
-                // setAvailable(false)
                 console.error('Error:', error.message)
             }
         }
@@ -60,18 +59,16 @@ const History = ({user, initial}) => {
         fetchHistory()
     }, [user.token, initial])
 
-    useEffect(() => {
-      console.log("history: "+history)
-    }, [history])
-    
-
     return ( 
         <div>
             <h2 className='mb-4'>History</h2>
+            {/* Display any other possible errors */}
             {error && 
             <div className="error">
                 <p>{error}</p>
             </div>}
+
+            {/* Control display of history information or message informing no history was found */}
             {history ? (
                 <div>
                     <table className="table">
@@ -85,6 +82,7 @@ const History = ({user, initial}) => {
                             </tr>
                         </thead>
                         <tbody>
+                            {/* 'initial' variable controls whether to display full history or only the first three elements */}
                             {history && history.slice(0, initial ? 3 : undefined).map((item) => (
                                 <tr key={item._id}>
                                     <td>{item.amount}</td>

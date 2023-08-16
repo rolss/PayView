@@ -1,16 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 // pages & components
-import Home from './pages/Home'
 import NavBar from './components/Navbar'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import View from './pages/View'
 import { useAuthContext } from './hooks/useAuthContext'
-import Transaction from './pages/Transaction'
 import NotFound from './pages/NotFound'
 import FullHistory from './pages/FullHistory'
 import Homepage from './components/Homepage'
+import TransactionForm from './components/TransactionForm'
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import './index.css';
@@ -42,7 +41,7 @@ function App() {
             />
             <Route
               path="/transaction"
-              element={!user ? <Login /> : <Transaction />}
+              element={!user ? <Login /> : <TransactionForm />}
             />
             <Route 
               path="/fullhistory"

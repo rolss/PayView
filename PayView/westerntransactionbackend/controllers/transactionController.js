@@ -7,7 +7,7 @@ const newTransaction = async (req,res) => {
     const user_id = req.user._id
 
     try {
-        // VALIDATIONS !!put in function
+        // Validations
         if (amount <= 0) {
             res.status(400).json({error: 'Invalid amount'})
             return
@@ -25,7 +25,6 @@ const newTransaction = async (req,res) => {
             return
         }
 
-        //!!add: atomicity
         const validCard = await Card.findOne(
             {cardName, cardNumber, expMonth, expYear, code}
         )
@@ -69,7 +68,7 @@ const newTransaction = async (req,res) => {
     }
 }
 
-// BACKEND ONLY - FOR DEMOS [!!]
+// BACKEND ONLY. Use this endpoint function to add a new Western card in database.
 const newCard = async (req,res) => {
     const {cardName, cardNumber, expMonth, expYear, code, balance} = req.body
     try {

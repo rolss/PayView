@@ -1,38 +1,42 @@
 import { useState } from "react"
 
 const NewCard = ({user, setEastCards, setWesternCards}) => {
-
+    // Form variables
     const [cardName, setCardName] = useState('')
     const [cardNumber, setCardNumber] = useState('')
     const [expMonth, setExpMonth] = useState('')
     const [expYear, setExpYear] = useState('')
     const [code, setCode] = useState('')
-
     const [bank, setBank] = useState('Western Bank')
 
+    // Error handling
     const [error, setError] = useState(null)
 
+    // Form validations to ensure valid transactions
     const performValidations = () => {
         if (!cardName || !cardNumber || !expMonth || !expYear || !code) {
-            setError("Por favor no deje campos vacios")
+            setError("Please don't leave empty fields")
             return
         }
         if (expMonth.length !== 2 || expYear.length !== 2) {
-            setError("Las fechas de la tarjeta son invalidas")
+            setError("Dates on card are invalid")
         }
         if (code.length !== 3) {
-            setError("El codigo ingresado es inválido")
+            setError("Invalid CVV")
         }
     }
     
+    // Post new card on backend and database
     const handleSubmit = async (e) => {
         e.preventDefault()
         performValidations()
         
+        // Group all variables the backend requires to log new card into database
         const details = {
             cardName, cardNumber, expMonth, expYear, code
         }
         
+        // Set bank selected by user to mount up the correct url for backend
         var bank_to_fetch = ""
         if (bank === "Western Bank") {
             bank_to_fetch = "western"
@@ -41,7 +45,7 @@ const NewCard = ({user, setEastCards, setWesternCards}) => {
         }
 
         try {
-            // Send card details. This will automatically add the card to the user cards
+            // Send card details. This will automatically add the card to the user list of linked cards
             const response = await fetch('/api/' + bank_to_fetch + '/query/cardInformation', {
                 method: 'POST',
                 body: JSON.stringify(details),
@@ -72,7 +76,6 @@ const NewCard = ({user, setEastCards, setWesternCards}) => {
     return ( 
         <form onSubmit={handleSubmit} className="form">
             <h2>New Card</h2>
-            {/* make this a component */}
             <label className="mt-2">Name on card</label>
             <input type="text" className="form-control" placeholder="Bruce Wayne"  onChange={(e) => {setCardName(e.target.value)}}/>
             <label className="mt-2">Bank</label>
@@ -94,6 +97,8 @@ const NewCard = ({user, setEastCards, setWesternCards}) => {
             <label className="mt-2">Security code</label>
             <input maxLength="3" className="form-control w-25" type="password" placeholder="•••" onChange={(e) => {setCode(e.target.value)}}/>
             <button className="formbutton btn btn-warning mt-4 w-100">Add to view</button>
+
+            {/* Display validation errors that may arise */}
             {error && 
             <div className="error mt-2">
                 <p>{error}</p>

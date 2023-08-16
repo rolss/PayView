@@ -11,6 +11,7 @@ const Login = () => {
     const navigate = useNavigate()
     const { dispatch } = useAuthContext()
 
+    // Check if microservice is up and modify displayed errors accordingly
     useEffect(() => {
         const checkAvailability = async () => {
             try {
@@ -23,7 +24,6 @@ const Login = () => {
                 }
             } catch (error) {
                 setAvailable(false)
-                console.error('Error:', error.message)
             }
         }
 
@@ -74,8 +74,8 @@ const Login = () => {
                 </div>
             )}
             {available === true && (
-                <div className="container p-0 d-flex align-items-center justify-content-center mt-5">
-                    <form className="user-form me-3 p-4 p-sm-5 col-11 col-sm-9 col-md-6 col-lg-5 col-xl-4" onSubmit={handleSubmit}>
+                <div className="container d-flex align-items-center justify-content-center mt-5 p-0 ">
+                    <form className="col-11 col-sm-9 col-md-6 col-lg-5 col-xl-4 me-3 p-4 p-sm-5 user-form" onSubmit={handleSubmit}>
                         <h1 className="h2 mb-5">Welcome back</h1>
                         {error &&
                         <div className="error">
@@ -87,8 +87,8 @@ const Login = () => {
                         <label className="form-label text-black ms-1 force-left">Password</label>
                         <input className="form-control form-control-sm mb-3 ms-1" placeholder="•••••••••••••••••" type="password" onChange={(e) => {setPassword(e.target.value)}}/>
                         <a className="text-secondary text-decoration-none d-block force-left" href="#">Forgot password?</a>
-                        <button className="btn-sm border-0 btn-warning w-50 mt-5 ms-1">Log in</button>
-                        <p className="text-black mt-2 ms-1 small">Don't have an account? <a className="text-secondary text-decoration-underline" href="/signup">Sign up today!</a></p>
+                        <button className="btn btn-sm btn-warning w-50 mt-5 ms-1">Log in</button>
+                        <p className="mt-2 ms-1">Don't have an account? <a className="text-secondary text-decoration-underline" href="/signup">Sign up today!</a></p>
 
                     </form>
                 </div>

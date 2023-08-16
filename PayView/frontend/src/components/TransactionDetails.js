@@ -3,6 +3,8 @@ const TransactionDetails = ({ data }) => {
     return ( 
         <>
             <div className="container receipt mt-5 p-sm-4 pt-md-4 pt-lg-5">
+
+                {/* Transaction status heading to change based on obtained status */}
                 {data.status ? (
                     <>
                     <div className="row align-items-center justify-content-center">
@@ -33,34 +35,35 @@ const TransactionDetails = ({ data }) => {
                     </>
                 )}
                 
-
+                {/* Display transaction details */}
                 <div className="row align-items-center justify-content-center">
-                <div className="col-12 d-sm-none text-center">
-                    <p className="mb-3"><strong className="d-block">Name</strong> {data.name}</p>
-                    <p className="mb-3"><strong className="d-block">Document</strong> {data.idType} {data.idNumber}</p>
-                    <p className="mb-3"><strong className="d-block">Email</strong> {data.email}</p>
-                    <p className="mb-3"><strong className="d-block">Amount</strong> {data.amount}</p>
-                    <p className="mb-3"><strong className="d-block">Status</strong> {data.status ? 'Failed' : 'Success'}</p>
-                    <p className="mb-3"><strong className="d-block">Transaction ID</strong> {data._id}</p>
-                </div>
-                    <div className="col-sm-4 col-md-5 col-xl-3 d-sm-block d-none">
-                        <p className="mb-3"><strong>Name</strong></p>
-                        <p className="mb-3"><strong>Document</strong></p>
-                        <p className="mb-3"><strong>Email</strong></p>
-                        <p className="mb-3"><strong>Amount</strong></p>
-                        <p className="mb-3"><strong>Status</strong></p>
-                        <p className="mb-3"><strong>Transaction ID</strong></p>
+                    <div className="col-12 d-sm-none text-center">
+                        <p className="mb-3"><strong className="d-block">Name</strong> {data.name}</p>
+                        <p className="mb-3"><strong className="d-block">Document</strong> {data.idType} {data.idNumber}</p>
+                        <p className="mb-3"><strong className="d-block">Email</strong> {data.email}</p>
+                        <p className="mb-3"><strong className="d-block">Amount</strong> {data.amount}</p>
+                        <p className="mb-3"><strong className="d-block">Status</strong> {data.status ? 'Failed' : 'Success'}</p>
+                        <p className="mb-3"><strong className="d-block">Transaction ID</strong> {data._id}</p>
                     </div>
-                    <div className="col-sm-5 col-md-5 col-xl-3 d-sm-block d-none">
-                        <p className="mb-3">{data.name}</p>
-                        <p className="mb-3">{data.idType} {data.idNumber}</p>
-                        <p className="mb-3">{data.email}</p>
-                        <p className="mb-3">{data.amount}</p>
-                        <p className="mb-3">{data.status ? 'Failed' : 'Success'}</p>
-                        <p className="mb-3">{data._id}</p>
-                    </div>
+                        <div className="col-sm-4 col-md-5 col-xl-3 d-sm-block d-none">
+                            <p className="mb-3"><strong>Name</strong></p>
+                            <p className="mb-3"><strong>Document</strong></p>
+                            <p className="mb-3"><strong>Email</strong></p>
+                            <p className="mb-3"><strong>Amount</strong></p>
+                            <p className="mb-3"><strong>Status</strong></p>
+                            <p className="mb-3"><strong>Transaction ID</strong></p>
+                        </div>
+                        <div className="col-sm-5 col-md-5 col-xl-3 d-sm-block d-none">
+                            <p className="mb-3">{data.name}</p>
+                            <p className="mb-3">{data.idType} {data.idNumber}</p>
+                            <p className="mb-3">{data.email}</p>
+                            <p className="mb-3">{data.amount}</p>
+                            <p className="mb-3">{data.status ? 'Failed' : 'Success'}</p>
+                            <p className="mb-3">{data._id}</p>
+                        </div>
                 </div>
             </div>
+            
             <div className="container">
                 <div className="row align-items-center justify-content-center ">
                     <a className="receipt-button reducer" href="/transaction">New transaction</a>

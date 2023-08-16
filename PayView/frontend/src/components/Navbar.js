@@ -1,19 +1,11 @@
-// Reusable
-import { Link } from 'react-router-dom'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useLogout } from '../hooks/useLogout'
-import { useLocation } from 'react-router-dom';
-
-import { useState, useEffect } from "react";
 import Help from './Help';
-// import { Navbar, Container, Nav } from "react-bootstrap";
-// import logo from "../assets/img/logo.jpeg";
 
 const NavBar = () => {
     // global user state from AuthContext and logout function from useLogout hook
     const { user } = useAuthContext()
     const { logout } = useLogout()
-    // const location = useLocation()
 
     const handleClick = () => {
         logout()

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import History from "../components/History";
 import { useAuthContext } from "../hooks/useAuthContext";
 
+// Reuses History component to show all data, triggered by "initial" variable
 const FullHistory = () => {
     const navigate = useNavigate()
     const { user } = useAuthContext()

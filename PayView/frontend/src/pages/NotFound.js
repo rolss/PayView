@@ -2,10 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 const NotFound = () => {
     const navigate = useNavigate()
-
-    const handleClick = () => {
-        navigate("/")
-    }
     
     return ( 
         <div className="alert alert-danger service-unavailable">

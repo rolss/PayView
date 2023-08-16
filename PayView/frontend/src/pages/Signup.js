@@ -12,7 +12,7 @@ const Signup = () => {
     const navigate = useNavigate()
     const { dispatch } = useAuthContext()
 
-
+    // Check if microservice is up and modify displayed errors accordingly
     useEffect(() => {
         const checkAvailability = async () => {
             try {
@@ -68,14 +68,6 @@ const Signup = () => {
         navigate.push('/view')
     }
 
-    // if (loading) {
-    //     return (
-    //         <div className="loading-spinner">
-    //           <ClipLoader color="#000000" loading={loading} size={80} speedMultiplier={0.6} />
-    //         </div>
-    //     );
-    // }
-
     return ( 
         <div className>
             {available === false && (
@@ -86,8 +78,8 @@ const Signup = () => {
                 </div>
             )}
             {available === true && (
-                <div className="container p-0 d-flex align-items-center justify-content-center mt-5">
-                    <form className="user-form me-3 p-4 p-sm-5 col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4" onSubmit={handleSubmit}>
+                <div className="container d-flex align-items-center justify-content-center p-0 mt-5">
+                    <form className="col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4 me-3 p-4 p-sm-5 user-form" onSubmit={handleSubmit}>
                         <h2 className="h2 ms-1 mb-5">Welcome to PayView</h2>
                         {error &&
                         <div className="error">
@@ -98,8 +90,8 @@ const Signup = () => {
                         
                         <label className="form-label text-black ms-1 force-left">Password</label>
                         <input className="form-control form-control-sm mb-3 ms-1" placeholder="•••••••••••••••••" type="password" onChange={(e) => {setPassword(e.target.value)}}/>
-                        <button className="btn-sm border-0 btn-warning w-50 mt-5 ms-1">Create account</button>
-                        <p className="text-black mt-2 ms-1 small">Already have an account? <a className="text-secondary text-decoration-underline" href="/login">Login instead</a></p>
+                        <button className="btn btn-sm btn-warning w-50 mt-5 ms-1">Create account</button>
+                        <p className="mt-2 ms-1">Already have an account? <a className="text-secondary text-decoration-underline" href="/login">Login instead</a></p>
                     </form>
                 </div>
             )}

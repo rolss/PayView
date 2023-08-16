@@ -1,9 +1,7 @@
 const Transaction = require('../models/eastTransactionModel')
 const Card = require('../models/eastCardModel')
 
-// Helper functions
-// Finds all cards linked to the user that is performing the request
-// returns the list of cards, empty string if no cards
+// Finds all cards linked to the user that is performing the request. Returns list of cards or an empty string if no cards were found
 const getUserCards = async (user_id) => {
     const userCards = await Card.find({ users: { $in: [user_id] } });
                 
@@ -15,13 +13,11 @@ const getUserCards = async (user_id) => {
     }
 }
 
-// -------------------------------------------------------------------------------------------------------
-
+/* Find all transactions by user id, only keep the description, amount and card number of each one
+Return null if user has no history */
 const transactionHistory = async (req,res) => {
-    const id = req.user._id // this id was added on our own middleware
+    const id = req.user._id
 
-    // Find all transactions by user id, only keep the description, amount and card number of each one
-    // Return null if user has no history
     try {
         let history = null;
         const transac_history = await Transaction.find({user_id: id}).sort({ createdAt: 'descending'})
@@ -44,8 +40,7 @@ const transactionHistory = async (req,res) => {
     }
 }
 
-// links card to user who performed request
-// returns information of the card
+// Links card to user who performed request. Returns card information safely
 const cardInformation = async (req,res) => {
     const { cardName, cardNumber, expMonth, expYear, code } = req.body
     const user_id = req.user._id
@@ -73,18 +68,18 @@ const cardInformation = async (req,res) => {
                 const updatedCards = await getUserCards(user_id);
                 res.status(200).json(updatedCards);
             } else {
-                res.status(400).json({error: "Este usuario ya esta vinculado con esta tarjeta"})
+                res.status(400).json({error: "Current user has already been linked to this card"})
             }
         }
         if (!card) {
             if (!cardName || !cardNumber || !expMonth || !expYear || !code) {
-                res.status(400).json({error: 'Por favor no deje campos vacios'})
+                res.status(400).json({error: 'Please dont leave empty fields'})
             } else if (expMonth.length !== 2 || expYear.length !== 2) {
-                res.status(400).json({error: 'Las fechas de la tarjeta son invalidas'})
+                res.status(400).json({error: 'Invalid dates'})
             } else if (code.length !== 3) {
-                res.status(400).json({error: 'El codigo ingresado es inválido'})
+                res.status(400).json({error: 'Invalid CVV'})
             } else {
-                res.status(400).json({error: 'Tarjeta invalida: la tarjeta con estas credenciales no existe'})
+                res.status(400).json({error: 'Invalid card credentials'})
             }
         }
     } catch (error) {
@@ -92,6 +87,7 @@ const cardInformation = async (req,res) => {
     }
 }
 
+// Unlinks user from a card
 const deleteCard = async (req,res) =>{
     const user_id = req.user._id
     const { cardId } = req.body
@@ -108,7 +104,7 @@ const deleteCard = async (req,res) =>{
             res.status(200).json(updatedCards);
         }
         if (!card) {
-            res.status(400).json({error: "Este usuario no está vinculado a esta tarjeta"})
+            res.status(400).json({error: "This user is not linked to this card"})
         }
         
     } catch (error) {

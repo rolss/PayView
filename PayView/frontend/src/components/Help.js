@@ -43,19 +43,24 @@ const Help = () => {
               <p>Signup with your email and password to use our services. Already have an account? Log in <a href="/login" className='m-0 text-secondary'>here</a></p>
             }
             {location.pathname === '/transaction' &&
-              <p>
-                Make transactions by filling in all the information of the person who is going to pay.
-                Please verify all the information is correct before clicking on the yellow "Pay" button.
-                After clicking, you will be redirected to a page with your receipt.
-              </p>
+              <>
+                <ul>
+                  <li>Make transactions by filling in all the information of the person who is going to pay.</li>
+                  <li>Please verify all the information is correct before clicking on the yellow "Pay" button.</li>
+                  <li>After clicking, you will be redirected to a page with your receipt.</li>
+                </ul>
+              </>
             }
             {location.pathname === '/view' &&
-              <p>
-                View information about your cards and the history of your transactions through PayView
-                Upon adding a card using the card form in this page, or making a transaction with a card, the card will be linked to your account for you to view its details at any time
-                You may unlink a card from your account at any time by clicking on the "unlink" button. Note this will not make any changes on your actual card
-                To view your full history of transactions with PayView, click on the "See more" button
-              </p>
+              <>
+                <ul>
+                  <li>View information about your cards and the history of your transactions through PayView</li>
+                  <li>Upon adding a card using the card form in this page, or making a transaction with a card, the card will be linked to your account for you to view its details at any time</li>
+                  <li>You may unlink a card from your account at any time by clicking on the "unlink" button. Note this will not make any changes on your actual card</li>
+                  <li>To view your full history of transactions with PayView, click on the "See more" button</li>
+                </ul>
+                <hr />
+              </>
             }
             {location.pathname !== '/' && location.pathname !== '/login' && location.pathname !== '/signup' && location.pathname !== '/transaction' && location.pathname !== '/view' && (
               <p>We can't help you on this page</p>
