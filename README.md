@@ -1,5 +1,5 @@
-# PayView [NOT FINISHED]
-Model webpage for transaction services using the MERN Stack (MongoDB, Express.js, React and Node.js). 
+# PayView
+Model webpage for online transaction services using the MERN Stack (MongoDB, Express.js, React and Node.js), Bootstrap, JWT and a microservice architectural approach. 
 
 ## Install dependencies ✅
 Some dependencies are not included into the repository in order to reduce noise
@@ -14,26 +14,35 @@ At PayView/frontend, run the following commands
 * npm install nodemon
 
 ## Run the code 🏃‍♂️
-First run the server (backend). In this case, its necessary to run three servers that are acting as individual microservices.
+To run all microservices (backend), do as follows:
 
-Do the following in three different terminals.
+At .../userbackend, .../eastquerybackend, .../westernquerybackend, ../easttransactionbackend and ../westerntransactionbackend run the command
+* npm start
 
-At .../userbackend, .../querybackend and ../transactionbackend run the command
-* npm run dev
-
-Now, run the react app (frontend).
+To run the react app (frontend)
 
 At .../frontend, run
 * npm start
 
 ## How it works 💡
-Three microservices are being run in the background focused on three different services: user authentication, querying of data and generating transactions. These are run on localhost:4000, localhost:4001 and localhost:4002 respectively. 
+There are a total of five microservices running.
+* userbackend - handles user logins and signups
+* eastquerybackend - handles queries for east bank
+* westernquerybackend - handles queries for western bank
+* easttransactionbackend - handles transactions for east bank
+* westerntransactionbackend - handles transactions for western bank
 
-A user can sign up and/or log into the website, his password will be secured via hashing and his information will be secured via JWT. For a user that is logged in, there are two main things that they can do.
-1. Querying user and card data. On the "view" page, a user will be able to get the balance of a specific credit card by typing in the card information. At the same time, a user is able to see their transaction history, which automatically loads on the same page.
-2. Generating a new transaction. On the "transaction" page, a user will be able to create a new transaction by filling in all of their data, including a valid card. The amount of the transaction entered will be deducted from the credit card's balance. A user may also pay with debit card, in which case he will have the option to be redirected to a third party application where the user may proceed. 
+If any of these microservices go offline at any point, the site duly informs the user but keeps working. The website is designed to uphold to a good architectural design that allows for low coupling, high availability and cohesion.
 
-Note: debit card payments are CURRENTLY not added to transaction history, because there is no way to check if the transaction actually went through.
+User logins and signups use JWT for safety. Passwords are hashed before getting stored in the MongoDB Database. 
 
-## Notes 📝
-This project is still in development and there are several functionalities and validations that are yet to be added.
+A user starts with no transaction history nor any linked cards. They can choose to do either of the following
+* Make a transaction (payment) with a card in the Transaction page. Such card is automatically linked to the user if the transaction is successful. Every transaction creates a receipt that is stored in the database.
+* View information about all cards linked to the user as well as the user's transaction history in the View page. A user may add a card to this page without making a transaction by using the helper form.
+
+On every page, click on the question mark icon for help on the current page the user sits on.
+
+## Important note
+Everything in this website is fictional, including the banks and the dummy credit card numbers. All transactions and credit cards are stored in the MongoDB database as samples. In a real capacity, the webpage would access a real bank's API with proper authorizations.
+
+Find samples.txt file within the repository to test the website with some sample credit cards 
