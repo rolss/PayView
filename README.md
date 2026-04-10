@@ -1,5 +1,5 @@
 # PayView (Pending Update)
-Note: this site was made as a class project and is currently under revision to improve its quality. 
+Note: this readme is being updated for project reproducibility. 
 
 Model webpage for online transaction services using the MERN Stack (MongoDB, Express.js, React and Node.js), Bootstrap, JWT and a microservice architectural approach. 
 
