@@ -1,10 +1,9 @@
-# PayView (Pending Update)
-Note: this readme is being updated for project reproducibility and simplicity. 
+# PayView (Updating...)
 
 Model webpage for online transaction services using the MERN Stack (MongoDB, Express.js, React and Node.js), Bootstrap, JWT and a microservice architectural approach. 
 
 ## Setup and dependencies ✅
-Some dependencies are not included into the repository in order to reduce noise
+Note: this readme is being updated for project reproducibility and simplicity. 
 
 At PayView/backend, run the following commands 
 * npm install
